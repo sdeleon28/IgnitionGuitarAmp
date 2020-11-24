@@ -152,10 +152,9 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     {
         auto* channelData = buffer.getWritePointer (channel);
 
-        const int drive = 6.f;
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
-            channelData[sample] = jlimit(-1.f, 1.f, channelData[sample] * drive) * 0.7f;
+            channelData[sample] = jlimit(-1.f, 1.f, channelData[sample] * mGain) * mOutLevel;
         }
     }
 }
