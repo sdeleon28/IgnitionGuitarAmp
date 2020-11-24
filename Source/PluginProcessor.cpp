@@ -163,6 +163,10 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
             {
                 processedSample = (channelData[sample] >= 0 ? 1.f : -1.f);
             }
+            else if (mWaveshaperType == WaveshaperType::sinewave)
+            {
+                processedSample = std::sin(channelData[sample] * mGain);
+            }
             channelData[sample] = jlimit(-1.f, 1.f, processedSample) * mOutLevel;
         }
     }

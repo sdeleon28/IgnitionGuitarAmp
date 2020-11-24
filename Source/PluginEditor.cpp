@@ -27,6 +27,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
 
     mWaveshaperTypeComboBox.addItem("Hyperbolic tangent", ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent);
     mWaveshaperTypeComboBox.addItem("Square", ShittyAmpAudioProcessor::WaveshaperType::square);
+    mWaveshaperTypeComboBox.addItem("Sinewave", ShittyAmpAudioProcessor::WaveshaperType::sinewave);
     mWaveshaperTypeComboBox.addListener(this);
 
     addAndMakeVisible(mWaveshaperTypeComboBox);
@@ -71,6 +72,10 @@ void ShittyAmpAudioProcessorEditor::comboBoxChanged(ComboBox *comboBox)
         else if (selectedId == ShittyAmpAudioProcessor::WaveshaperType::square)
         {
             audioProcessor.mWaveshaperType = ShittyAmpAudioProcessor::WaveshaperType::square;
+        }
+        else if (selectedId == ShittyAmpAudioProcessor::WaveshaperType::sinewave)
+        {
+            audioProcessor.mWaveshaperType = ShittyAmpAudioProcessor::WaveshaperType::sinewave;
         }
     }
 }
