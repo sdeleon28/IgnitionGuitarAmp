@@ -15,7 +15,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
 {
     mGainSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     mGainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
-    mGainSlider.setRange(0.0f, 10.0f, 0.01f);
+    mGainSlider.setRange(0.0f, 20.0f, 0.01f);
     mGainSlider.setValue(1.f);
     mGainSlider.addListener(this);
 

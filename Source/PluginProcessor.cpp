@@ -154,7 +154,8 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
-            channelData[sample] = jlimit(-1.f, 1.f, channelData[sample] * mGain) * mOutLevel;
+            const float processedSample = std::tanh(channelData[sample] * mGain);
+            channelData[sample] = jlimit(-1.f, 1.f, processedSample) * mOutLevel;
         }
     }
 }
