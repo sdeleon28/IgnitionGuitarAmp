@@ -14,20 +14,23 @@
 //==============================================================================
 /**
 */
-class ShittyAmpAudioProcessorEditor  : public juce::AudioProcessorEditor,
-                                       public juce::Slider::Listener
+class ShittyAmpAudioProcessorEditor  : public AudioProcessorEditor,
+                                       public Slider::Listener,
+                                       public ComboBox::Listener
 {
 public:
     ShittyAmpAudioProcessorEditor (ShittyAmpAudioProcessor&);
     ~ShittyAmpAudioProcessorEditor() override;
 
     //==============================================================================
-    void paint (juce::Graphics&) override;
+    void paint (Graphics&) override;
     void resized() override;
-    void sliderValueChanged (juce::Slider* slider) override;
+    void sliderValueChanged (Slider* slider) override;
+    void comboBoxChanged (ComboBox* comboBox) override;
 private:
-    juce::Slider mGainSlider;
-    juce::Slider mOutLevelSlider;
+    Slider mGainSlider;
+    Slider mOutLevelSlider;
+    ComboBox mWaveshaperTypeComboBox;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

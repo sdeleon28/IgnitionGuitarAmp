@@ -53,6 +53,8 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    enum WaveshaperType { hyperbolicTangent = 1, square };
+    WaveshaperType mWaveshaperType;
     float mGain { 0.5 };
     float mOutLevel { 0.5 };
 private:

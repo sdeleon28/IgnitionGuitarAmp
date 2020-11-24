@@ -154,7 +154,15 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
-            const float processedSample = std::tanh(channelData[sample] * mGain);
+            float processedSample = channelData[sample]; // Default to same sample
+            if (mWaveshaperType == WaveshaperType::hyperbolicTangent)
+            {
+                processedSample = std::tanh(channelData[sample] * mGain);
+            }
+            else if (mWaveshaperType == WaveshaperType::square)
+            {
+                processedSample = (channelData[sample] >= 0 ? 1.f : -1.f);
+            }
             channelData[sample] = jlimit(-1.f, 1.f, processedSample) * mOutLevel;
         }
     }
