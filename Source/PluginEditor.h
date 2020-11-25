@@ -30,25 +30,25 @@ public:
     void sliderValueChanged (Slider* slider) override;
     void comboBoxChanged (ComboBox* comboBox) override;
 private:
-    Label mGainLabel;
-    Slider mGainSlider;
-    std::unique_ptr<SliderAttachment> mGainAttachment;
+    Label gainLabel;
+    Slider gainSlider;
+    std::unique_ptr<SliderAttachment> gainAttachment;
 
-    Label mOutLevelLabel;
-    Slider mOutLevelSlider;
-    std::unique_ptr<SliderAttachment> mOutLevelAttacment;
+    Label outLevelLabel;
+    Slider outLevelSlider;
+    std::unique_ptr<SliderAttachment> outLevelAttachement;
 
-    Label mLowShelfGainLabel;
-    Slider mLowShelfGainSlider;
+    Label lowShelfGainLabel;
+    Slider lowShelfGainSlider;
     std::unique_ptr<SliderAttachment> mLowShelfGainAttacment;
 
-    Label mLowShelfFreqLabel;
-    Slider mLowShelfFreqSlider;
-    std::unique_ptr<SliderAttachment> mLowShelfFreqAttacment;
+    Label lowShelfFreqLabel;
+    Slider lowShelfFreqSlider;
+    std::unique_ptr<SliderAttachment> lowShelfFreqAttacment;
 
-    Label mWaveshaperTypeLabel;
-    ComboBox mWaveshaperTypeComboBox;
-    std::unique_ptr<SliderAttachment> mWaveshaperTypeAttacment;
+    Label waveshaperTypeLabel;
+    ComboBox waveshaperTypeComboBox;
+    std::unique_ptr<SliderAttachment> waveshaperTypeAttacment;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

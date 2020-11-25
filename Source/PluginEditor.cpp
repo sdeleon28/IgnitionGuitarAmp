@@ -17,53 +17,53 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
 {
     // TODO: Set label
     // TODO: Connect to parameter
-    mWaveshaperTypeComboBox.addItem("Hyperbolic tangent", ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent);
-    mWaveshaperTypeComboBox.addItem("Square", ShittyAmpAudioProcessor::WaveshaperType::square);
-    mWaveshaperTypeComboBox.addItem("Sinewave", ShittyAmpAudioProcessor::WaveshaperType::sinewave);
-    mWaveshaperTypeComboBox.addListener(this);
-    addAndMakeVisible(mWaveshaperTypeComboBox);
+    waveshaperTypeComboBox.addItem("Hyperbolic tangent", ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent);
+    waveshaperTypeComboBox.addItem("Square", ShittyAmpAudioProcessor::WaveshaperType::square);
+    waveshaperTypeComboBox.addItem("Sinewave", ShittyAmpAudioProcessor::WaveshaperType::sinewave);
+    waveshaperTypeComboBox.addListener(this);
+    addAndMakeVisible(waveshaperTypeComboBox);
     
-    mGainLabel.setText(GAIN_NAME, dontSendNotification);
-    mGainLabel.attachToComponent(&mGainSlider, false);
-    mGainAttachment = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, mGainSlider);
-    mGainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
-    mGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    mGainSlider.setRange(0.0f, 20.0f, 0.01f);
-    mGainSlider.setValue(1.f);
-    mGainSlider.setPopupDisplayEnabled(true, true, this);
-    mGainSlider.addListener(this);
-    addAndMakeVisible(mGainLabel);
-    addAndMakeVisible(mGainSlider);
+    gainLabel.setText(GAIN_NAME, dontSendNotification);
+    gainLabel.attachToComponent(&gainSlider, false);
+    gainAttachment = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, gainSlider);
+    gainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
+    gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    gainSlider.setRange(0.0f, 20.0f, 0.01f);
+    gainSlider.setValue(1.f);
+    gainSlider.setPopupDisplayEnabled(true, true, this);
+    gainSlider.addListener(this);
+    addAndMakeVisible(gainLabel);
+    addAndMakeVisible(gainSlider);
 
     // TODO: Set label
     // TODO: Connect to parameter
-    mOutLevelSlider.setSliderStyle(Slider::SliderStyle::Rotary);
-    mOutLevelSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    mOutLevelSlider.setRange(0.0f, 1.0f, 0.01f);
-    mOutLevelSlider.setValue(0.5f);
-    mOutLevelSlider.setPopupDisplayEnabled(true, true, this);
-    mOutLevelSlider.addListener(this);
-    addAndMakeVisible(mOutLevelSlider);
+    outLevelSlider.setSliderStyle(Slider::SliderStyle::Rotary);
+    outLevelSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    outLevelSlider.setRange(0.0f, 1.0f, 0.01f);
+    outLevelSlider.setValue(0.5f);
+    outLevelSlider.setPopupDisplayEnabled(true, true, this);
+    outLevelSlider.addListener(this);
+    addAndMakeVisible(outLevelSlider);
 
     // TODO: Set label
     // TODO: Connect to parameter
-    mLowShelfGainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
-    mLowShelfGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    mLowShelfGainSlider.setRange(-10.f, 10.f, 0.01f);
-    mLowShelfGainSlider.setValue(0.5f);
-    mLowShelfGainSlider.setPopupDisplayEnabled(true, true, this);
-    mLowShelfGainSlider.addListener(this);
-    addAndMakeVisible(mLowShelfGainSlider);
+    lowShelfGainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
+    lowShelfGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    lowShelfGainSlider.setRange(-10.f, 10.f, 0.01f);
+    lowShelfGainSlider.setValue(0.5f);
+    lowShelfGainSlider.setPopupDisplayEnabled(true, true, this);
+    lowShelfGainSlider.addListener(this);
+    addAndMakeVisible(lowShelfGainSlider);
 
     // TODO: Set label
     // TODO: Connect to parameter
-    mLowShelfFreqSlider.setSliderStyle(Slider::SliderStyle::Rotary);
-    mLowShelfFreqSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    mLowShelfFreqSlider.setRange(20, 600, 0.01f);
-    mLowShelfFreqSlider.setValue(0.5f);
-    mLowShelfFreqSlider.setPopupDisplayEnabled(true, true, this);
-    mLowShelfFreqSlider.addListener(this);
-    addAndMakeVisible(mLowShelfFreqSlider);
+    lowShelfFreqSlider.setSliderStyle(Slider::SliderStyle::Rotary);
+    lowShelfFreqSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    lowShelfFreqSlider.setRange(20, 600, 0.01f);
+    lowShelfFreqSlider.setValue(0.5f);
+    lowShelfFreqSlider.setPopupDisplayEnabled(true, true, this);
+    lowShelfFreqSlider.addListener(this);
+    addAndMakeVisible(lowShelfFreqSlider);
 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -88,38 +88,38 @@ void ShittyAmpAudioProcessorEditor::resized()
     const int column = 100;
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    mWaveshaperTypeComboBox.setBounds(0, 0, 200, 50);
-    mGainSlider.setBounds(0, 1 * row, 100, 100);
-    mOutLevelSlider.setBounds(1 * column, 1 * row, 100, 100);
-    mLowShelfGainSlider.setBounds(0, 2 * row, 100, 100);
-    mLowShelfFreqSlider.setBounds(1 * column, 2 * row, 100, 100);
+    waveshaperTypeComboBox.setBounds(0, 0, 200, 50);
+    gainSlider.setBounds(0, 1 * row, 100, 100);
+    outLevelSlider.setBounds(1 * column, 1 * row, 100, 100);
+    lowShelfGainSlider.setBounds(0, 2 * row, 100, 100);
+    lowShelfFreqSlider.setBounds(1 * column, 2 * row, 100, 100);
 }
 
 void ShittyAmpAudioProcessorEditor::comboBoxChanged(ComboBox *comboBox)
 {
-    if (comboBox == &mWaveshaperTypeComboBox)
+    if (comboBox == &waveshaperTypeComboBox)
     {
-        const int selectedId = mWaveshaperTypeComboBox.getSelectedId();
+        const int selectedId = waveshaperTypeComboBox.getSelectedId();
         if (selectedId == ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent)
         {
-            audioProcessor.mWaveshaperType = ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent;
+            audioProcessor.waveshaperType = ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent;
         }
         else if (selectedId == ShittyAmpAudioProcessor::WaveshaperType::square)
         {
-            audioProcessor.mWaveshaperType = ShittyAmpAudioProcessor::WaveshaperType::square;
+            audioProcessor.waveshaperType = ShittyAmpAudioProcessor::WaveshaperType::square;
         }
         else if (selectedId == ShittyAmpAudioProcessor::WaveshaperType::sinewave)
         {
-            audioProcessor.mWaveshaperType = ShittyAmpAudioProcessor::WaveshaperType::sinewave;
+            audioProcessor.waveshaperType = ShittyAmpAudioProcessor::WaveshaperType::sinewave;
         }
     }
 }
 
 void ShittyAmpAudioProcessorEditor::sliderValueChanged(Slider *slider)
 {
-    if (slider == &mGainSlider)
-        audioProcessor.mGain = mGainSlider.getValue();
-    if (slider == &mOutLevelSlider)
-        audioProcessor.mOutLevel = mOutLevelSlider.getValue();
+    if (slider == &gainSlider)
+        audioProcessor.gain = gainSlider.getValue();
+    if (slider == &outLevelSlider)
+        audioProcessor.outLevel = outLevelSlider.getValue();
     // TODO: add filters
 }
