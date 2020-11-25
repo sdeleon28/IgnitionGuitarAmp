@@ -23,7 +23,8 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     mWaveshaperTypeComboBox.addListener(this);
     addAndMakeVisible(mWaveshaperTypeComboBox);
     
-    // TODO: Set label
+    mGainLabel.setText(GAIN_NAME, dontSendNotification);
+    mGainLabel.attachToComponent(&mGainSlider, false);
     mGainAttachment = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, mGainSlider);
     mGainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     mGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
@@ -31,6 +32,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     mGainSlider.setValue(1.f);
     mGainSlider.setPopupDisplayEnabled(true, true, this);
     mGainSlider.addListener(this);
+    addAndMakeVisible(mGainLabel);
     addAndMakeVisible(mGainSlider);
 
     // TODO: Set label
@@ -119,4 +121,5 @@ void ShittyAmpAudioProcessorEditor::sliderValueChanged(Slider *slider)
         audioProcessor.mGain = mGainSlider.getValue();
     if (slider == &mOutLevelSlider)
         audioProcessor.mOutLevel = mOutLevelSlider.getValue();
+    // TODO: add filters
 }
