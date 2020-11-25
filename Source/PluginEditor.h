@@ -30,6 +30,8 @@ public:
 private:
     Slider mGainSlider;
     Slider mOutLevelSlider;
+    Slider mLowShelfGainSlider;
+    Slider mLowShelfFreqSlider;
     ComboBox mWaveshaperTypeComboBox;
 
     // This reference is provided as a quick way for your editor to
