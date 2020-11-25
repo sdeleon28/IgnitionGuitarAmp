@@ -15,8 +15,6 @@ using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    // TODO: Set label
-    // TODO: Connect to parameter
     waveshaperTypeComboBox.addItem("Hyperbolic tangent", ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent);
     waveshaperTypeComboBox.addItem("Square", ShittyAmpAudioProcessor::WaveshaperType::square);
     waveshaperTypeComboBox.addItem("Sinewave", ShittyAmpAudioProcessor::WaveshaperType::sinewave);
@@ -25,7 +23,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     
     gainLabel.setText(GAIN_NAME, dontSendNotification);
     gainLabel.attachToComponent(&gainSlider, false);
-    gainAttachment = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, gainSlider);
+    gainValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, gainSlider);
     gainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     gainSlider.setRange(0.0f, 20.0f, 0.01f);
@@ -35,34 +33,41 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     addAndMakeVisible(gainLabel);
     addAndMakeVisible(gainSlider);
 
-    // TODO: Set label
-    // TODO: Connect to parameter
+    outLevelLabel.setText(OUTPUT_NAME, dontSendNotification);
+    outLevelLabel.attachToComponent(&outLevelSlider, false);
+    outLevelValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, OUTPUT_ID, outLevelSlider);
     outLevelSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     outLevelSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     outLevelSlider.setRange(0.0f, 1.0f, 0.01f);
     outLevelSlider.setValue(0.5f);
     outLevelSlider.setPopupDisplayEnabled(true, true, this);
     outLevelSlider.addListener(this);
+    addAndMakeVisible(outLevelLabel);
     addAndMakeVisible(outLevelSlider);
 
-    // TODO: Set label
-    // TODO: Connect to parameter
+    lowShelfGainLabel.setText(LOW_SHELF_GAIN_NAME, dontSendNotification);
+    lowShelfGainLabel.attachToComponent(&lowShelfGainSlider, false);
+    lowShelfGainValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, LOW_SHELF_GAIN_ID, lowShelfGainSlider);
     lowShelfGainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     lowShelfGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     lowShelfGainSlider.setRange(-10.f, 10.f, 0.01f);
-    lowShelfGainSlider.setValue(0.5f);
+    lowShelfGainSlider.setValue(0.f);
     lowShelfGainSlider.setPopupDisplayEnabled(true, true, this);
     lowShelfGainSlider.addListener(this);
+    addAndMakeVisible(lowShelfGainLabel);
     addAndMakeVisible(lowShelfGainSlider);
 
-    // TODO: Set label
-    // TODO: Connect to parameter
+    lowShelfFreqLabel.setText(LOW_SHELF_FREQ_NAME, dontSendNotification);
+    lowShelfFreqLabel.attachToComponent(&lowShelfFreqSlider, false);
+    lowShelfFreqValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, LOW_SHELF_FREQ_ID, lowShelfFreqSlider);
     lowShelfFreqSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     lowShelfFreqSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    lowShelfFreqSlider.setRange(20, 600, 0.01f);
-    lowShelfFreqSlider.setValue(0.5f);
+    lowShelfFreqSlider.setRange(20.f, 1000.f, 0.01f);
+    lowShelfFreqSlider.setValue(490.f);
     lowShelfFreqSlider.setPopupDisplayEnabled(true, true, this);
     lowShelfFreqSlider.addListener(this);
+    lowShelfFreqSlider.setSkewFactorFromMidPoint(490.f);
+    addAndMakeVisible(lowShelfFreqLabel);
     addAndMakeVisible(lowShelfFreqSlider);
 
     // Make sure that before the constructor has finished, you've set the
@@ -89,10 +94,10 @@ void ShittyAmpAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
     waveshaperTypeComboBox.setBounds(0, 0, 200, 50);
-    gainSlider.setBounds(0, 1 * row, 100, 100);
-    outLevelSlider.setBounds(1 * column, 1 * row, 100, 100);
-    lowShelfGainSlider.setBounds(0, 2 * row, 100, 100);
-    lowShelfFreqSlider.setBounds(1 * column, 2 * row, 100, 100);
+    gainSlider.setBounds(0, 1 * row, column * 0.8, row * 0.8);
+    outLevelSlider.setBounds(1 * column, 1 * row, column * 0.8, row * 0.8);
+    lowShelfGainSlider.setBounds(0, 2 * row, column * 0.8, row * 0.8);
+    lowShelfFreqSlider.setBounds(1 * column, 2 * row, column * 0.8, row * 0.8);
 }
 
 void ShittyAmpAudioProcessorEditor::comboBoxChanged(ComboBox *comboBox)
@@ -121,5 +126,8 @@ void ShittyAmpAudioProcessorEditor::sliderValueChanged(Slider *slider)
         audioProcessor.gain = gainSlider.getValue();
     if (slider == &outLevelSlider)
         audioProcessor.outLevel = outLevelSlider.getValue();
-    // TODO: add filters
+    if (slider == &lowShelfGainSlider)
+        audioProcessor.lowShelfGain = lowShelfGainSlider.getValue();
+    if (slider == &lowShelfFreqSlider)
+        audioProcessor.lowShelfFreq = lowShelfFreqSlider.getValue();
 }

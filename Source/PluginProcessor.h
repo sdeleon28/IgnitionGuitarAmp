@@ -11,6 +11,12 @@
 #include <JuceHeader.h>
 #define GAIN_ID "gain"
 #define GAIN_NAME "Gain"
+#define OUTPUT_ID "output"
+#define OUTPUT_NAME "Output"
+#define LOW_SHELF_GAIN_ID "low_shelf_gain"
+#define LOW_SHELF_GAIN_NAME "LS Gain"
+#define LOW_SHELF_FREQ_ID "low_shelf_freq"
+#define LOW_SHELF_FREQ_NAME "LS Freq"
 
 //==============================================================================
 /**
@@ -59,6 +65,8 @@ public:
     WaveshaperType waveshaperType;
     float gain { 0.5 };
     float outLevel { 0.5 };
+    float lowShelfGain { 0.f };
+    float lowShelfFreq { 300.f };
     
     AudioProcessorValueTreeState treeState;
 private:
