@@ -9,16 +9,22 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
+
 //==============================================================================
 ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+    // TODO: Set label
+    // TODO: Connect to parameter
     mWaveshaperTypeComboBox.addItem("Hyperbolic tangent", ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent);
     mWaveshaperTypeComboBox.addItem("Square", ShittyAmpAudioProcessor::WaveshaperType::square);
     mWaveshaperTypeComboBox.addItem("Sinewave", ShittyAmpAudioProcessor::WaveshaperType::sinewave);
     mWaveshaperTypeComboBox.addListener(this);
     addAndMakeVisible(mWaveshaperTypeComboBox);
     
+    // TODO: Set label
+    mGainAttachment = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, mGainSlider);
     mGainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     mGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     mGainSlider.setRange(0.0f, 20.0f, 0.01f);
@@ -27,6 +33,8 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     mGainSlider.addListener(this);
     addAndMakeVisible(mGainSlider);
 
+    // TODO: Set label
+    // TODO: Connect to parameter
     mOutLevelSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     mOutLevelSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     mOutLevelSlider.setRange(0.0f, 1.0f, 0.01f);
@@ -35,6 +43,8 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     mOutLevelSlider.addListener(this);
     addAndMakeVisible(mOutLevelSlider);
 
+    // TODO: Set label
+    // TODO: Connect to parameter
     mLowShelfGainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     mLowShelfGainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     mLowShelfGainSlider.setRange(-10.f, 10.f, 0.01f);
@@ -43,6 +53,8 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     mLowShelfGainSlider.addListener(this);
     addAndMakeVisible(mLowShelfGainSlider);
 
+    // TODO: Set label
+    // TODO: Connect to parameter
     mLowShelfFreqSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     mLowShelfFreqSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     mLowShelfFreqSlider.setRange(20, 600, 0.01f);

@@ -9,6 +9,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#define GAIN_ID "gain"
+#define GAIN_NAME "Gain"
 
 //==============================================================================
 /**
@@ -57,6 +59,8 @@ public:
     WaveshaperType mWaveshaperType;
     float mGain { 0.5 };
     float mOutLevel { 0.5 };
+    
+    AudioProcessorValueTreeState treeState;
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ShittyAmpAudioProcessor)

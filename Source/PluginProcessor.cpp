@@ -19,7 +19,10 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
+       treeState(*this, nullptr, "PARAMETERS", {
+           std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 1.f, 20.f, 1.f),
+       })
 #endif
 {
 }
@@ -95,6 +98,15 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    lastSampleRate = sampleRate;
+
+    dsp::ProcessSpec spec;
+    spec.sampleRate = lastSampleRate;
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.numChannels = getMainBusNumOutputChannels();
+
+    stateVariableFilter.reset();
+    stateVariableFilter.prepare(spec);
 }
 
 void ShittyAmpAudioProcessor::releaseResources()

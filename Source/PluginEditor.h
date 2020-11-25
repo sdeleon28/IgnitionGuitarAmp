@@ -11,6 +11,8 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
+using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
+
 //==============================================================================
 /**
 */
@@ -28,11 +30,25 @@ public:
     void sliderValueChanged (Slider* slider) override;
     void comboBoxChanged (ComboBox* comboBox) override;
 private:
+    Label mGainLabel;
     Slider mGainSlider;
+    std::unique_ptr<SliderAttachment> mGainAttachment;
+
+    Label mOutLevelLabel;
     Slider mOutLevelSlider;
+    std::unique_ptr<SliderAttachment> mOutLevelAttacment;
+
+    Label mLowShelfGainLabel;
     Slider mLowShelfGainSlider;
+    std::unique_ptr<SliderAttachment> mLowShelfGainAttacment;
+
+    Label mLowShelfFreqLabel;
     Slider mLowShelfFreqSlider;
+    std::unique_ptr<SliderAttachment> mLowShelfFreqAttacment;
+
+    Label mWaveshaperTypeLabel;
     ComboBox mWaveshaperTypeComboBox;
+    std::unique_ptr<SliderAttachment> mWaveshaperTypeAttacment;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
