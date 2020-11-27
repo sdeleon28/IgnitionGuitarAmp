@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "WaveshaperProcessor.h"
 #define GAIN_ID "gain"
 #define GAIN_NAME "Gain"
 #define OUTPUT_ID "output"
@@ -61,15 +62,19 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    enum WaveshaperType { hyperbolicTangent = 1, square, sinewave };
-    WaveshaperType waveshaperType;
-    float gain { 0.5 };
-    float outLevel { 0.5 };
+    void updateWaveshaperParams();
+    
+    WaveshaperProcessor::WaveshaperType waveshaperType;
+    float gain { 0.5f };
+    float outLevel { 0.5f };
     float lowShelfGain { 0.f };
     float lowShelfFreq { 300.f };
     
     AudioProcessorValueTreeState treeState;
 private:
+    WaveshaperProcessor waveshaperProcessor;
+    float lastSampleRate;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ShittyAmpAudioProcessor)
 };

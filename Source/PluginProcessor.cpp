@@ -1,11 +1,3 @@
-/*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin processor.
-
-  ==============================================================================
-*/
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
@@ -99,23 +91,31 @@ void ShittyAmpAudioProcessor::changeProgramName (int index, const juce::String& 
 //==============================================================================
 void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
-    //lastSampleRate = sampleRate;
+    lastSampleRate = sampleRate;
 
-    //dsp::ProcessSpec spec;
-    //spec.sampleRate = lastSampleRate;
-    //spec.maximumBlockSize = samplesPerBlock;
-    //spec.numChannels = getMainBusNumOutputChannels();
+    dsp::ProcessSpec spec;
+    spec.sampleRate = lastSampleRate;
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.numChannels = getMainBusNumOutputChannels();
 
-    //stateVariableFilter.reset();
-    //stateVariableFilter.prepare(spec);
+    waveshaperProcessor.reset();
+    updateWaveshaperParams();
+    waveshaperProcessor.prepare(spec);
 }
 
 void ShittyAmpAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
+}
+
+void ShittyAmpAudioProcessor::updateWaveshaperParams()
+{
+    gain = *treeState.getRawParameterValue(GAIN_ID);
+    outLevel = *treeState.getRawParameterValue(OUTPUT_ID);
+    //waveshaperType = *treeState.getRawParameterValue(WAVESHAPER_ID);
+    waveshaperProcessor.setGain(gain);
+    waveshaperProcessor.setOutLevel(outLevel);
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -157,34 +157,9 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
-
-        for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
-        {
-            float processedSample = channelData[sample]; // Default to same sample
-            if (waveshaperType == WaveshaperType::hyperbolicTangent)
-            {
-                processedSample = std::tanh(channelData[sample] * gain);
-            }
-            else if (waveshaperType == WaveshaperType::square)
-            {
-                processedSample = (channelData[sample] >= 0 ? 1.f : -1.f);
-            }
-            else if (waveshaperType == WaveshaperType::sinewave)
-            {
-                processedSample = std::sin(channelData[sample] * gain);
-            }
-            channelData[sample] = jlimit(-1.f, 1.f, processedSample) * outLevel;
-        }
-    }
+    dsp::AudioBlock<float> block(buffer);
+    updateWaveshaperParams();
+    waveshaperProcessor.process(dsp::ProcessContextReplacing<float>(block));
 }
 
 //==============================================================================

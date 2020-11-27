@@ -15,9 +15,9 @@ using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    waveshaperTypeComboBox.addItem("Hyperbolic tangent", ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent);
-    waveshaperTypeComboBox.addItem("Square", ShittyAmpAudioProcessor::WaveshaperType::square);
-    waveshaperTypeComboBox.addItem("Sinewave", ShittyAmpAudioProcessor::WaveshaperType::sinewave);
+    waveshaperTypeComboBox.addItem("Hyperbolic tangent", WaveshaperProcessor::WaveshaperType::hyperbolicTangent);
+    waveshaperTypeComboBox.addItem("Square", WaveshaperProcessor::WaveshaperType::square);
+    waveshaperTypeComboBox.addItem("Sinewave", WaveshaperProcessor::WaveshaperType::sinewave);
     waveshaperTypeComboBox.addListener(this);
     addAndMakeVisible(waveshaperTypeComboBox);
     
@@ -105,17 +105,17 @@ void ShittyAmpAudioProcessorEditor::comboBoxChanged(ComboBox *comboBox)
     if (comboBox == &waveshaperTypeComboBox)
     {
         const int selectedId = waveshaperTypeComboBox.getSelectedId();
-        if (selectedId == ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent)
+        if (selectedId == WaveshaperProcessor::WaveshaperType::hyperbolicTangent)
         {
-            audioProcessor.waveshaperType = ShittyAmpAudioProcessor::WaveshaperType::hyperbolicTangent;
+            audioProcessor.waveshaperType = WaveshaperProcessor::WaveshaperType::hyperbolicTangent;
         }
-        else if (selectedId == ShittyAmpAudioProcessor::WaveshaperType::square)
+        else if (selectedId == WaveshaperProcessor::WaveshaperType::square)
         {
-            audioProcessor.waveshaperType = ShittyAmpAudioProcessor::WaveshaperType::square;
+            audioProcessor.waveshaperType = WaveshaperProcessor::WaveshaperType::square;
         }
-        else if (selectedId == ShittyAmpAudioProcessor::WaveshaperType::sinewave)
+        else if (selectedId == WaveshaperProcessor::WaveshaperType::sinewave)
         {
-            audioProcessor.waveshaperType = ShittyAmpAudioProcessor::WaveshaperType::sinewave;
+            audioProcessor.waveshaperType = WaveshaperProcessor::WaveshaperType::sinewave;
         }
     }
 }
