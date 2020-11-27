@@ -18,6 +18,8 @@
 #define LOW_SHELF_GAIN_NAME "LS Gain"
 #define LOW_SHELF_FREQ_ID "low_shelf_freq"
 #define LOW_SHELF_FREQ_NAME "LS Freq"
+#define WAVESHAPER_TYPE_ID "waveshaper_type"
+#define WAVESHAPER_TYPE_NAME "WS Type"
 
 //==============================================================================
 /**
@@ -64,7 +66,7 @@ public:
 
     void updateWaveshaperParams();
     
-    WaveshaperProcessor::WaveshaperType waveshaperType;
+    WaveshaperType waveshaperType;
     float gain { 0.5f };
     float outLevel { 0.5f };
     float lowShelfGain { 0.f };

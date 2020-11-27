@@ -13,6 +13,7 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
                      #endif
                        ),
        treeState(*this, nullptr, "PARAMETERS", {
+           std::make_unique<AudioParameterFloat> (WAVESHAPER_TYPE_ID, WAVESHAPER_TYPE_NAME, 1.f, 3.f, 1.f),
            std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 1.f, 20.f, 1.f),
            std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 1.f, 0.5f),
            std::make_unique<AudioParameterFloat> (LOW_SHELF_GAIN_ID, LOW_SHELF_GAIN_NAME, -10.f, 10.f, 0.f),
@@ -113,9 +114,23 @@ void ShittyAmpAudioProcessor::updateWaveshaperParams()
 {
     gain = *treeState.getRawParameterValue(GAIN_ID);
     outLevel = *treeState.getRawParameterValue(OUTPUT_ID);
-    //waveshaperType = *treeState.getRawParameterValue(WAVESHAPER_ID);
+    float floatWt = *treeState.getRawParameterValue(WAVESHAPER_TYPE_ID);
+    switch ((int)floatWt) {
+        case 1:
+            waveshaperType = WaveshaperType::hyperbolicTangent;
+            break;
+        case 2:
+            waveshaperType = WaveshaperType::square;
+            break;
+        case 3:
+            waveshaperType = WaveshaperType::sinewave;
+            break;
+        default:
+            break;
+    }
     waveshaperProcessor.setGain(gain);
     waveshaperProcessor.setOutLevel(outLevel);
+    waveshaperProcessor.setWaveshaperType(waveshaperType);
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations

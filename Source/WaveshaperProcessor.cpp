@@ -26,14 +26,15 @@ void WaveshaperProcessor::setOutLevel(float newOutLevel) noexcept
 }
 
 
-//void setWaveshaperType(WaveshaperType newWaveshaperType) noexcept
-//{
-//    waveshaperType = newWaveshaperType;
-//}
-//WaveshaperType getWaveshaperType() const noexcept
-//{
-//    return waveshaperType;
-//}
+void WaveshaperProcessor::setWaveshaperType(WaveshaperType newWaveshaperType) noexcept
+{
+    waveshaperType = newWaveshaperType;
+}
+
+WaveshaperType WaveshaperProcessor::getWaveshaperType() const noexcept
+{
+    return waveshaperType;
+}
 
 void WaveshaperProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
 {

@@ -12,6 +12,7 @@
 #include "PluginProcessor.h"
 
 using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
+using ComboBoxAttachment = AudioProcessorValueTreeState::ComboBoxAttachment;
 
 //==============================================================================
 /**
@@ -48,6 +49,7 @@ private:
 
     Label waveshaperTypeLabel;
     ComboBox waveshaperTypeComboBox;
+    std::unique_ptr<ComboBoxAttachment> waveshaperTypeValue;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
