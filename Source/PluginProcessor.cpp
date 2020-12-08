@@ -13,8 +13,8 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
                      #endif
                        ),
        treeState(*this, nullptr, "PARAMETERS", {
-           std::make_unique<AudioParameterFloat> (WAVESHAPER_TYPE_ID, WAVESHAPER_TYPE_NAME, 1.f, 3.f, 1.f),
-           std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 1.f, 20.f, 1.f),
+           std::make_unique<AudioParameterFloat> (WAVESHAPER_TYPE_ID, WAVESHAPER_TYPE_NAME, 1.f, 4.f, 1.f),
+           std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 1.f, 100.f, 1.f),
            std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 1.f, 0.5f),
            std::make_unique<AudioParameterFloat> (LOW_SHELF_GAIN_ID, LOW_SHELF_GAIN_NAME, -10.f, 10.f, 0.f),
            std::make_unique<AudioParameterFloat> (LOW_SHELF_FREQ_ID, LOW_SHELF_FREQ_NAME, 20.f, 1000.f, 490.f),
@@ -115,19 +115,26 @@ void ShittyAmpAudioProcessor::updateWaveshaperParams()
     gain = *treeState.getRawParameterValue(GAIN_ID);
     outLevel = *treeState.getRawParameterValue(OUTPUT_ID);
     float floatWt = *treeState.getRawParameterValue(WAVESHAPER_TYPE_ID);
+    // FIXME: Get rid of this whole waveshaper combo box thing
+    /*
     switch ((int)floatWt) {
         case 1:
-            waveshaperType = WaveshaperType::hyperbolicTangent;
+            waveshaperType = WaveshaperType::asymptoticLimit;
             break;
         case 2:
-            waveshaperType = WaveshaperType::square;
+            waveshaperType = WaveshaperType::hyperbolicTangent;
             break;
         case 3:
+            waveshaperType = WaveshaperType::square;
+            break;
+        case 4:
             waveshaperType = WaveshaperType::sinewave;
             break;
         default:
             break;
     }
+    */
+    waveshaperType = WaveshaperType::asymptoticLimit;
     waveshaperProcessor.setGain(gain);
     waveshaperProcessor.setOutLevel(outLevel);
     waveshaperProcessor.setWaveshaperType(waveshaperType);

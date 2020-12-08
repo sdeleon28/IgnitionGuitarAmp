@@ -72,7 +72,12 @@ void WaveshaperProcessor::process (const dsp::ProcessContextReplacing<float>& co
         for (int sample = 0; sample < len; ++sample)
         {
             float processedSample = src[sample]; // Default to same sample
-            if (waveshaperType == WaveshaperType::hyperbolicTangent)
+            if (waveshaperType == WaveshaperType::asymptoticLimit)
+            {
+                auto gainedSample = src[sample] * gain;
+                processedSample = gainedSample / (std::abs(gainedSample) + 1);
+            }
+            else if (waveshaperType == WaveshaperType::hyperbolicTangent)
             {
                 processedSample = std::tanh(src[sample] * gain);
             }

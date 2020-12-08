@@ -1,6 +1,6 @@
 #include <JuceHeader.h>
 
-enum WaveshaperType { hyperbolicTangent = 1, square, sinewave };
+enum WaveshaperType { asymptoticLimit = 1, hyperbolicTangent, square, sinewave };
 
 class WaveshaperProcessor
 {
@@ -21,7 +21,7 @@ public:
     void reset() noexcept;
     void process (const dsp::ProcessContextReplacing<float>& context) noexcept;
 private:
-    WaveshaperType waveshaperType { WaveshaperType::hyperbolicTangent };
+    WaveshaperType waveshaperType { WaveshaperType::asymptoticLimit };
     float gain { 0.5f };
     float outLevel { 1.f };
 };

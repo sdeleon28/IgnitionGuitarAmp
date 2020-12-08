@@ -15,6 +15,7 @@ using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+    waveshaperTypeComboBox.addItem("Asymptotic limit", WaveshaperType::asymptoticLimit);
     waveshaperTypeComboBox.addItem("Hyperbolic tangent", WaveshaperType::hyperbolicTangent);
     waveshaperTypeComboBox.addItem("Square", WaveshaperType::square);
     waveshaperTypeComboBox.addItem("Sinewave", WaveshaperType::sinewave);
@@ -27,7 +28,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     gainValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, gainSlider);
     gainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    gainSlider.setRange(0.0f, 20.0f, 0.01f);
+    gainSlider.setRange(0.0f, 100.0f, 0.01f);
     gainSlider.setValue(1.f);
     gainSlider.setPopupDisplayEnabled(true, true, this);
     gainSlider.addListener(this);
@@ -106,7 +107,11 @@ void ShittyAmpAudioProcessorEditor::comboBoxChanged(ComboBox *comboBox)
     if (comboBox == &waveshaperTypeComboBox)
     {
         const int selectedId = waveshaperTypeComboBox.getSelectedId();
-        if (selectedId == WaveshaperType::hyperbolicTangent)
+        if (selectedId == WaveshaperType::asymptoticLimit)
+        {
+            audioProcessor.waveshaperType = WaveshaperType::asymptoticLimit;
+        }
+        else if (selectedId == WaveshaperType::hyperbolicTangent)
         {
             audioProcessor.waveshaperType = WaveshaperType::hyperbolicTangent;
         }
