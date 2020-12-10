@@ -76,6 +76,7 @@ public:
     AudioProcessorValueTreeState treeState;
 private:
     EqProcessor preEqProcessor;
+    EqProcessor postEqProcessor;
     WaveshaperProcessor waveshaperProcessor;
     float lastSampleRate;
 

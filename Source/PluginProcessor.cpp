@@ -113,7 +113,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         EqProcessor::FilterType::NoFilter,
         0.0f, // frequency
         0.0f, // q
-        Decibels::decibelsToGain(0.0f), // gain
+        0.0f, // gain
         false // active
     );
     EqProcessor::Band preEqLowMids(
@@ -138,7 +138,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         EqProcessor::FilterType::NoFilter,
         0.0f, // frequency
         0.0f, // q
-        Decibels::decibelsToGain(0.0f), // gain
+        0.0f, // gain
         false // active
     );
     EqProcessor::Band preEqHighest(
@@ -162,6 +162,67 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     waveshaperProcessor.reset();
     updateWaveshaperParams();
     waveshaperProcessor.prepare(spec);
+
+    // BEGIN post-EQ
+    EqProcessor::Band postEqLowest(
+        "Lowest",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::HighPass,
+        144.0f, // frequency
+        1.1f // q
+    );
+    EqProcessor::Band postEqLow(
+        "Low",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::NoFilter,
+        0.0f, // frequency
+        0.0f, // q
+        0.0f, // gain
+        false // active
+    );
+    EqProcessor::Band postEqLowMids(
+        "Low Mids",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::Peak,
+        304.0f, // frequency
+        1.1f, // q
+        Decibels::decibelsToGain(2.0f) // gain
+    );
+    EqProcessor::Band postEqHighMids(
+        "High Mids",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::Peak,
+        896.0f, // frequency
+        1.1f, // q
+        Decibels::decibelsToGain(3.6f) // gain
+    );
+    EqProcessor::Band postEqHigh(
+        "High",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::Peak,
+        2680.0f, // frequency
+        1.1f, // q
+        Decibels::decibelsToGain(-0.8f) // gain
+    );
+    EqProcessor::Band postEqHighest(
+        "Highest",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::NoFilter,
+        0.0f, // frequency
+        0.0f, // q
+        0.0f, // gain
+        false // active
+    );
+
+    postEqProcessor.setBand(0, postEqLowest);
+    postEqProcessor.setBand(1, postEqLow);
+    postEqProcessor.setBand(2, postEqLowMids);
+    postEqProcessor.setBand(3, postEqHighMids);
+    postEqProcessor.setBand(4, postEqHigh);
+    postEqProcessor.setBand(5, postEqHighest);
+
+    postEqProcessor.prepare(spec);
+    // END post-EQ
 }
 
 void ShittyAmpAudioProcessor::releaseResources()
@@ -246,6 +307,7 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     dsp::ProcessContextReplacing<float> context = dsp::ProcessContextReplacing<float>(block);
     preEqProcessor.process(context);
     waveshaperProcessor.process(context);
+    postEqProcessor.process(context);
 }
 
 //==============================================================================
