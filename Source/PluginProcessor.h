@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "EqProcessor.h"
 #include "WaveshaperProcessor.h"
 #define GAIN_ID "gain"
 #define GAIN_NAME "Gain"
@@ -74,6 +75,7 @@ public:
     
     AudioProcessorValueTreeState treeState;
 private:
+    EqProcessor preEqProcessor;
     WaveshaperProcessor waveshaperProcessor;
     float lastSampleRate;
 

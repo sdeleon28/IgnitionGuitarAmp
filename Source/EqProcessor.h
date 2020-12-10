@@ -14,9 +14,7 @@
 //==============================================================================
 /**
 */
-class EqProcessor  : public AudioProcessor,
-                                   public AudioProcessorValueTreeState::Listener,
-                                   public ChangeBroadcaster
+class EqProcessor
 {
 public:
     enum FilterType
@@ -44,29 +42,16 @@ public:
     static String paramActive;
 
     static String getBandID (size_t index);
-    static String getTypeParamName (size_t index);
-    static String getFrequencyParamName (size_t index);
-    static String getQualityParamName (size_t index);
-    static String getGainParamName (size_t index);
-    static String getActiveParamName (size_t index);
 
     //==============================================================================
     EqProcessor();
     ~EqProcessor();
 
     //==============================================================================
-    void prepareToPlay (double newSampleRate, int newSamplesPerBlock) override;
-    void releaseResources() override;
+    void prepare (const dsp::ProcessSpec& spec) noexcept;
+    void releaseResources();
 
-   #ifndef JucePlugin_PreferredChannelConfigurations
-    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-   #endif
-
-    void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
-
-    void parameterChanged (const String& parameter, float newValue) override;
-
-    AudioProcessorValueTreeState& getPluginState();
+    void process (const dsp::ProcessContextReplacing<float>& context) noexcept;
 
     size_t getNumBands () const;
 
@@ -78,38 +63,22 @@ public:
 
     static StringArray getFilterTypeNames();
 
-    //==============================================================================
-    AudioProcessorEditor* createEditor() override;
-    bool hasEditor() const override;
-
     const std::vector<double>& getMagnitudes ();
 
-    void createFrequencyPlot (Path& p, const std::vector<double>& mags, const Rectangle<int> bounds, float pixelsPerDouble);
+    //==============================================================================
+    const String getName() const;
 
-    void createAnalyserPlot (Path& p, const Rectangle<int> bounds, float minFreq, bool input);
-
-    bool checkForNewAnalyserData();
+    bool acceptsMidi() const;
+    bool producesMidi() const;
+    bool isMidiEffect() const;
+    double getTailLengthSeconds() const;
 
     //==============================================================================
-    const String getName() const override;
-
-    bool acceptsMidi() const override;
-    bool producesMidi() const override;
-    bool isMidiEffect() const override;
-    double getTailLengthSeconds() const override;
-
-    //==============================================================================
-    int getNumPrograms() override;
-    int getCurrentProgram() override;
-    void setCurrentProgram (int index) override;
-    const String getProgramName (int index) override;
-    void changeProgramName (int index, const String& newName) override;
-
-    //==============================================================================
-    void getStateInformation (MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
-    Point<int> getSavedSize() const;
-    void setSavedSize (const Point<int>& size);
+    int getNumPrograms();
+    int getCurrentProgram();
+    void setCurrentProgram (int index);
+    const String getProgramName (int index);
+    void changeProgramName (int index, const String& newName);
 
     //==============================================================================
     struct Band {
@@ -134,9 +103,12 @@ public:
         std::vector<double> magnitudes;
     };
 
-    Band* getBand (size_t index);
-    int getBandIndexFromID (String paramID);
+    // BEGIN adapter code
+    void setGain(float newValueInDb);
+    void setBand(int index, const Band& newBand);
+    // END adapter code
 
+    Band* getBand (size_t index);
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (EqProcessor)
@@ -144,11 +116,6 @@ private:
     void updateBand (const size_t index);
 
     void updateBypassedStates ();
-
-    void updatePlots ();
-
-    UndoManager                  undo;
-    AudioProcessorValueTreeState state;
 
     std::vector<Band>    bands;
 
@@ -164,9 +131,4 @@ private:
     double sampleRate = 0;
 
     int soloed = -1;
-
-    Analyser<float> inputAnalyser;
-    Analyser<float> outputAnalyser;
-
-    Point<int> editorSize = { 900, 500 };
 };

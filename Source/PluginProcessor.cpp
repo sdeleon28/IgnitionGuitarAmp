@@ -99,6 +99,66 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     spec.maximumBlockSize = samplesPerBlock;
     spec.numChannels = getMainBusNumOutputChannels();
 
+    // BEGIN pre-EQ
+    EqProcessor::Band preEqLowest(
+        "Lowest",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::HighPass,
+        64.0f, // frequency
+        0.1f // q
+    );
+    EqProcessor::Band preEqLow(
+        "Low",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::NoFilter,
+        0.0f, // frequency
+        0.0f, // q
+        Decibels::decibelsToGain(0.0f), // gain
+        false // active
+    );
+    EqProcessor::Band preEqLowMids(
+        "Low Mids",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::Peak,
+        671.0f, // frequency
+        2.1f, // q
+        Decibels::decibelsToGain(8.5f) // gain
+    );
+    EqProcessor::Band preEqHighMids(
+        "High Mids",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::Peak,
+        1320.0f, // frequency
+        1.1f, // q
+        Decibels::decibelsToGain(8.9f) // gain
+    );
+    EqProcessor::Band preEqHigh(
+        "High",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::NoFilter,
+        0.0f, // frequency
+        0.0f, // q
+        Decibels::decibelsToGain(0.0f), // gain
+        false // active
+    );
+    EqProcessor::Band preEqHighest(
+        "Highest",
+        Colours::blue, // TODO: Get rid of this
+        EqProcessor::FilterType::LowPass,
+        17380.0f, // frequency
+        0.1f // q
+    );
+
+    preEqProcessor.setBand(0, preEqLowest);
+    preEqProcessor.setBand(1, preEqLow);
+    preEqProcessor.setBand(2, preEqLowMids);
+    preEqProcessor.setBand(3, preEqHighMids);
+    preEqProcessor.setBand(4, preEqHigh);
+    preEqProcessor.setBand(5, preEqHighest);
+
+    preEqProcessor.prepare(spec);
+    // END pre-EQ
+
     waveshaperProcessor.reset();
     updateWaveshaperParams();
     waveshaperProcessor.prepare(spec);
@@ -181,7 +241,11 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
     dsp::AudioBlock<float> block(buffer);
     updateWaveshaperParams();
-    waveshaperProcessor.process(dsp::ProcessContextReplacing<float>(block));
+
+    // TODO: Make this a processor chain
+    dsp::ProcessContextReplacing<float> context = dsp::ProcessContextReplacing<float>(block);
+    preEqProcessor.process(context);
+    waveshaperProcessor.process(context);
 }
 
 //==============================================================================

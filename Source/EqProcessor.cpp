@@ -6,7 +6,6 @@
   ==============================================================================
 */
 
-#include "Analyser.h"
 #include "EqProcessor.h"
 
 String EqProcessor::paramOutput   ("output");
@@ -31,15 +30,6 @@ String EqProcessor::getBandID (size_t index)
     return "unknown";
 }
 
-int EqProcessor::getBandIndexFromID (String paramID)
-{
-    for (size_t i=0; i < 6; ++i)
-        if (paramID.startsWith (getBandID (i) + "-"))
-            return int (i);
-
-    return -1;
-}
-
 std::vector<EqProcessor::Band> createDefaultBands()
 {
     std::vector<EqProcessor::Band> defaults;
@@ -52,96 +42,8 @@ std::vector<EqProcessor::Band> createDefaultBands()
     return defaults;
 }
 
-AudioProcessorValueTreeState::ParameterLayout createParameterLayout()
-{
-    std::vector<std::unique_ptr<AudioProcessorParameterGroup>> params;
-
-    // setting defaults
-    const float maxGain = Decibels::decibelsToGain (24.0f);
-    auto defaults = createDefaultBands();
-
-    {
-        auto param = std::make_unique<AudioParameterFloat> (EqProcessor::paramOutput, TRANS ("Output"),
-                                                            NormalisableRange<float> (0.0f, 2.0f, 0.01f), 1.0f,
-                                                            TRANS ("Output level"),
-                                                            AudioProcessorParameter::genericParameter,
-                                                            [](float value, int) {return String (Decibels::gainToDecibels(value), 1) + " dB";},
-                                                            [](String text) {return Decibels::decibelsToGain (text.dropLastCharacters (3).getFloatValue());});
-
-        auto group = std::make_unique<AudioProcessorParameterGroup> ("global", TRANS ("Globals"), "|", std::move (param));
-        params.push_back (std::move (group));
-    }
-
-    for (size_t i = 0; i < defaults.size(); ++i)
-    {
-        auto prefix = "Q" + String (i + 1) + ": ";
-
-        auto typeParameter = std::make_unique<AudioParameterChoice> (EqProcessor::getTypeParamName (i),
-                                                                     prefix + TRANS ("Filter Type"),
-                                                                     EqProcessor::getFilterTypeNames(),
-                                                                     defaults [i].type);
-
-        auto freqParameter = std::make_unique<AudioParameterFloat> (EqProcessor::getFrequencyParamName (i),
-                                                                    prefix + TRANS ("Frequency"),
-                                                                    NormalisableRange<float> {20.0f, 20000.0f, 1.0f, std::log (0.5f) / std::log (980.0f / 19980.0f)},
-                                                                    defaults [i].frequency,
-                                                                    String(),
-                                                                    AudioProcessorParameter::genericParameter,
-                                                                    [](float value, int) { return (value < 1000) ?
-                                                                        String (value, 0) + " Hz" :
-                                                                        String (value / 1000.0, 2) + " kHz"; },
-                                                                    [](String text) { return text.endsWith(" kHz") ?
-                                                                        text.dropLastCharacters (4).getFloatValue() * 1000.0 :
-                                                                        text.dropLastCharacters (3).getFloatValue(); });
-
-        auto qltyParameter = std::make_unique<AudioParameterFloat> (EqProcessor::getQualityParamName (i),
-                                                                    prefix + TRANS ("Quality"),
-                                                                    NormalisableRange<float> {0.1f, 10.0f, 1.0f, std::log (0.5f) / std::log (0.9f / 9.9f)},
-                                                                    defaults [i].quality,
-                                                                    String(),
-                                                                    AudioProcessorParameter::genericParameter,
-                                                                    [](float value, int) { return String (value, 1); },
-                                                                    [](const String& text) { return text.getFloatValue(); });
-
-        auto gainParameter = std::make_unique<AudioParameterFloat> (EqProcessor::getGainParamName (i),
-                                                                    prefix + TRANS ("Gain"),
-                                                                    NormalisableRange<float> {1.0f / maxGain, maxGain, 0.001f,
-                                                                        std::log (0.5f) / std::log ((1.0f - (1.0f / maxGain)) / (maxGain - (1.0f / maxGain)))},
-                                                                    defaults [i].gain,
-                                                                    String(),
-                                                                    AudioProcessorParameter::genericParameter,
-                                                                    [](float value, int) {return String (Decibels::gainToDecibels(value), 1) + " dB";},
-                                                                    [](String text) {return Decibels::decibelsToGain (text.dropLastCharacters (3).getFloatValue());});
-
-        auto actvParameter = std::make_unique<AudioParameterBool> (EqProcessor::getActiveParamName (i),
-                                                                   prefix + TRANS ("Active"),
-                                                                   defaults [i].active,
-                                                                   String(),
-                                                                   [](float value, int) {return value > 0.5f ? TRANS ("active") : TRANS ("bypassed");},
-                                                                   [](String text) {return text == TRANS ("active");});
-
-        auto group = std::make_unique<AudioProcessorParameterGroup> ("band" + String (i), defaults [i].name, "|",
-                                                                     std::move (typeParameter),
-                                                                     std::move (freqParameter),
-                                                                     std::move (qltyParameter),
-                                                                     std::move (gainParameter),
-                                                                     std::move (actvParameter));
-
-        params.push_back (std::move (group));
-    }
-
-    return { params.begin(), params.end() };
-}
-
 //==============================================================================
-EqProcessor::EqProcessor() :
-#ifndef JucePlugin_PreferredChannelConfigurations
-    AudioProcessor (BusesProperties()
-                    .withInput  ("Input",  AudioChannelSet::stereo(), true)
-                    .withOutput ("Output", AudioChannelSet::stereo(), true)
-                    ),
-#endif
-state (*this, &undo, "PARAMS", createParameterLayout())
+EqProcessor::EqProcessor()
 {
     frequencies.resize (300);
     for (size_t i=0; i < frequencies.size(); ++i) {
@@ -155,23 +57,11 @@ state (*this, &undo, "PARAMS", createParameterLayout())
     for (size_t i = 0; i < bands.size(); ++i)
     {
         bands [i].magnitudes.resize (frequencies.size(), 1.0);
-
-        state.addParameterListener (getTypeParamName (i), this);
-        state.addParameterListener (getFrequencyParamName (i), this);
-        state.addParameterListener (getQualityParamName (i), this);
-        state.addParameterListener (getGainParamName (i), this);
-        state.addParameterListener (getActiveParamName (i), this);
     }
-
-    state.addParameterListener (paramOutput, this);
-
-    state.state = ValueTree (JucePlugin_Name);
 }
 
 EqProcessor::~EqProcessor()
 {
-    inputAnalyser.stopThread (1000);
-    outputAnalyser.stopThread (1000);
 }
 
 //==============================================================================
@@ -233,123 +123,51 @@ void EqProcessor::changeProgramName (int, const String&)
 }
 
 //==============================================================================
-void EqProcessor::prepareToPlay (double newSampleRate, int newSamplesPerBlock)
+void EqProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
 {
-    sampleRate = newSampleRate;
-
-    dsp::ProcessSpec spec;
-    spec.sampleRate = newSampleRate;
-    spec.maximumBlockSize = uint32 (newSamplesPerBlock);
-    spec.numChannels = uint32 (getTotalNumOutputChannels ());
+    sampleRate = spec.sampleRate;
 
     for (size_t i=0; i < bands.size(); ++i) {
         updateBand (i);
     }
-    filter.get<6>().setGainLinear (*state.getRawParameterValue (paramOutput));
+    // Don't push the level by default
+    filter.get<6>().setGainLinear (1);
 
     filter.prepare (spec);
-
-    inputAnalyser.setupAnalyser  (int (sampleRate), float (sampleRate));
-    outputAnalyser.setupAnalyser (int (sampleRate), float (sampleRate));
 }
 
 void EqProcessor::releaseResources()
 {
-    inputAnalyser.stopThread (1000);
-    outputAnalyser.stopThread (1000);
 }
 
-#ifndef JucePlugin_PreferredChannelConfigurations
-bool EqProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+void EqProcessor::process (const dsp::ProcessContextReplacing<float>& context) noexcept
 {
-    // This checks if the input layout matches the output layout
-    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
-        return false;
-
-    return true;
-}
-#endif
-
-void EqProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
-{
-    ScopedNoDenormals noDenormals;
-    ignoreUnused (midiMessages);
-
-    if (getActiveEditor() != nullptr)
-        inputAnalyser.addAudioData (buffer, 0, getTotalNumInputChannels());
-
-    if (wasBypassed) {
-        filter.reset();
-        wasBypassed = false;
-    }
-    dsp::AudioBlock<float>              ioBuffer (buffer);
-    dsp::ProcessContextReplacing<float> context  (ioBuffer);
     filter.process (context);
-
-    if (getActiveEditor() != nullptr)
-        outputAnalyser.addAudioData (buffer, 0, getTotalNumOutputChannels());
 }
 
-AudioProcessorValueTreeState& EqProcessor::getPluginState()
+// BEGIN: Adapter code to make this usable without a UI
+void EqProcessor::setGain(float newValueInDb)
 {
-    return state;
+    // TODO: How do I do this?
+    filter.get<6>().setGainDecibels(newValueInDb);
+    // Example code did this
+    // filter.get<6>().setGainLinear (newValue);
 }
 
-String EqProcessor::getTypeParamName (size_t index)
+void EqProcessor::setBand(int index, const EqProcessor::Band& newBand)
 {
-    return getBandID (index) + "-" + paramType;
-}
-
-String EqProcessor::getFrequencyParamName (size_t index)
-{
-    return getBandID (index) + "-" + paramFrequency;
-}
-
-String EqProcessor::getQualityParamName (size_t index)
-{
-    return getBandID (index) + "-" + paramQuality;
-}
-
-String EqProcessor::getGainParamName (size_t index)
-{
-    return getBandID (index) + "-" + paramGain;
-}
-
-String EqProcessor::getActiveParamName (size_t index)
-{
-    return getBandID (index) + "-" + paramActive;
-}
-
-void EqProcessor::parameterChanged (const String& parameter, float newValue)
-{
-    if (parameter == paramOutput) {
-        filter.get<6>().setGainLinear (newValue);
-        return;
-    }
-
-    int index = getBandIndexFromID (parameter);
     if (isPositiveAndBelow (index, bands.size()))
     {
         auto* band = getBand (size_t (index));
-        if (parameter.endsWith (paramType)) {
-            band->type = static_cast<FilterType> (static_cast<int> (newValue));
-        }
-        else if (parameter.endsWith (paramFrequency)) {
-            band->frequency = newValue;
-        }
-        else if (parameter.endsWith (paramQuality)) {
-            band->quality = newValue;
-        }
-        else if (parameter.endsWith (paramGain)) {
-            band->gain = newValue;
-        }
-        else if (parameter.endsWith (paramActive)) {
-            band->active = newValue >= 0.5f;
-        }
-
+        band->type = newBand.type;
+        band->frequency = newBand.frequency;
+        band->quality = newBand.quality;
+        band->gain = newBand.gain;
+        band->active = newBand.active;
         updateBand (size_t (index));
     }
 }
+// END: Adapter code
 
 size_t EqProcessor::getNumBands () const
 {
@@ -362,6 +180,7 @@ String EqProcessor::getBandName   (size_t index) const
         return bands [size_t (index)].name;
     return TRANS ("unknown");
 }
+
 Colour EqProcessor::getBandColour (size_t index) const
 {
     if (isPositiveAndBelow (index, bands.size()))
@@ -473,8 +292,11 @@ void EqProcessor::updateBand (const size_t index)
         if (newCoefficients)
         {
             {
+                // I think I don't need the next lock since I'm not changing these values in real time
+                // Commenting out for now
+
                 // minimise lock scope, get<0>() needs to be a  compile time constant
-                ScopedLock processLock (getCallbackLock());
+                // ScopedLock processLock (getCallbackLock());
                 if (index == 0)
                     *filter.get<0>().state = *newCoefficients;
                 else if (index == 1)
@@ -497,18 +319,7 @@ void EqProcessor::updateBand (const size_t index)
     }
 }
 
-//==============================================================================
-bool EqProcessor::hasEditor() const
-{
-    return true;
-}
-
 const std::vector<double>& EqProcessor::getMagnitudes ()
 {
     return magnitudes;
-}
-
-bool EqProcessor::checkForNewAnalyserData()
-{
-    return inputAnalyser.checkForNewData() || outputAnalyser.checkForNewData();
 }

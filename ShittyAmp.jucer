@@ -6,6 +6,8 @@
               displaySplashScreen="1" pluginVST3Category="Distortion">
   <MAINGROUP id="KoOqKs" name="ShittyAmp">
     <GROUP id="{3C61CE8C-3D73-3D84-A3F2-889AC9331BC7}" name="Source">
+      <FILE id="PTsMrg" name="EqProcessor.cpp" compile="1" resource="0" file="Source/EqProcessor.cpp"/>
+      <FILE id="ZNTtDh" name="EqProcessor.h" compile="0" resource="0" file="Source/EqProcessor.h"/>
       <FILE id="y1JXHJ" name="WaveshaperProcessor.cpp" compile="1" resource="0"
             file="Source/WaveshaperProcessor.cpp"/>
       <FILE id="hV5boD" name="WaveshaperProcessor.h" compile="0" resource="0"
