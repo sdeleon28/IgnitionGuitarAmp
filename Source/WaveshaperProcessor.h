@@ -22,6 +22,6 @@ public:
     void process (const dsp::ProcessContextReplacing<float>& context) noexcept;
 private:
     WaveshaperType waveshaperType { WaveshaperType::asymptoticLimit };
-    float gain { 0.5f };
-    float outLevel { 1.f };
+    float gain { 82.f };
+    float outLevel { .15f };
 };

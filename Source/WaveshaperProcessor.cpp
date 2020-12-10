@@ -43,8 +43,8 @@ void WaveshaperProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
 
 void WaveshaperProcessor::reset() noexcept
 {
-    gain = 0.5f;
-    outLevel = 1.f;
+    gain = 82.0f;
+    outLevel = .15f;
 }
 
 void WaveshaperProcessor::process (const dsp::ProcessContextReplacing<float>& context) noexcept
