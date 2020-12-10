@@ -6,6 +6,11 @@
               displaySplashScreen="1" pluginVST3Category="Distortion">
   <MAINGROUP id="KoOqKs" name="ShittyAmp">
     <GROUP id="{3C61CE8C-3D73-3D84-A3F2-889AC9331BC7}" name="Source">
+      <FILE id="dmiGfJ" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
+      <FILE id="ktEr5z" name="CabConvolutionProcessor.cpp" compile="1" resource="0"
+            file="Source/CabConvolutionProcessor.cpp"/>
+      <FILE id="pescag" name="CabConvolutionProcessor.h" compile="0" resource="0"
+            file="Source/CabConvolutionProcessor.h"/>
       <FILE id="PTsMrg" name="EqProcessor.cpp" compile="1" resource="0" file="Source/EqProcessor.cpp"/>
       <FILE id="ZNTtDh" name="EqProcessor.h" compile="0" resource="0" file="Source/EqProcessor.h"/>
       <FILE id="y1JXHJ" name="WaveshaperProcessor.cpp" compile="1" resource="0"
@@ -19,6 +24,10 @@
       <FILE id="RHBqiM" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="uZLlWv" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+    <GROUP id="{675E0FD3-3764-EE8F-C44E-CBE96AC32132}" name="Assets">
+      <FILE id="cepjQx" name="cabsim.wav" compile="0" resource="1" file="Assets/cabsim.wav"
+            xcodeResource="1"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

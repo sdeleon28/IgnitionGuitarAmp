@@ -223,6 +223,9 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
 
     postEqProcessor.prepare(spec);
     // END post-EQ
+
+    cabConvolutionProcessor.reset();
+    cabConvolutionProcessor.prepare(spec);
 }
 
 void ShittyAmpAudioProcessor::releaseResources()
@@ -308,6 +311,7 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     preEqProcessor.process(context);
     waveshaperProcessor.process(context);
     postEqProcessor.process(context);
+    cabConvolutionProcessor.process(context);
 }
 
 //==============================================================================

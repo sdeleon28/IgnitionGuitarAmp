@@ -11,6 +11,9 @@
 #include <JuceHeader.h>
 #include "EqProcessor.h"
 #include "WaveshaperProcessor.h"
+// TODO: Split into declaration and definition
+#include "CabConvolutionProcessor.cpp"
+
 #define GAIN_ID "gain"
 #define GAIN_NAME "Gain"
 #define OUTPUT_ID "output"
@@ -76,8 +79,10 @@ public:
     AudioProcessorValueTreeState treeState;
 private:
     EqProcessor preEqProcessor;
-    EqProcessor postEqProcessor;
     WaveshaperProcessor waveshaperProcessor;
+    EqProcessor postEqProcessor;
+    CabConvolutionProcessor cabConvolutionProcessor;
+
     float lastSampleRate;
 
     //==============================================================================
