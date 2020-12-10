@@ -11,8 +11,7 @@
 #include <JuceHeader.h>
 #include "EqProcessor.h"
 #include "WaveshaperProcessor.h"
-// TODO: Split into declaration and definition
-#include "CabConvolutionProcessor.cpp"
+#include "CabConvolutionProcessor.h"
 
 #define GAIN_ID "gain"
 #define GAIN_NAME "Gain"
