@@ -39,14 +39,6 @@ private:
     Slider outLevelSlider;
     std::unique_ptr<SliderAttachment> outLevelValue;
 
-    Label lowShelfGainLabel;
-    Slider lowShelfGainSlider;
-    std::unique_ptr<SliderAttachment> lowShelfGainValue;
-
-    Label lowShelfFreqLabel;
-    Slider lowShelfFreqSlider;
-    std::unique_ptr<SliderAttachment> lowShelfFreqValue;
-
     Label waveshaperTypeLabel;
     ComboBox waveshaperTypeComboBox;
     std::unique_ptr<ComboBoxAttachment> waveshaperTypeValue;

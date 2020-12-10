@@ -16,8 +16,6 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
            std::make_unique<AudioParameterFloat> (WAVESHAPER_TYPE_ID, WAVESHAPER_TYPE_NAME, 1.f, 4.f, 1.f),
            std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 1.f, 100.f, 1.f),
            std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 1.f, 0.5f),
-           std::make_unique<AudioParameterFloat> (LOW_SHELF_GAIN_ID, LOW_SHELF_GAIN_NAME, -10.f, 10.f, 0.f),
-           std::make_unique<AudioParameterFloat> (LOW_SHELF_FREQ_ID, LOW_SHELF_FREQ_NAME, 20.f, 1000.f, 490.f),
        })
 #endif
 {

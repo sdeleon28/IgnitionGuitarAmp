@@ -17,10 +17,6 @@
 #define GAIN_NAME "Gain"
 #define OUTPUT_ID "output"
 #define OUTPUT_NAME "Output"
-#define LOW_SHELF_GAIN_ID "low_shelf_gain"
-#define LOW_SHELF_GAIN_NAME "LS Gain"
-#define LOW_SHELF_FREQ_ID "low_shelf_freq"
-#define LOW_SHELF_FREQ_NAME "LS Freq"
 #define WAVESHAPER_TYPE_ID "waveshaper_type"
 #define WAVESHAPER_TYPE_NAME "WS Type"
 
@@ -72,8 +68,6 @@ public:
     WaveshaperType waveshaperType;
     float gain { 0.5f };
     float outLevel { 0.5f };
-    float lowShelfGain { 0.f };
-    float lowShelfFreq { 300.f };
     
     AudioProcessorValueTreeState treeState;
 private:
