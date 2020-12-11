@@ -28,7 +28,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     gainValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, gainSlider);
     gainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
     gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    gainSlider.setRange(0.0f, 100.0f, 0.01f);
+    gainSlider.setRange(0.0f, 10.0f, 0.01f);
     gainSlider.setValue(82.f);
     gainSlider.setPopupDisplayEnabled(true, true, this);
     gainSlider.addListener(this);

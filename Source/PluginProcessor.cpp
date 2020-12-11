@@ -14,7 +14,7 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
                        ),
        treeState(*this, nullptr, "PARAMETERS", {
            std::make_unique<AudioParameterFloat> (WAVESHAPER_TYPE_ID, WAVESHAPER_TYPE_NAME, 1.f, 4.f, 1.f),
-           std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 1.f, 100.f, 1.f),
+           std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 1.f, 10.f, 1.f),
            std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 1.f, 0.5f),
        })
 #endif
@@ -257,7 +257,7 @@ void ShittyAmpAudioProcessor::updateWaveshaperParams()
     }
     */
     waveshaperType = WaveshaperType::asymptoticLimit;
-    waveshaperProcessor.setGain(gain);
+    waveshaperProcessor.setGain(Decibels::decibelsToGain(gain * 4));
     waveshaperProcessor.setOutLevel(outLevel);
     waveshaperProcessor.setWaveshaperType(waveshaperType);
 }
