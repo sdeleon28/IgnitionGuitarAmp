@@ -15,14 +15,6 @@ using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    waveshaperTypeComboBox.addItem("Asymptotic limit", WaveshaperType::asymptoticLimit);
-    waveshaperTypeComboBox.addItem("Hyperbolic tangent", WaveshaperType::hyperbolicTangent);
-    waveshaperTypeComboBox.addItem("Square", WaveshaperType::square);
-    waveshaperTypeComboBox.addItem("Sinewave", WaveshaperType::sinewave);
-    waveshaperTypeValue = std::make_unique<ComboBoxAttachment>(audioProcessor.treeState, WAVESHAPER_TYPE_ID, waveshaperTypeComboBox);
-    waveshaperTypeComboBox.addListener(this);
-    addAndMakeVisible(waveshaperTypeComboBox);
-    
     gainLabel.setText(GAIN_NAME, dontSendNotification);
     gainLabel.attachToComponent(&gainSlider, false);
     gainValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, gainSlider);
@@ -70,33 +62,8 @@ void ShittyAmpAudioProcessorEditor::resized()
     const int column = 100;
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    waveshaperTypeComboBox.setBounds(0, 0, 200, 50);
-    gainSlider.setBounds(0, 1 * row, column * 0.8, row * 0.8);
+    gainSlider.setBounds(0 * column, 1 * row, column * 0.8, row * 0.8);
     outLevelSlider.setBounds(1 * column, 1 * row, column * 0.8, row * 0.8);
-}
-
-void ShittyAmpAudioProcessorEditor::comboBoxChanged(ComboBox *comboBox)
-{
-    if (comboBox == &waveshaperTypeComboBox)
-    {
-        const int selectedId = waveshaperTypeComboBox.getSelectedId();
-        if (selectedId == WaveshaperType::asymptoticLimit)
-        {
-            audioProcessor.waveshaperType = WaveshaperType::asymptoticLimit;
-        }
-        else if (selectedId == WaveshaperType::hyperbolicTangent)
-        {
-            audioProcessor.waveshaperType = WaveshaperType::hyperbolicTangent;
-        }
-        else if (selectedId == WaveshaperType::square)
-        {
-            audioProcessor.waveshaperType = WaveshaperType::square;
-        }
-        else if (selectedId == WaveshaperType::sinewave)
-        {
-            audioProcessor.waveshaperType = WaveshaperType::sinewave;
-        }
-    }
 }
 
 void ShittyAmpAudioProcessorEditor::sliderValueChanged(Slider *slider)

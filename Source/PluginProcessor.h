@@ -17,8 +17,6 @@
 #define GAIN_NAME "Gain"
 #define OUTPUT_ID "output"
 #define OUTPUT_NAME "Output"
-#define WAVESHAPER_TYPE_ID "waveshaper_type"
-#define WAVESHAPER_TYPE_NAME "WS Type"
 
 //==============================================================================
 /**
@@ -65,7 +63,6 @@ public:
 
     void updateWaveshaperParams();
     
-    WaveshaperType waveshaperType;
     float gain { 5.f };
     float outLevel { 0.5f };
     

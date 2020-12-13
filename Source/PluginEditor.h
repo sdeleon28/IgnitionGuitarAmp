@@ -12,14 +12,12 @@
 #include "PluginProcessor.h"
 
 using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
-using ComboBoxAttachment = AudioProcessorValueTreeState::ComboBoxAttachment;
 
 //==============================================================================
 /**
 */
 class ShittyAmpAudioProcessorEditor  : public AudioProcessorEditor,
-                                       public Slider::Listener,
-                                       public ComboBox::Listener
+                                       public Slider::Listener
 {
 public:
     ShittyAmpAudioProcessorEditor (ShittyAmpAudioProcessor&);
@@ -29,7 +27,6 @@ public:
     void paint (Graphics&) override;
     void resized() override;
     void sliderValueChanged (Slider* slider) override;
-    void comboBoxChanged (ComboBox* comboBox) override;
 private:
     Label gainLabel;
     Slider gainSlider;
@@ -38,10 +35,6 @@ private:
     Label outLevelLabel;
     Slider outLevelSlider;
     std::unique_ptr<SliderAttachment> outLevelValue;
-
-    Label waveshaperTypeLabel;
-    ComboBox waveshaperTypeComboBox;
-    std::unique_ptr<ComboBoxAttachment> waveshaperTypeValue;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

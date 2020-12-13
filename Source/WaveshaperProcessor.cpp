@@ -26,16 +26,6 @@ void WaveshaperProcessor::setOutLevel(float newOutLevel) noexcept
 }
 
 
-void WaveshaperProcessor::setWaveshaperType(WaveshaperType newWaveshaperType) noexcept
-{
-    waveshaperType = newWaveshaperType;
-}
-
-WaveshaperType WaveshaperProcessor::getWaveshaperType() const noexcept
-{
-    return waveshaperType;
-}
-
 void WaveshaperProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
 {
     reset();
@@ -71,24 +61,8 @@ void WaveshaperProcessor::process (const dsp::ProcessContextReplacing<float>& co
         auto* dst = outBlock.getChannelPointer (channel);
         for (int sample = 0; sample < len; ++sample)
         {
-            float processedSample = src[sample]; // Default to same sample
-            if (waveshaperType == WaveshaperType::asymptoticLimit)
-            {
-                auto gainedSample = src[sample] * gain;
-                processedSample = gainedSample / (std::abs(gainedSample) + 1);
-            }
-            else if (waveshaperType == WaveshaperType::hyperbolicTangent)
-            {
-                processedSample = std::tanh(src[sample] * gain);
-            }
-            else if (waveshaperType == WaveshaperType::square)
-            {
-                processedSample = (src[sample] >= 0 ? 1.f : -1.f);
-            }
-            else if (waveshaperType == WaveshaperType::sinewave)
-            {
-                processedSample = std::sin(src[sample] * gain);
-            }
+            auto gainedSample = src[sample] * gain;
+            auto processedSample = gainedSample / (std::abs(gainedSample) + 1);
             dst[sample] = jlimit(-1.f, 1.f, processedSample) * outLevel;
         }
     }
