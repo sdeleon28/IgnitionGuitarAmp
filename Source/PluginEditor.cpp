@@ -26,7 +26,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     gainLabel.setText(GAIN_NAME, dontSendNotification);
     gainLabel.attachToComponent(&gainSlider, false);
     gainValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, gainSlider);
-    gainSlider.setSliderStyle(Slider::SliderStyle::Rotary);
+    gainSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     gainSlider.setRange(0.0f, 10.0f, 0.01f);
     gainSlider.setValue(82.f);
@@ -38,7 +38,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     outLevelLabel.setText(OUTPUT_NAME, dontSendNotification);
     outLevelLabel.attachToComponent(&outLevelSlider, false);
     outLevelValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, OUTPUT_ID, outLevelSlider);
-    outLevelSlider.setSliderStyle(Slider::SliderStyle::Rotary);
+    outLevelSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     outLevelSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     outLevelSlider.setRange(0.0f, 1.0f, 0.01f);
     outLevelSlider.setValue(0.15f);
