@@ -32,8 +32,8 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     outLevelValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, OUTPUT_ID, outLevelSlider);
     outLevelSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     outLevelSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    outLevelSlider.setRange(0.0f, 1.0f, 0.01f);
-    outLevelSlider.setValue(0.15f);
+    outLevelSlider.setRange(0.f, 10.0f, 0.1f);
+    outLevelSlider.setValue(5.f);
     outLevelSlider.setPopupDisplayEnabled(true, true, this);
     outLevelSlider.addListener(this);
     addAndMakeVisible(outLevelLabel);

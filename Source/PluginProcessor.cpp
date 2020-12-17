@@ -14,7 +14,7 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
                        ),
        treeState(*this, nullptr, "PARAMETERS", {
            std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 1.f, 10.f, 1.f),
-           std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 1.f, 0.5f),
+           std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 10.f, 5.f),
        })
 #endif
 {
@@ -235,8 +235,23 @@ void ShittyAmpAudioProcessor::updateWaveshaperParams()
 {
     gain = *treeState.getRawParameterValue(GAIN_ID);
     outLevel = *treeState.getRawParameterValue(OUTPUT_ID);
+    // The gain knob works as an amplifier. I empirically found +40dB to be a reasonable
+    // upper bound for the amount of amplification allowed. I implemented it in a hacky way
+    // by multiplying the 1.0-10 range by 4. I should find out how to make this transition
+    // logarithmic.
+    // TODO:
+    // * Should zero gain amount to 0dB (no boost but also no reduction, effectively true-bypass)?
+    // * Logarithmic feel?
     waveshaperProcessor.setGain(Decibels::decibelsToGain(gain * 4));
-    waveshaperProcessor.setOutLevel(outLevel);
+    // The out level knob works as an attenuator. You use this to tame the amount of gain
+    // you've added before the waveshaper (but there's no reason to keep boosting at this stage).
+    // The 0-10 range in the output knob should map to -inf to 0 in the dB realm. Also, in order
+    // for the knob to feel natural, it should map logarithmically to those values.
+    // So, first turn the 0-10 value to a 0-1 range
+    float outRatio = outLevel / 10.0f;
+    // Now map that to dBs logarithmically
+    float outAttenuationInDb = 20 * std::log(outRatio);
+    waveshaperProcessor.setOutLevel(Decibels::decibelsToGain(outAttenuationInDb));
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
