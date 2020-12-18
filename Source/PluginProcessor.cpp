@@ -231,27 +231,29 @@ void ShittyAmpAudioProcessor::releaseResources()
     // spare memory, etc.
 }
 
+// TODO: Move these to static variables in the class
+float outLowerBoundInDb = -60.0;
+float outLevelACoefficient = -outLowerBoundInDb / 10;
+
 void ShittyAmpAudioProcessor::updateWaveshaperParams()
 {
     gain = *treeState.getRawParameterValue(GAIN_ID);
     outLevel = *treeState.getRawParameterValue(OUTPUT_ID);
     // The gain knob works as an amplifier. I empirically found +40dB to be a reasonable
-    // upper bound for the amount of amplification allowed. I implemented it in a hacky way
-    // by multiplying the 1.0-10 range by 4. I should find out how to make this transition
-    // logarithmic.
-    // TODO:
-    // * Should zero gain amount to 0dB (no boost but also no reduction, effectively true-bypass)?
-    // * Logarithmic feel?
+    // upper bound for the amount of amplification allowed.
+    // The user facing values are in the familiar 0-10 gain range. Under the hood, this is
+    // translated linearly to 0-40dB (by just multiplying by 4). Then that is mapped logarithmically
+    // to absolute gain values by calling decibelsToGain.
     waveshaperProcessor.setGain(Decibels::decibelsToGain(gain * 4));
     // The out level knob works as an attenuator. You use this to tame the amount of gain
     // you've added before the waveshaper (but there's no reason to keep boosting at this stage).
-    // The 0-10 range in the output knob should map to -inf to 0 in the dB realm. Also, in order
-    // for the knob to feel natural, it should map logarithmically to those values.
-    // So, first turn the 0-10 value to a 0-1 range
-    float outRatio = outLevel / 10.0f;
-    // Now map that to dBs logarithmically
-    float outAttenuationInDb = 20 * std::log(outRatio);
-    waveshaperProcessor.setOutLevel(Decibels::decibelsToGain(outAttenuationInDb));
+    // The 0-10 range in the output knob should map to -inf to 0 in the dB realm.
+    // If you define -inf as -60.f what we need to use to translate user-values into dB is the linear
+    // function f(x) such that,
+    // f(0) = -60 and f(10) = 0
+    // Some basic math reveals that that function is:
+    float outAttenuationInDb = outLevelACoefficient * outLevel + outLowerBoundInDb;
+    waveshaperProcessor.setOutLevel(Decibels::decibelsToGain(outAttenuationInDb, outLowerBoundInDb));
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
