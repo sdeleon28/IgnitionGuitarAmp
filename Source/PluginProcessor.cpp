@@ -99,14 +99,12 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     // BEGIN pre-EQ
     EqProcessor::Band preEqLowest(
         "Lowest",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::HighPass,
         64.0f, // frequency
         0.1f // q
     );
     EqProcessor::Band preEqLow(
         "Low",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::NoFilter,
         0.0f, // frequency
         0.0f, // q
@@ -115,7 +113,6 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     );
     EqProcessor::Band preEqLowMids(
         "Low Mids",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::Peak,
         671.0f, // frequency
         2.1f, // q
@@ -123,7 +120,6 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     );
     EqProcessor::Band preEqHighMids(
         "High Mids",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::Peak,
         1320.0f, // frequency
         1.1f, // q
@@ -131,7 +127,6 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     );
     EqProcessor::Band preEqHigh(
         "High",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::NoFilter,
         0.0f, // frequency
         0.0f, // q
@@ -140,7 +135,6 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     );
     EqProcessor::Band preEqHighest(
         "Highest",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::LowPass,
         17380.0f, // frequency
         0.1f // q
@@ -163,14 +157,12 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     // BEGIN post-EQ
     EqProcessor::Band postEqLowest(
         "Lowest",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::HighPass,
         144.0f, // frequency
         1.1f // q
     );
     EqProcessor::Band postEqLow(
         "Low",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::NoFilter,
         0.0f, // frequency
         0.0f, // q
@@ -179,7 +171,6 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     );
     EqProcessor::Band postEqLowMids(
         "Low Mids",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::Peak,
         304.0f, // frequency
         1.1f, // q
@@ -187,7 +178,6 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     );
     EqProcessor::Band postEqHighMids(
         "High Mids",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::Peak,
         896.0f, // frequency
         1.1f, // q
@@ -195,7 +185,6 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     );
     EqProcessor::Band postEqHigh(
         "High",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::Peak,
         2680.0f, // frequency
         1.1f, // q
@@ -203,7 +192,6 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     );
     EqProcessor::Band postEqHighest(
         "Highest",
-        Colours::blue, // TODO: Get rid of this
         EqProcessor::FilterType::NoFilter,
         0.0f, // frequency
         0.0f, // q

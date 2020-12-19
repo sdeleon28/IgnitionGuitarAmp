@@ -33,12 +33,12 @@ String EqProcessor::getBandID (size_t index)
 std::vector<EqProcessor::Band> createDefaultBands()
 {
     std::vector<EqProcessor::Band> defaults;
-    defaults.push_back (EqProcessor::Band (TRANS ("Lowest"),    Colours::blue,   EqProcessor::HighPass,    20.0f, 0.707f));
-    defaults.push_back (EqProcessor::Band (TRANS ("Low"),       Colours::brown,  EqProcessor::LowShelf,   250.0f, 0.707f));
-    defaults.push_back (EqProcessor::Band (TRANS ("Low Mids"),  Colours::green,  EqProcessor::Peak,       500.0f, 0.707f));
-    defaults.push_back (EqProcessor::Band (TRANS ("High Mids"), Colours::coral,  EqProcessor::Peak,      1000.0f, 0.707f));
-    defaults.push_back (EqProcessor::Band (TRANS ("High"),      Colours::orange, EqProcessor::HighShelf, 5000.0f, 0.707f));
-    defaults.push_back (EqProcessor::Band (TRANS ("Highest"),   Colours::red,    EqProcessor::LowPass,  12000.0f, 0.707f));
+    defaults.push_back (EqProcessor::Band (TRANS ("Lowest"),    EqProcessor::HighPass,    20.0f, 0.707f));
+    defaults.push_back (EqProcessor::Band (TRANS ("Low"),       EqProcessor::LowShelf,   250.0f, 0.707f));
+    defaults.push_back (EqProcessor::Band (TRANS ("Low Mids"),  EqProcessor::Peak,       500.0f, 0.707f));
+    defaults.push_back (EqProcessor::Band (TRANS ("High Mids"), EqProcessor::Peak,      1000.0f, 0.707f));
+    defaults.push_back (EqProcessor::Band (TRANS ("High"),      EqProcessor::HighShelf, 5000.0f, 0.707f));
+    defaults.push_back (EqProcessor::Band (TRANS ("Highest"),   EqProcessor::LowPass,  12000.0f, 0.707f));
     return defaults;
 }
 
@@ -179,13 +179,6 @@ String EqProcessor::getBandName   (size_t index) const
     if (isPositiveAndBelow (index, bands.size()))
         return bands [size_t (index)].name;
     return TRANS ("unknown");
-}
-
-Colour EqProcessor::getBandColour (size_t index) const
-{
-    if (isPositiveAndBelow (index, bands.size()))
-        return bands [size_t (index)].colour;
-    return Colours::silver;
 }
 
 bool EqProcessor::getBandSolo (int index) const

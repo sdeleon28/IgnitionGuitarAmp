@@ -56,7 +56,6 @@ public:
     size_t getNumBands () const;
 
     String getBandName   (size_t index) const;
-    Colour getBandColour (size_t index) const;
 
     void setBandSolo (int index);
     bool getBandSolo (int index) const;
@@ -82,10 +81,9 @@ public:
 
     //==============================================================================
     struct Band {
-        Band (const String& nameToUse, Colour colourToUse, FilterType typeToUse,
+        Band (const String& nameToUse, FilterType typeToUse,
             float frequencyToUse, float qualityToUse, float gainToUse=1.0f, bool shouldBeActive=true)
           : name (nameToUse),
-            colour (colourToUse),
             type (typeToUse),
             frequency (frequencyToUse),
             quality (qualityToUse),
@@ -94,7 +92,6 @@ public:
         {}
 
         String      name;
-        Colour      colour;
         FilterType  type      = BandPass;
         float       frequency = 1000.0f;
         float       quality   = 1.0f;
