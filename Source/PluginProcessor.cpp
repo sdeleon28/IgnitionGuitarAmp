@@ -231,10 +231,6 @@ void ShittyAmpAudioProcessor::releaseResources()
     // spare memory, etc.
 }
 
-// TODO: Move these to static variables in the class
-float outLowerBoundInDb = -60.0;
-float outLevelACoefficient = -outLowerBoundInDb / 10;
-
 void ShittyAmpAudioProcessor::updateWaveshaperParams()
 {
     gain = *treeState.getRawParameterValue(GAIN_ID);

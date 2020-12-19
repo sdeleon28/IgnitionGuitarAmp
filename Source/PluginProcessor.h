@@ -72,6 +72,8 @@ private:
     WaveshaperProcessor waveshaperProcessor;
     EqProcessor postEqProcessor;
     CabConvolutionProcessor cabConvolutionProcessor;
+    float outLowerBoundInDb = -60.0;
+    float outLevelACoefficient = -outLowerBoundInDb / 10;
 
     float lastSampleRate;
 
