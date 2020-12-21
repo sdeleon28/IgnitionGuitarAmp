@@ -63,8 +63,8 @@ public:
 
     void updateWaveshaperParams();
     
-    float gain { 5.f };
-    float outLevel { 5.f };
+    float gain;
+    float outLevel;
     
     AudioProcessorValueTreeState treeState;
 private:

@@ -21,7 +21,6 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     gainSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     gainSlider.setRange(0.0f, 10.0f, 0.01f);
-    gainSlider.setValue(82.f);
     gainSlider.setPopupDisplayEnabled(true, true, this);
     gainSlider.addListener(this);
     addAndMakeVisible(gainLabel);
@@ -33,7 +32,6 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     outLevelSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     outLevelSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     outLevelSlider.setRange(0.f, 10.0f, 0.1f);
-    outLevelSlider.setValue(5.f);
     outLevelSlider.setPopupDisplayEnabled(true, true, this);
     outLevelSlider.addListener(this);
     addAndMakeVisible(outLevelLabel);
