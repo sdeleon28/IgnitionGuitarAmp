@@ -148,10 +148,7 @@ void EqProcessor::process (const dsp::ProcessContextReplacing<float>& context) n
 // BEGIN: Adapter code to make this usable without a UI
 void EqProcessor::setGain(float newValueInDb)
 {
-    // TODO: How do I do this?
     filter.get<6>().setGainDecibels(newValueInDb);
-    // Example code did this
-    // filter.get<6>().setGainLinear (newValue);
 }
 
 void EqProcessor::setBand(int index, const EqProcessor::Band& newBand)

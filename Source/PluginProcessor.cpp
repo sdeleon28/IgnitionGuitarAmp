@@ -13,8 +13,8 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
                      #endif
                        ),
        treeState(*this, nullptr, "PARAMETERS", {
-           std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 1.f, 10.f, 1.f),
-           std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 10.f, 5.f),
+           std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 0.f, 10.f, 1.f),
+           std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 10.f, 10.f),
        })
 #endif
 {
@@ -205,6 +205,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     postEqProcessor.setBand(3, postEqHighMids);
     postEqProcessor.setBand(4, postEqHigh);
     postEqProcessor.setBand(5, postEqHighest);
+    postEqProcessor.setGain(6);
 
     postEqProcessor.prepare(spec);
     // END post-EQ
