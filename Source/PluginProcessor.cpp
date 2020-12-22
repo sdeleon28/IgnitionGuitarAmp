@@ -96,6 +96,8 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     spec.maximumBlockSize = samplesPerBlock;
     spec.numChannels = getMainBusNumOutputChannels();
 
+    updateParams();
+
     // BEGIN pre-EQ
     EqProcessor::Band preEqLowest(
         "Lowest",
@@ -146,10 +148,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     preEqProcessor.setBand(3, preEqHighMids);
     preEqProcessor.setBand(4, preEqHigh);
     preEqProcessor.setBand(5, preEqHighest);
-
     // END pre-EQ
-
-    updateWaveshaperParams();
 
     // BEGIN post-EQ
     EqProcessor::Band postEqLowest(
@@ -205,13 +204,11 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     postEqProcessor.setGain(6);
     // END post-EQ
 
-    preEqProcessor.reset();
+    // I know this is a bit boilerplatey but processor chains are cumbersome
     preEqProcessor.prepare(spec);
     gainProcessor.reset();
     gainProcessor.prepare(spec);
-    waveshaperProcessor.reset();
     waveshaperProcessor.prepare(spec);
-    postEqProcessor.reset();
     postEqProcessor.prepare(spec);
     cabConvolutionProcessor.reset();
     cabConvolutionProcessor.prepare(spec);
@@ -225,7 +222,7 @@ void ShittyAmpAudioProcessor::releaseResources()
     // spare memory, etc.
 }
 
-void ShittyAmpAudioProcessor::updateWaveshaperParams()
+void ShittyAmpAudioProcessor::updateParams()
 {
     gain = *treeState.getRawParameterValue(GAIN_ID);
     outLevel = *treeState.getRawParameterValue(OUTPUT_ID);
@@ -286,10 +283,11 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         buffer.clear (i, 0, buffer.getNumSamples());
 
     dsp::AudioBlock<float> block(buffer);
-    updateWaveshaperParams();
+    updateParams();
 
-    // TODO: Make this a processor chain
     dsp::ProcessContextReplacing<float> context = dsp::ProcessContextReplacing<float>(block);
+
+    // I don't turn these into a processor chain because it makes accessing individual processors more cumbersome
     preEqProcessor.process(context);
     gainProcessor.process(context);
     waveshaperProcessor.process(context);

@@ -2,12 +2,10 @@
 
 AsymptoticLimitWaveshaperProcessor::AsymptoticLimitWaveshaperProcessor ()
 {
-    reset();
 }
 
 void AsymptoticLimitWaveshaperProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
 {
-    reset();
 }
 
 void AsymptoticLimitWaveshaperProcessor::reset() noexcept
