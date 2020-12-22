@@ -5,17 +5,6 @@ WaveshaperProcessor::WaveshaperProcessor ()
     reset();
 }
 
-float WaveshaperProcessor::getOutLevel() const noexcept
-{
-    return outLevel;
-}
-
-void WaveshaperProcessor::setOutLevel(float newOutLevel) noexcept
-{
-    outLevel = newOutLevel;
-}
-
-
 void WaveshaperProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
 {
     reset();
@@ -23,7 +12,6 @@ void WaveshaperProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
 
 void WaveshaperProcessor::reset() noexcept
 {
-    outLevel = .15f;
 }
 
 void WaveshaperProcessor::process (const dsp::ProcessContextReplacing<float>& context) noexcept
@@ -51,7 +39,7 @@ void WaveshaperProcessor::process (const dsp::ProcessContextReplacing<float>& co
         for (int sample = 0; sample < len; ++sample)
         {
             auto processedSample = src[sample] / (std::abs(src[sample]) + 1);
-            dst[sample] = jlimit(-1.f, 1.f, processedSample) * outLevel;
+            dst[sample] = jlimit(-1.f, 1.f, processedSample);
         }
     }
 }

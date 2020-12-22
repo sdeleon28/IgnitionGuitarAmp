@@ -73,6 +73,8 @@ private:
     WaveshaperProcessor waveshaperProcessor;
     EqProcessor postEqProcessor;
     CabConvolutionProcessor cabConvolutionProcessor;
+    Gain<float> outputLevelProcessor;
+
     float outLowerBoundInDb = -60.0;
     float outLevelACoefficient = -outLowerBoundInDb / 10;
 

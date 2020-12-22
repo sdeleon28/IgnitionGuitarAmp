@@ -215,6 +215,9 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
 
     cabConvolutionProcessor.reset();
     cabConvolutionProcessor.prepare(spec);
+
+    outputLevelProcessor.reset();
+    outputLevelProcessor.prepare(spec);
 }
 
 void ShittyAmpAudioProcessor::releaseResources()
@@ -241,7 +244,7 @@ void ShittyAmpAudioProcessor::updateWaveshaperParams()
     // f(0) = -60 and f(10) = 0
     // Some basic math reveals that that function is:
     float outAttenuationInDb = outLevelACoefficient * outLevel + outLowerBoundInDb;
-    waveshaperProcessor.setOutLevel(Decibels::decibelsToGain(outAttenuationInDb, outLowerBoundInDb));
+    outputLevelProcessor.setGainLinear(Decibels::decibelsToGain(outAttenuationInDb, outLowerBoundInDb));
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -293,6 +296,7 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     waveshaperProcessor.process(context);
     postEqProcessor.process(context);
     cabConvolutionProcessor.process(context);
+    outputLevelProcessor.process(context);
 }
 
 //==============================================================================
