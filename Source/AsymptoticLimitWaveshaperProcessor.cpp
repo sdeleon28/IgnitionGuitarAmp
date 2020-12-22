@@ -1,20 +1,20 @@
-#include "WaveshaperProcessor.h"
+#include "AsymptoticLimitWaveshaperProcessor.h"
 
-WaveshaperProcessor::WaveshaperProcessor ()
+AsymptoticLimitWaveshaperProcessor::AsymptoticLimitWaveshaperProcessor ()
 {
     reset();
 }
 
-void WaveshaperProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
+void AsymptoticLimitWaveshaperProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
 {
     reset();
 }
 
-void WaveshaperProcessor::reset() noexcept
+void AsymptoticLimitWaveshaperProcessor::reset() noexcept
 {
 }
 
-void WaveshaperProcessor::process (const dsp::ProcessContextReplacing<float>& context) noexcept
+void AsymptoticLimitWaveshaperProcessor::process (const dsp::ProcessContextReplacing<float>& context) noexcept
 {
     auto&& inBlock  = context.getInputBlock();
     auto&& outBlock = context.getOutputBlock();

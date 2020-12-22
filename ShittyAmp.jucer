@@ -13,10 +13,10 @@
             file="Source/CabConvolutionProcessor.h"/>
       <FILE id="PTsMrg" name="EqProcessor.cpp" compile="1" resource="0" file="Source/EqProcessor.cpp"/>
       <FILE id="ZNTtDh" name="EqProcessor.h" compile="0" resource="0" file="Source/EqProcessor.h"/>
-      <FILE id="y1JXHJ" name="WaveshaperProcessor.cpp" compile="1" resource="0"
-            file="Source/WaveshaperProcessor.cpp"/>
-      <FILE id="hV5boD" name="WaveshaperProcessor.h" compile="0" resource="0"
-            file="Source/WaveshaperProcessor.h"/>
+      <FILE id="y1JXHJ" name="AsymptoticLimitWaveshaperProcessor.cpp" compile="1" resource="0"
+            file="Source/AsymptoticLimitWaveshaperProcessor.cpp"/>
+      <FILE id="hV5boD" name="AsymptoticLimitWaveshaperProcessor.h" compile="0" resource="0"
+            file="Source/AsymptoticLimitWaveshaperProcessor.h"/>
       <FILE id="Gf7JWs" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="cbio8e" name="PluginProcessor.h" compile="0" resource="0"

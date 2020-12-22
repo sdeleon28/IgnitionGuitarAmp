@@ -10,7 +10,7 @@
 
 #include <JuceHeader.h>
 #include "EqProcessor.h"
-#include "WaveshaperProcessor.h"
+#include "AsymptoticLimitWaveshaperProcessor.h"
 #include "CabConvolutionProcessor.h"
 
 #define GAIN_ID "gain"
@@ -70,7 +70,7 @@ public:
 private:
     EqProcessor preEqProcessor;
     Gain<float> gainProcessor;
-    WaveshaperProcessor waveshaperProcessor;
+    AsymptoticLimitWaveshaperProcessor waveshaperProcessor;
     EqProcessor postEqProcessor;
     CabConvolutionProcessor cabConvolutionProcessor;
     Gain<float> outputLevelProcessor;

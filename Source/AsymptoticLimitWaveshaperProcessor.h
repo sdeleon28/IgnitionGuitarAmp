@@ -1,9 +1,9 @@
 #include <JuceHeader.h>
 
-class WaveshaperProcessor
+class AsymptoticLimitWaveshaperProcessor
 {
 public:
-    WaveshaperProcessor();
+    AsymptoticLimitWaveshaperProcessor();
     void prepare (const dsp::ProcessSpec& spec) noexcept;
     void reset() noexcept;
     void process (const dsp::ProcessContextReplacing<float>& context) noexcept;
