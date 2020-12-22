@@ -48,6 +48,7 @@ public:
     ~EqProcessor();
 
     //==============================================================================
+    void reset() noexcept;
     void prepare (const dsp::ProcessSpec& spec) noexcept;
     void releaseResources();
 

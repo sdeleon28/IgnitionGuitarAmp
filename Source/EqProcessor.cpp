@@ -122,6 +122,10 @@ void EqProcessor::changeProgramName (int, const String&)
 {
 }
 
+void EqProcessor::reset () noexcept
+{
+}
+
 //==============================================================================
 void EqProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
 {

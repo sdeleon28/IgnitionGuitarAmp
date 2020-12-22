@@ -147,15 +147,9 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     preEqProcessor.setBand(4, preEqHigh);
     preEqProcessor.setBand(5, preEqHighest);
 
-    preEqProcessor.prepare(spec);
     // END pre-EQ
 
-    gainProcessor.reset();
-    gainProcessor.prepare(spec);
-
-    waveshaperProcessor.reset();
     updateWaveshaperParams();
-    waveshaperProcessor.prepare(spec);
 
     // BEGIN post-EQ
     EqProcessor::Band postEqLowest(
@@ -209,13 +203,18 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     postEqProcessor.setBand(4, postEqHigh);
     postEqProcessor.setBand(5, postEqHighest);
     postEqProcessor.setGain(6);
-
-    postEqProcessor.prepare(spec);
     // END post-EQ
 
+    preEqProcessor.reset();
+    preEqProcessor.prepare(spec);
+    gainProcessor.reset();
+    gainProcessor.prepare(spec);
+    waveshaperProcessor.reset();
+    waveshaperProcessor.prepare(spec);
+    postEqProcessor.reset();
+    postEqProcessor.prepare(spec);
     cabConvolutionProcessor.reset();
     cabConvolutionProcessor.prepare(spec);
-
     outputLevelProcessor.reset();
     outputLevelProcessor.prepare(spec);
 }
