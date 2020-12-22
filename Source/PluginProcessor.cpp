@@ -150,6 +150,9 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     preEqProcessor.prepare(spec);
     // END pre-EQ
 
+    gainProcessor.reset();
+    gainProcessor.prepare(spec);
+
     waveshaperProcessor.reset();
     updateWaveshaperParams();
     waveshaperProcessor.prepare(spec);
@@ -228,8 +231,8 @@ void ShittyAmpAudioProcessor::updateWaveshaperParams()
     // upper bound for the amount of amplification allowed.
     // The user facing values are in the familiar 0-10 gain range. Under the hood, this is
     // translated linearly to 0-40dB (by just multiplying by 4). Then that is mapped logarithmically
-    // to absolute gain values by calling decibelsToGain.
-    waveshaperProcessor.setGain(Decibels::decibelsToGain(gain * 4));
+    // to absolute gain values by the gainProcessor.
+    gainProcessor.setGainDecibels(gain * 4);
     // The out level knob works as an attenuator. You use this to tame the amount of gain
     // you've added before the waveshaper (but there's no reason to keep boosting at this stage).
     // The 0-10 range in the output knob should map to -inf to 0 in the dB realm.
@@ -286,6 +289,7 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     // TODO: Make this a processor chain
     dsp::ProcessContextReplacing<float> context = dsp::ProcessContextReplacing<float>(block);
     preEqProcessor.process(context);
+    gainProcessor.process(context);
     waveshaperProcessor.process(context);
     postEqProcessor.process(context);
     cabConvolutionProcessor.process(context);

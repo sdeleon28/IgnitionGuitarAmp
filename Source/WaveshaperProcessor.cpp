@@ -5,16 +5,6 @@ WaveshaperProcessor::WaveshaperProcessor ()
     reset();
 }
 
-float WaveshaperProcessor::getGain() const noexcept
-{
-    return gain;
-}
-
-void WaveshaperProcessor::setGain(float newGain) noexcept
-{
-    gain = newGain;
-}
-
 float WaveshaperProcessor::getOutLevel() const noexcept
 {
     return outLevel;
@@ -33,7 +23,6 @@ void WaveshaperProcessor::prepare (const dsp::ProcessSpec& spec) noexcept
 
 void WaveshaperProcessor::reset() noexcept
 {
-    gain = 82.0f;
     outLevel = .15f;
 }
 
@@ -61,8 +50,7 @@ void WaveshaperProcessor::process (const dsp::ProcessContextReplacing<float>& co
         auto* dst = outBlock.getChannelPointer (channel);
         for (int sample = 0; sample < len; ++sample)
         {
-            auto gainedSample = src[sample] * gain;
-            auto processedSample = gainedSample / (std::abs(gainedSample) + 1);
+            auto processedSample = src[sample] / (std::abs(src[sample]) + 1);
             dst[sample] = jlimit(-1.f, 1.f, processedSample) * outLevel;
         }
     }

@@ -69,6 +69,7 @@ public:
     AudioProcessorValueTreeState treeState;
 private:
     EqProcessor preEqProcessor;
+    Gain<float> gainProcessor;
     WaveshaperProcessor waveshaperProcessor;
     EqProcessor postEqProcessor;
     CabConvolutionProcessor cabConvolutionProcessor;
