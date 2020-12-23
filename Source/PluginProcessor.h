@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "EqProcessor.h"
+#include "SingleEqBandProcessor.h"
 #include "AsymptoticLimitWaveshaperProcessor.h"
 #include "CabConvolutionProcessor.h"
 
@@ -72,6 +73,7 @@ private:
     Gain<float> gainProcessor;
     AsymptoticLimitWaveshaperProcessor waveshaperProcessor;
     EqProcessor postEqProcessor;
+    SingleEqBandProcessor toneControlEqProcessor;
     CabConvolutionProcessor cabConvolutionProcessor;
     Gain<float> outputLevelProcessor;
 

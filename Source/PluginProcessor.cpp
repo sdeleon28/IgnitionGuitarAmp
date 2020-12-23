@@ -204,6 +204,17 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     postEqProcessor.setGain(6);
     // END post-EQ
 
+    // BEGIN tone control EQ
+    SingleEqBandProcessor::Band toneControlEqBand(
+        "High",
+        SingleEqBandProcessor::FilterType::Peak,
+        2450.0f, // frequency
+        1.1f, // q
+        Decibels::decibelsToGain(0.0f) // gain // TODO: Make this changeable
+    );
+    toneControlEqProcessor.setBand(toneControlEqBand);
+    // BEGIN tone control EQ
+
     // I know this is a bit boilerplatey but processor chains are cumbersome
     preEqProcessor.prepare(spec);
     gainProcessor.reset();
@@ -212,6 +223,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     postEqProcessor.prepare(spec);
     cabConvolutionProcessor.reset();
     cabConvolutionProcessor.prepare(spec);
+    toneControlEqProcessor.prepare(spec);
     outputLevelProcessor.reset();
     outputLevelProcessor.prepare(spec);
 }
@@ -293,6 +305,7 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     waveshaperProcessor.process(context);
     postEqProcessor.process(context);
     cabConvolutionProcessor.process(context);
+    toneControlEqProcessor.process(context);
     outputLevelProcessor.process(context);
 }
 
