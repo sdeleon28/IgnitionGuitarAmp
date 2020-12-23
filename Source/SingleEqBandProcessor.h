@@ -21,25 +21,13 @@ public:
         LastFilterID
     };
 
-    static String paramOutput;
-    static String paramType;
-    static String paramFrequency;
-    static String paramQuality;
-    static String paramGain;
-    static String paramActive;
-
-    //==============================================================================
     SingleEqBandProcessor();
     ~SingleEqBandProcessor();
 
-    //==============================================================================
     void reset() noexcept;
     void prepare (const dsp::ProcessSpec& spec) noexcept;
     void releaseResources();
-
     void process (const dsp::ProcessContextReplacing<float>& context) noexcept;
-
-    const std::vector<double>& getMagnitudes ();
 
     struct Band {
         Band (const String& nameToUse, FilterType typeToUse,
@@ -68,14 +56,8 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SingleEqBandProcessor)
 
     void updateBand ();
-
     Band band;
-
-    std::vector<double> frequencies;
-    std::vector<double> magnitudes;
-
     using FilterBand = dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>>;
     FilterBand filter;
-
     double sampleRate = 0;
 };

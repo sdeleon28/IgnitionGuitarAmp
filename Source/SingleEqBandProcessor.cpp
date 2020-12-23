@@ -1,31 +1,9 @@
-
-/*
-  ==============================================================================
-
-    This is the Frequalizer implementation
-
-  ==============================================================================
-*/
-
 #include "SingleEqBandProcessor.h"
-
-String SingleEqBandProcessor::paramOutput   ("output");
-String SingleEqBandProcessor::paramType     ("type");
-String SingleEqBandProcessor::paramFrequency("frequency");
-String SingleEqBandProcessor::paramQuality  ("quality");
-String SingleEqBandProcessor::paramGain     ("gain");
-String SingleEqBandProcessor::paramActive   ("active");
 
 //==============================================================================
 SingleEqBandProcessor::SingleEqBandProcessor()
     : band(SingleEqBandProcessor::Band (TRANS ("High Mids"), SingleEqBandProcessor::Peak, 1000.0f, 0.707f))
 {
-    frequencies.resize (300);
-    for (size_t i=0; i < frequencies.size(); ++i) {
-        frequencies [i] = 20.0 * std::pow (2.0, i / 30.0);
-    }
-    magnitudes.resize (frequencies.size());
-    band.magnitudes.resize (frequencies.size(), 1.0);
 }
 
 SingleEqBandProcessor::~SingleEqBandProcessor()
@@ -122,14 +100,6 @@ void SingleEqBandProcessor::updateBand ()
 
                 *filter.state = *newCoefficients;
             }
-            newCoefficients->getMagnitudeForFrequencyArray (frequencies.data(),
-                                                            band.magnitudes.data(),
-                                                            frequencies.size(), sampleRate);
         }
     }
-}
-
-const std::vector<double>& SingleEqBandProcessor::getMagnitudes ()
-{
-    return magnitudes;
 }
