@@ -1,11 +1,3 @@
-/*
-  ==============================================================================
-
-    This is the Frequalizer implementation
-
-  ==============================================================================
-*/
-
 #include "EqProcessor.h"
 
 String EqProcessor::paramOutput   ("output");
