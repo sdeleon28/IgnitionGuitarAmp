@@ -32,6 +32,10 @@ private:
     Slider gainSlider;
     std::unique_ptr<SliderAttachment> gainValue;
 
+    Label toneLabel;
+    Slider toneSlider;
+    std::unique_ptr<SliderAttachment> toneValue;
+
     Label outLevelLabel;
     Slider outLevelSlider;
     std::unique_ptr<SliderAttachment> outLevelValue;

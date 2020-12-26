@@ -49,6 +49,7 @@ public:
         std::vector<double> magnitudes;
     };
 
+    void setBandGain(float gainToUse);
     void setBand(const Band& newBand);
     SingleEqBandProcessor::Band* getBand();
 private:

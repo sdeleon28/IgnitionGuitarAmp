@@ -32,6 +32,12 @@ void SingleEqBandProcessor::process (const dsp::ProcessContextReplacing<float>& 
     filter.process (context);
 }
 
+void SingleEqBandProcessor::setBandGain(float gainToUse)
+{
+    band.gain = gainToUse;
+    updateBand();
+}
+
 void SingleEqBandProcessor::setBand(const SingleEqBandProcessor::Band& newBand)
 {
     band.type = newBand.type;

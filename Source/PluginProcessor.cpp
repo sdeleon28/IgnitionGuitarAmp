@@ -14,6 +14,7 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
                        ),
        treeState(*this, nullptr, "PARAMETERS", {
            std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 0.f, 10.f, 1.f),
+           std::make_unique<AudioParameterFloat> (TONE_ID, TONE_NAME, 0.f, 10.f, 5.f),
            std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 10.f, 10.f),
        })
 #endif
@@ -210,7 +211,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         SingleEqBandProcessor::FilterType::Peak,
         2450.0f, // frequency
         1.1f, // q
-        Decibels::decibelsToGain(0.0f) // gain // TODO: Make this changeable
+        Decibels::decibelsToGain(0) // gain // TODO: Make this changeable
     );
     toneControlEqProcessor.setBand(toneControlEqBand);
     // BEGIN tone control EQ
@@ -244,6 +245,12 @@ void ShittyAmpAudioProcessor::updateParams()
     // translated linearly to 0-40dB (by just multiplying by 4). Then that is mapped logarithmically
     // to absolute gain values by the gainProcessor.
     gainProcessor.setGainDecibels(gain * 4);
+
+    float tone = *treeState.getRawParameterValue(TONE_ID);
+    // Line equation for f(0) = -10 and f(10) = 10
+    float toneBandGainInDb = 2 * tone - 10;
+    toneControlEqProcessor.setBandGain(Decibels::decibelsToGain(toneBandGainInDb));
+
     // The out level knob works as an attenuator. You use this to tame the amount of gain
     // you've added before the waveshaper (but there's no reason to keep boosting at this stage).
     // The 0-10 range in the output knob should map to -inf to 0 in the dB realm.

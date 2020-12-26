@@ -18,6 +18,8 @@
 #define GAIN_NAME "Gain"
 #define OUTPUT_ID "output"
 #define OUTPUT_NAME "Output"
+#define TONE_ID "tone"
+#define TONE_NAME "Tone"
 
 //==============================================================================
 /**

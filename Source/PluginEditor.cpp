@@ -20,11 +20,22 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     gainValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, gainSlider);
     gainSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    gainSlider.setRange(0.0f, 10.0f, 0.01f);
+    gainSlider.setRange(0.0f, 10.0f, 0.1f);
     gainSlider.setPopupDisplayEnabled(true, true, this);
     gainSlider.addListener(this);
     addAndMakeVisible(gainLabel);
     addAndMakeVisible(gainSlider);
+
+    toneLabel.setText(TONE_NAME, dontSendNotification);
+    toneLabel.attachToComponent(&toneSlider, false);
+    toneValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, TONE_ID, toneSlider);
+    toneSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    toneSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    toneSlider.setRange(0.0f, 10.0f, 0.1f);
+    toneSlider.setPopupDisplayEnabled(true, true, this);
+    toneSlider.addListener(this);
+    addAndMakeVisible(toneLabel);
+    addAndMakeVisible(toneSlider);
 
     outLevelLabel.setText(OUTPUT_NAME, dontSendNotification);
     outLevelLabel.attachToComponent(&outLevelSlider, false);
@@ -61,9 +72,11 @@ void ShittyAmpAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
     gainSlider.setBounds(0 * column, 1 * row, column * 0.8, row * 0.8);
-    outLevelSlider.setBounds(1 * column, 1 * row, column * 0.8, row * 0.8);
+    toneSlider.setBounds(1 * column, 1 * row, column * 0.8, row * 0.8);
+    outLevelSlider.setBounds(2 * column, 1 * row, column * 0.8, row * 0.8);
 }
 
+// TODO: Is this still necessary?
 void ShittyAmpAudioProcessorEditor::sliderValueChanged(Slider *slider)
 {
     if (slider == &gainSlider)
