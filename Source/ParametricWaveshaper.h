@@ -1,9 +1,9 @@
 #include <JuceHeader.h>
 #include "BaseWaveshaper.h"
 
-class AsymptoticLimitWaveshaperProcessor : public BaseWaveshaper
+class ParametricWaveshaper : public BaseWaveshaper
 {
 public:
-    AsymptoticLimitWaveshaperProcessor();
+    ParametricWaveshaper();
     float processSample(float sample) override;
 };

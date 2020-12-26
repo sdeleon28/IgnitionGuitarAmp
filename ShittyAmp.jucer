@@ -6,6 +6,14 @@
               displaySplashScreen="1" pluginVST3Category="Distortion">
   <MAINGROUP id="KoOqKs" name="ShittyAmp">
     <GROUP id="{3C61CE8C-3D73-3D84-A3F2-889AC9331BC7}" name="Source">
+      <FILE id="lcryWs" name="BaseWaveshaper.cpp" compile="1" resource="0"
+            file="Source/BaseWaveshaper.cpp"/>
+      <FILE id="c3ntng" name="BaseWaveshaper.h" compile="0" resource="0"
+            file="Source/BaseWaveshaper.h"/>
+      <FILE id="q1sXVn" name="ParametricWaveshaper.cpp" compile="1" resource="0"
+            file="Source/ParametricWaveshaper.cpp"/>
+      <FILE id="G0Ftx1" name="ParametricWaveshaper.h" compile="0" resource="0"
+            file="Source/ParametricWaveshaper.h"/>
       <FILE id="ESNR1r" name="SingleEqBandProcessor.cpp" compile="1" resource="0"
             file="Source/SingleEqBandProcessor.cpp"/>
       <FILE id="z0PA10" name="SingleEqBandProcessor.h" compile="0" resource="0"
