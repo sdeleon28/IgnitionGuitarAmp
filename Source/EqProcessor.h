@@ -34,13 +34,6 @@ public:
         LastFilterID
     };
 
-    static String paramOutput;
-    static String paramType;
-    static String paramFrequency;
-    static String paramQuality;
-    static String paramGain;
-    static String paramActive;
-
     static String getBandID (size_t index);
 
     //==============================================================================

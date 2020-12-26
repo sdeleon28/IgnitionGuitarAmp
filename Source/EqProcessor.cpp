@@ -1,12 +1,5 @@
 #include "EqProcessor.h"
 
-String EqProcessor::paramOutput   ("output");
-String EqProcessor::paramType     ("type");
-String EqProcessor::paramFrequency("frequency");
-String EqProcessor::paramQuality  ("quality");
-String EqProcessor::paramGain     ("gain");
-String EqProcessor::paramActive   ("active");
-
 String EqProcessor::getBandID (size_t index)
 {
     switch (index)
