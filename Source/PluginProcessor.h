@@ -1,17 +1,10 @@
-/*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin processor.
-
-  ==============================================================================
-*/
-
 #pragma once
 
 #include <JuceHeader.h>
 #include "EqProcessor.h"
 #include "SingleEqBandProcessor.h"
 #include "AsymptoticLimitWaveshaperProcessor.h"
+#include "ParametricWaveshaper.h"
 #include "CabConvolutionProcessor.h"
 
 #define GAIN_ID "gain"
@@ -20,6 +13,8 @@
 #define OUTPUT_NAME "Output"
 #define TONE_ID "tone"
 #define TONE_NAME "Tone"
+#define WAVESHAPER_PARAM_ID "waveshaper-param"
+#define WAVESHAPER_PARAM_NAME "WS Param"
 
 //==============================================================================
 /**
@@ -73,7 +68,9 @@ public:
 private:
     EqProcessor preEqProcessor;
     Gain<float> gainProcessor;
-    AsymptoticLimitWaveshaperProcessor waveshaperProcessor;
+    Gain<float> middleGainProcessor;
+    AsymptoticLimitWaveshaperProcessor asymptoticLimitWaveshaper;
+    ParametricWaveshaper parametricWaveshaper;
     EqProcessor postEqProcessor;
     SingleEqBandProcessor toneControlEqProcessor;
     CabConvolutionProcessor cabConvolutionProcessor;

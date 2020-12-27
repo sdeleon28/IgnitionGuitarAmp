@@ -48,6 +48,17 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     addAndMakeVisible(outLevelLabel);
     addAndMakeVisible(outLevelSlider);
 
+    waveshaperParamLabel.setText(WAVESHAPER_PARAM_NAME, dontSendNotification);
+    waveshaperParamLabel.attachToComponent(&waveshaperParamSlider, false);
+    waveshaperParamValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, WAVESHAPER_PARAM_ID, waveshaperParamSlider);
+    waveshaperParamSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    waveshaperParamSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    waveshaperParamSlider.setRange(0.f, 10.0f, 0.1f);
+    waveshaperParamSlider.setPopupDisplayEnabled(true, true, this);
+    waveshaperParamSlider.addListener(this);
+    addAndMakeVisible(waveshaperParamLabel);
+    addAndMakeVisible(waveshaperParamSlider);
+
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (800, 600);
@@ -65,15 +76,21 @@ void ShittyAmpAudioProcessorEditor::paint (Graphics& g)
     g.setFont (15.0f);
 }
 
+void ShittyAmpAudioProcessorEditor::placeKnob(Slider* slider, int column, int row)
+{
+    const int rowSize = 100;
+    const int columnSize = 100;
+    slider->setBounds(column * columnSize, row * rowSize, columnSize * 0.8, rowSize * 0.8);
+}
+
 void ShittyAmpAudioProcessorEditor::resized()
 {
-    const int row = 100;
-    const int column = 100;
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    gainSlider.setBounds(0 * column, 1 * row, column * 0.8, row * 0.8);
-    toneSlider.setBounds(1 * column, 1 * row, column * 0.8, row * 0.8);
-    outLevelSlider.setBounds(2 * column, 1 * row, column * 0.8, row * 0.8);
+    placeKnob(&gainSlider, 0, 1);
+    placeKnob(&toneSlider, 1, 1);
+    placeKnob(&outLevelSlider, 2, 1);
+    placeKnob(&waveshaperParamSlider, 0, 2);
 }
 
 // TODO: Is this still necessary?

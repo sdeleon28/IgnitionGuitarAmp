@@ -25,6 +25,7 @@ public:
 
     //==============================================================================
     void paint (Graphics&) override;
+    void placeKnob(Slider* slider, int column, int row);
     void resized() override;
     void sliderValueChanged (Slider* slider) override;
 private:
@@ -39,6 +40,10 @@ private:
     Label outLevelLabel;
     Slider outLevelSlider;
     std::unique_ptr<SliderAttachment> outLevelValue;
+
+    Label waveshaperParamLabel;
+    Slider waveshaperParamSlider;
+    std::unique_ptr<SliderAttachment> waveshaperParamValue;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

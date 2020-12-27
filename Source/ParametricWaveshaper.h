@@ -5,5 +5,8 @@ class ParametricWaveshaper : public BaseWaveshaper
 {
 public:
     ParametricWaveshaper();
+    void setParameter(float parameterToUse);
     float processSample(float sample) override;
+private:
+    float parameter;
 };

@@ -4,8 +4,12 @@ ParametricWaveshaper::ParametricWaveshaper()
 {
 }
 
+void ParametricWaveshaper::setParameter(float parameterToUse)
+{
+    parameter = parameterToUse;
+}
+
 float ParametricWaveshaper::processSample(float x)
 {
-    float a = 0.2833f;
-    return (x*(abs(x) + a)/(x*x + (a-1) * abs(x) + 1)) * 0.7;
+    return (x*(abs(x) + parameter)/(x*x + (parameter-1) * abs(x) + 1)) * 0.7;
 }

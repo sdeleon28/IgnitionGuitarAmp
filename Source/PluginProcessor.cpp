@@ -16,6 +16,7 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
            std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 0.f, 10.f, 1.f),
            std::make_unique<AudioParameterFloat> (TONE_ID, TONE_NAME, 0.f, 10.f, 5.f),
            std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 10.f, 10.f),
+           std::make_unique<AudioParameterFloat> (WAVESHAPER_PARAM_ID, WAVESHAPER_PARAM_NAME, 0.f, 10.f, 0.2833f),
        })
 #endif
 {
@@ -220,7 +221,10 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     preEqProcessor.prepare(spec);
     gainProcessor.reset();
     gainProcessor.prepare(spec);
-    waveshaperProcessor.prepare(spec);
+    asymptoticLimitWaveshaper.prepare(spec);
+    middleGainProcessor.reset();
+    middleGainProcessor.setGainLinear(2);
+    parametricWaveshaper.prepare(spec);
     postEqProcessor.prepare(spec);
     cabConvolutionProcessor.reset();
     cabConvolutionProcessor.prepare(spec);
@@ -260,6 +264,8 @@ void ShittyAmpAudioProcessor::updateParams()
     // Some basic math reveals that that function is:
     float outAttenuationInDb = outLevelACoefficient * outLevel + outLowerBoundInDb;
     outputLevelProcessor.setGainLinear(Decibels::decibelsToGain(outAttenuationInDb, outLowerBoundInDb));
+
+    parametricWaveshaper.setParameter(*treeState.getRawParameterValue(WAVESHAPER_PARAM_ID));
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -309,7 +315,9 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     // I don't turn these into a processor chain because it makes accessing individual processors more cumbersome
     preEqProcessor.process(context);
     gainProcessor.process(context);
-    waveshaperProcessor.process(context);
+    asymptoticLimitWaveshaper.process(context);
+    middleGainProcessor.process(context);
+    parametricWaveshaper.process(context);
     postEqProcessor.process(context);
     cabConvolutionProcessor.process(context);
     toneControlEqProcessor.process(context);
