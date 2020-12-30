@@ -14,12 +14,6 @@
             file="Source/SlewRateLimiter.cpp"/>
       <FILE id="pdFlen" name="SlewRateLimiter.h" compile="0" resource="0"
             file="Source/SlewRateLimiter.h"/>
-      <FILE id="QJWAeV" name="SlewLimiter.cpp" compile="1" resource="0" file="Source/SlewLimiter.cpp"/>
-      <FILE id="v5CS1P" name="SlewLimiter.h" compile="0" resource="0" file="Source/SlewLimiter.h"/>
-      <FILE id="MCd20D" name="FullWaveRectifier.cpp" compile="1" resource="0"
-            file="Source/FullWaveRectifier.cpp"/>
-      <FILE id="wmGgBH" name="FullWaveRectifier.h" compile="0" resource="0"
-            file="Source/FullWaveRectifier.h"/>
       <FILE id="lcryWs" name="BaseWaveshaper.cpp" compile="1" resource="0"
             file="Source/BaseWaveshaper.cpp"/>
       <FILE id="c3ntng" name="BaseWaveshaper.h" compile="0" resource="0"
