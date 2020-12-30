@@ -4,11 +4,6 @@ SlewLimiter::SlewLimiter()
 {
 }
 
-void SlewLimiter::prepare(dsp::ProcessSpec spec)
-{
-    sampleRate = spec.sampleRate;
-}
-
 float SlewLimiter::processSample(float sample)
 {
     // Rise limiting

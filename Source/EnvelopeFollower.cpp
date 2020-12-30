@@ -1,24 +1,22 @@
-#include "BaseWaveshaper.h"
+#include "EnvelopeFollower.h"
 
-BaseWaveshaper::~BaseWaveshaper()
+EnvelopeFollower::EnvelopeFollower()
+{
+  mode = 2;
+}
+
+EnvelopeFollower::~EnvelopeFollower()
 {
 }
 
-void BaseWaveshaper::prepare (const dsp::ProcessSpec& spec) noexcept
+void EnvelopeFollower::prepare (const dsp::ProcessSpec& spec) noexcept
 {
-    sampleRate = spec.sampleRate;
+    setSampleRate(spec.sampleRate);
+    reset();
 }
 
-void BaseWaveshaper::reset() noexcept
-{
-}
-
-float BaseWaveshaper::processSample(float x)
-{
-    return x;
-}
-
-void BaseWaveshaper::process (const dsp::ProcessContextReplacing<float>& context) noexcept
+// FIXME: Duplicated code
+void EnvelopeFollower::process (const dsp::ProcessContextReplacing<float>& context) noexcept
 {
     auto&& inBlock  = context.getInputBlock();
     auto&& outBlock = context.getOutputBlock();
@@ -42,7 +40,13 @@ void BaseWaveshaper::process (const dsp::ProcessContextReplacing<float>& context
         auto* dst = outBlock.getChannelPointer (channel);
         for (int sample = 0; sample < len; ++sample)
         {
-            dst[sample] = jlimit(-1.f, 1.f, processSample(src[sample]));
+            dst[sample] = jlimit(-1.f, 1.f, getSample(src[sample]));
         }
     }
+}
+
+void EnvelopeFollower::setMode(int Mode)
+{
+  if( Mode >= MEAN_ABS && Mode < NUM_MODES )
+    mode = Mode;
 }

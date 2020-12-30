@@ -6,6 +6,16 @@
               displaySplashScreen="1" pluginVST3Category="Distortion">
   <MAINGROUP id="KoOqKs" name="ShittyAmp">
     <GROUP id="{3C61CE8C-3D73-3D84-A3F2-889AC9331BC7}" name="Source">
+      <FILE id="rBnTmt" name="EnvelopeFollower.cpp" compile="1" resource="0"
+            file="Source/EnvelopeFollower.cpp"/>
+      <FILE id="dPRlxg" name="EnvelopeFollower.h" compile="0" resource="0"
+            file="Source/EnvelopeFollower.h"/>
+      <FILE id="BTh4d8" name="SlewRateLimiter.cpp" compile="1" resource="0"
+            file="Source/SlewRateLimiter.cpp"/>
+      <FILE id="pdFlen" name="SlewRateLimiter.h" compile="0" resource="0"
+            file="Source/SlewRateLimiter.h"/>
+      <FILE id="QJWAeV" name="SlewLimiter.cpp" compile="1" resource="0" file="Source/SlewLimiter.cpp"/>
+      <FILE id="v5CS1P" name="SlewLimiter.h" compile="0" resource="0" file="Source/SlewLimiter.h"/>
       <FILE id="MCd20D" name="FullWaveRectifier.cpp" compile="1" resource="0"
             file="Source/FullWaveRectifier.cpp"/>
       <FILE id="wmGgBH" name="FullWaveRectifier.h" compile="0" resource="0"

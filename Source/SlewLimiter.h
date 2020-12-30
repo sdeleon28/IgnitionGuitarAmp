@@ -7,14 +7,11 @@ class SlewLimiter : public BaseWaveshaper
 {
 public:
     SlewLimiter();
-    void prepare(dsp::ProcessSpec spec);
     float processSample(float sample) override;
 private:
-    float sampleRate;
-
     // User parameters
     float rise = 0.5f;
-    float fall = 0.5f;
+    float fall = 0.999f;
 
     // Constants
     float slewMin = 0.1f;	// Minimum slope in volts per second
