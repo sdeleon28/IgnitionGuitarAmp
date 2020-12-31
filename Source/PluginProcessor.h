@@ -4,7 +4,8 @@
 #include "EqProcessor.h"
 #include "SingleEqBandProcessor.h"
 #include "AsymptoticLimitWaveshaperProcessor.h"
-#include "ParametricWaveshaper.h"
+#include "EnvelopeFollower.h"
+#include "DynamicWaveshaper.h"
 #include "CabConvolutionProcessor.h"
 
 #define GAIN_ID "gain"
@@ -13,8 +14,10 @@
 #define OUTPUT_NAME "Output"
 #define TONE_ID "tone"
 #define TONE_NAME "Tone"
-#define WAVESHAPER_PARAM_ID "waveshaper-param"
-#define WAVESHAPER_PARAM_NAME "WS Param"
+#define WAVESHAPER_ATTACK_ID "waveshaper-attack"
+#define WAVESHAPER_ATTACK_NAME "WS Attack"
+#define WAVESHAPER_RELEASE_ID "waveshaper-release"
+#define WAVESHAPER_RELEASE_NAME "WS Release"
 
 //==============================================================================
 /**
@@ -70,7 +73,8 @@ private:
     Gain<float> gainProcessor;
     Gain<float> middleGainProcessor;
     AsymptoticLimitWaveshaperProcessor asymptoticLimitWaveshaper;
-    ParametricWaveshaper parametricWaveshaper;
+    EnvelopeFollower envelopeFollower;
+    DynamicWaveshaper dynamicWaveshaper;
     EqProcessor postEqProcessor;
     SingleEqBandProcessor toneControlEqProcessor;
     CabConvolutionProcessor cabConvolutionProcessor;

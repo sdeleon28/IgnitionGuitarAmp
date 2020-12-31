@@ -6,6 +6,10 @@
               displaySplashScreen="1" pluginVST3Category="Distortion">
   <MAINGROUP id="KoOqKs" name="ShittyAmp">
     <GROUP id="{3C61CE8C-3D73-3D84-A3F2-889AC9331BC7}" name="Source">
+      <FILE id="kEcWlc" name="DynamicWaveshaper.cpp" compile="1" resource="0"
+            file="Source/DynamicWaveshaper.cpp"/>
+      <FILE id="AxNyHZ" name="DynamicWaveshaper.h" compile="0" resource="0"
+            file="Source/DynamicWaveshaper.h"/>
       <FILE id="rBnTmt" name="EnvelopeFollower.cpp" compile="1" resource="0"
             file="Source/EnvelopeFollower.cpp"/>
       <FILE id="dPRlxg" name="EnvelopeFollower.h" compile="0" resource="0"

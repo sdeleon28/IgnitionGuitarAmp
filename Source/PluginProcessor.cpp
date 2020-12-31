@@ -16,7 +16,8 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
            std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 0.f, 10.f, 1.f),
            std::make_unique<AudioParameterFloat> (TONE_ID, TONE_NAME, 0.f, 10.f, 5.f),
            std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 10.f, 10.f),
-           std::make_unique<AudioParameterFloat> (WAVESHAPER_PARAM_ID, WAVESHAPER_PARAM_NAME, 0.f, 10.f, 0.2833f),
+           std::make_unique<AudioParameterFloat> (WAVESHAPER_ATTACK_ID, WAVESHAPER_ATTACK_NAME, 0.01f, 2.f, 0.01f),
+           std::make_unique<AudioParameterFloat> (WAVESHAPER_RELEASE_ID, WAVESHAPER_RELEASE_NAME, 0.01f, 2.f, 0.1f),
        })
 #endif
 {
@@ -224,7 +225,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     asymptoticLimitWaveshaper.prepare(spec);
     middleGainProcessor.reset();
     middleGainProcessor.setGainLinear(2);
-    parametricWaveshaper.prepare(spec);
+    dynamicWaveshaper.prepare(spec);
     postEqProcessor.prepare(spec);
     cabConvolutionProcessor.reset();
     cabConvolutionProcessor.prepare(spec);
@@ -255,6 +256,11 @@ void ShittyAmpAudioProcessor::updateParams()
     float toneBandGainInDb = 2 * tone - 10;
     toneControlEqProcessor.setBandGain(Decibels::decibelsToGain(toneBandGainInDb));
 
+    float attackTime = *treeState.getRawParameterValue(WAVESHAPER_ATTACK_ID);
+    float releaseTime = *treeState.getRawParameterValue(WAVESHAPER_RELEASE_ID);
+    dynamicWaveshaper.setAttackTime(attackTime);
+    dynamicWaveshaper.setReleaseTime(releaseTime);
+
     // The out level knob works as an attenuator. You use this to tame the amount of gain
     // you've added before the waveshaper (but there's no reason to keep boosting at this stage).
     // The 0-10 range in the output knob should map to -inf to 0 in the dB realm.
@@ -264,8 +270,6 @@ void ShittyAmpAudioProcessor::updateParams()
     // Some basic math reveals that that function is:
     float outAttenuationInDb = outLevelACoefficient * outLevel + outLowerBoundInDb;
     outputLevelProcessor.setGainLinear(Decibels::decibelsToGain(outAttenuationInDb, outLowerBoundInDb));
-
-    parametricWaveshaper.setParameter(*treeState.getRawParameterValue(WAVESHAPER_PARAM_ID));
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -317,7 +321,7 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     gainProcessor.process(context);
     asymptoticLimitWaveshaper.process(context);
     middleGainProcessor.process(context);
-    parametricWaveshaper.process(context);
+    dynamicWaveshaper.process(context);
     postEqProcessor.process(context);
     cabConvolutionProcessor.process(context);
     toneControlEqProcessor.process(context);

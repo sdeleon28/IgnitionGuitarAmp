@@ -16,13 +16,18 @@ void EnvelopeFollower::prepare (const dsp::ProcessSpec& spec) noexcept
 }
 
 // FIXME: Duplicated code
-void EnvelopeFollower::process (const dsp::ProcessContextReplacing<float>& context) noexcept
+void EnvelopeFollower::process (const dsp::ProcessContextNonReplacing<float>& context) noexcept
 {
     auto&& inBlock  = context.getInputBlock();
     auto&& outBlock = context.getOutputBlock();
 
     jassert (inBlock.getNumChannels() == outBlock.getNumChannels());
-    jassert (inBlock.getNumSamples() == outBlock.getNumSamples());
+
+    // I don't necessarily need to know the exact sample count for the buffer I use here
+    // (as long as it's long enough). If this were outputting samples for use as plugin output
+    // I would be in trouble, but this is just the sidechain for another plugin.
+    // BE AWARE of that, and refactor if you need this to behave like a regular processor.
+    //jassert (inBlock.getNumSamples() == outBlock.getNumSamples());
 
     auto len         = inBlock.getNumSamples();
     auto numChannels = inBlock.getNumChannels();

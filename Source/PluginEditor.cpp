@@ -48,16 +48,27 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
     addAndMakeVisible(outLevelLabel);
     addAndMakeVisible(outLevelSlider);
 
-    waveshaperParamLabel.setText(WAVESHAPER_PARAM_NAME, dontSendNotification);
-    waveshaperParamLabel.attachToComponent(&waveshaperParamSlider, false);
-    waveshaperParamValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, WAVESHAPER_PARAM_ID, waveshaperParamSlider);
-    waveshaperParamSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    waveshaperParamSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    waveshaperParamSlider.setRange(0.f, 10.0f, 0.1f);
-    waveshaperParamSlider.setPopupDisplayEnabled(true, true, this);
-    waveshaperParamSlider.addListener(this);
-    addAndMakeVisible(waveshaperParamLabel);
-    addAndMakeVisible(waveshaperParamSlider);
+    waveshaperAttackLabel.setText(WAVESHAPER_ATTACK_NAME, dontSendNotification);
+    waveshaperAttackLabel.attachToComponent(&waveshaperAttackSlider, false);
+    waveshaperAttackValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, WAVESHAPER_ATTACK_ID, waveshaperAttackSlider);
+    waveshaperAttackSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    waveshaperAttackSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    waveshaperAttackSlider.setRange(0.01f, 2.0f, 0.01f);
+    waveshaperAttackSlider.setPopupDisplayEnabled(true, true, this);
+    waveshaperAttackSlider.addListener(this);
+    addAndMakeVisible(waveshaperAttackLabel);
+    addAndMakeVisible(waveshaperAttackSlider);
+
+    waveshaperReleaseLabel.setText(WAVESHAPER_RELEASE_NAME, dontSendNotification);
+    waveshaperReleaseLabel.attachToComponent(&waveshaperReleaseSlider, false);
+    waveshaperReleaseValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, WAVESHAPER_RELEASE_ID, waveshaperReleaseSlider);
+    waveshaperReleaseSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    waveshaperReleaseSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    waveshaperReleaseSlider.setRange(0.01f, 2.0f, 0.01f);
+    waveshaperReleaseSlider.setPopupDisplayEnabled(true, true, this);
+    waveshaperReleaseSlider.addListener(this);
+    addAndMakeVisible(waveshaperReleaseLabel);
+    addAndMakeVisible(waveshaperReleaseSlider);
 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -87,10 +98,14 @@ void ShittyAmpAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+
+    // First row
     placeKnob(&gainSlider, 0, 1);
     placeKnob(&toneSlider, 1, 1);
     placeKnob(&outLevelSlider, 2, 1);
-    placeKnob(&waveshaperParamSlider, 0, 2);
+    // Second row
+    placeKnob(&waveshaperAttackSlider, 0, 2);
+    placeKnob(&waveshaperReleaseSlider, 1, 2);
 }
 
 // TODO: Is this still necessary?

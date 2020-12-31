@@ -1,12 +1,13 @@
+#pragma once
+
 #include <JuceHeader.h>
 #include "BaseWaveshaper.h"
 
-class ParametricWaveshaper : public BaseWaveshaper
+class ParametricWaveshaper
 {
 public:
     ParametricWaveshaper();
-    void setParameter(float parameterToUse);
-    float processSample(float sample) override;
-private:
-    float parameter;
+    void prepare(const dsp::ProcessSpec& spec);
+    float processSample(int channel, int sample, float x, AudioBuffer<float>* sidechainBuffer);
+    void processWithSidechain (const dsp::ProcessContextReplacing<float>& context, AudioBuffer<float>* sidechainBuffer) noexcept;
 };

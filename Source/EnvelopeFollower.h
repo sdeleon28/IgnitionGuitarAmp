@@ -52,7 +52,7 @@ public:
     
     void prepare (const dsp::ProcessSpec& spec) noexcept;
 
-  void process (const dsp::ProcessContextReplacing<float>& context) noexcept;
+  void process (const dsp::ProcessContextNonReplacing<float>& context) noexcept;
 
   /** Estimates the signal envelope via one of the functions getSampleMeanAbsolute(), 
   getSampleMeanSquare() or getSampleRootMeanSquare() depending on the chosen mode. */
