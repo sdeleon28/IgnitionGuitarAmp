@@ -14,6 +14,8 @@ void DynamicWaveshaper::prepare (const dsp::ProcessSpec& spec) noexcept
     envOutputBlock = std::make_unique<dsp::AudioBlock<float>>(*envOutputBuffer);
     envelopeFollower.prepare(spec);
     parametricWaveshaper.prepare(spec);
+    setAttackTime(0.15f);
+    setReleaseTime(0.10f);
 }
 
 void DynamicWaveshaper::setAttackTime(float attackTime)

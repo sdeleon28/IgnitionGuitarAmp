@@ -16,8 +16,6 @@ ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
            std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 0.f, 10.f, 1.f),
            std::make_unique<AudioParameterFloat> (TONE_ID, TONE_NAME, 0.f, 10.f, 5.f),
            std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 10.f, 10.f),
-           std::make_unique<AudioParameterFloat> (WAVESHAPER_ATTACK_ID, WAVESHAPER_ATTACK_NAME, 0.01f, 2.f, 0.01f),
-           std::make_unique<AudioParameterFloat> (WAVESHAPER_RELEASE_ID, WAVESHAPER_RELEASE_NAME, 0.01f, 2.f, 0.1f),
        })
 #endif
 {
@@ -277,11 +275,6 @@ void ShittyAmpAudioProcessor::updateParams()
     // Line equation for f(0) = -10 and f(10) = 10
     float toneBandGainInDb = 2 * tone - 10;
     toneControlEqProcessor.setBandGain(Decibels::decibelsToGain(toneBandGainInDb));
-
-    float attackTime = *treeState.getRawParameterValue(WAVESHAPER_ATTACK_ID);
-    float releaseTime = *treeState.getRawParameterValue(WAVESHAPER_RELEASE_ID);
-    dynamicWaveshaper.setAttackTime(attackTime);
-    dynamicWaveshaper.setReleaseTime(releaseTime);
 
     // The out level knob works as an attenuator. You use this to tame the amount of gain
     // you've added before the waveshaper (but there's no reason to keep boosting at this stage).

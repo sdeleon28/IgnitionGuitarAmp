@@ -14,10 +14,6 @@
 #define OUTPUT_NAME "Output"
 #define TONE_ID "tone"
 #define TONE_NAME "Tone"
-#define WAVESHAPER_ATTACK_ID "waveshaper-attack"
-#define WAVESHAPER_ATTACK_NAME "WS Attack"
-#define WAVESHAPER_RELEASE_ID "waveshaper-release"
-#define WAVESHAPER_RELEASE_NAME "WS Release"
 
 //==============================================================================
 /**

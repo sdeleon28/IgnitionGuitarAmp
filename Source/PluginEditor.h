@@ -41,14 +41,6 @@ private:
     Slider outLevelSlider;
     std::unique_ptr<SliderAttachment> outLevelValue;
 
-    Label waveshaperAttackLabel;
-    Slider waveshaperAttackSlider;
-    std::unique_ptr<SliderAttachment> waveshaperAttackValue;
-
-    Label waveshaperReleaseLabel;
-    Slider waveshaperReleaseSlider;
-    std::unique_ptr<SliderAttachment> waveshaperReleaseValue;
-
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     ShittyAmpAudioProcessor& audioProcessor;
