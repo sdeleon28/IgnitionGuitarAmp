@@ -79,6 +79,8 @@ private:
     SingleEqBandProcessor toneControlEqProcessor;
     CabConvolutionProcessor cabConvolutionProcessor;
     Gain<float> outputLevelProcessor;
+    SingleEqBandProcessor postConvolutionLowEqProcessor;
+    SingleEqBandProcessor postConvolutionLowMidsEqProcessor;
 
     float outLowerBoundInDb = -60.0;
     float outLevelACoefficient = -outLowerBoundInDb / 10;

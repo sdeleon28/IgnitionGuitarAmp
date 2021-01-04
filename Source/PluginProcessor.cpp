@@ -213,10 +213,30 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         SingleEqBandProcessor::FilterType::Peak,
         2450.0f, // frequency
         1.1f, // q
-        Decibels::decibelsToGain(0) // gain // TODO: Make this changeable
+        Decibels::decibelsToGain(0)
     );
     toneControlEqProcessor.setBand(toneControlEqBand);
     // BEGIN tone control EQ
+
+    // BEGIN post-convolution EQ
+    SingleEqBandProcessor::Band postConvolutionLowEqBand(
+        "High",
+        SingleEqBandProcessor::FilterType::Peak,
+        256.0f, // frequency
+        0.94f, // q
+        Decibels::decibelsToGain(3.2)
+    );
+    postConvolutionLowEqProcessor.setBand(postConvolutionLowEqBand);
+
+    SingleEqBandProcessor::Band postConvolutionLowMidsEqBand(
+        "High",
+        SingleEqBandProcessor::FilterType::Peak,
+        690.0f, // frequency
+        0.87, // q
+        Decibels::decibelsToGain(-4.3)
+    );
+    postConvolutionLowMidsEqProcessor.setBand(postConvolutionLowMidsEqBand);
+    // END post-convolution EQ
 
     // I know this is a bit boilerplatey but processor chains are cumbersome
     preEqProcessor.prepare(spec);
@@ -232,6 +252,8 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     toneControlEqProcessor.prepare(spec);
     outputLevelProcessor.reset();
     outputLevelProcessor.prepare(spec);
+    postConvolutionLowEqProcessor.prepare(spec);
+    postConvolutionLowMidsEqProcessor.prepare(spec);
 }
 
 void ShittyAmpAudioProcessor::releaseResources()
@@ -244,7 +266,7 @@ void ShittyAmpAudioProcessor::updateParams()
 {
     gain = *treeState.getRawParameterValue(GAIN_ID);
     outLevel = *treeState.getRawParameterValue(OUTPUT_ID);
-    // The gain knob works as an amplifier. I empirically found +40dB to be a reasonable
+    // The gain knob works as an amplifier. I empirically found +60dB to be a reasonable
     // upper bound for the amount of amplification allowed.
     // The user facing values are in the familiar 0-10 gain range. Under the hood, this is
     // translated linearly to 0-60dB (by just multiplying by 6). Then that is mapped logarithmically
@@ -326,6 +348,8 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     cabConvolutionProcessor.process(context);
     toneControlEqProcessor.process(context);
     outputLevelProcessor.process(context);
+    postConvolutionLowEqProcessor.process(context);
+    postConvolutionLowMidsEqProcessor.process(context);
 }
 
 //==============================================================================
