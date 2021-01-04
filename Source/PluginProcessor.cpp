@@ -224,7 +224,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     gainProcessor.prepare(spec);
     asymptoticLimitWaveshaper.prepare(spec);
     middleGainProcessor.reset();
-    middleGainProcessor.setGainLinear(5);
+    middleGainProcessor.setGainLinear(6);
     dynamicWaveshaper.prepare(spec);
     postEqProcessor.prepare(spec);
     cabConvolutionProcessor.reset();
@@ -247,9 +247,9 @@ void ShittyAmpAudioProcessor::updateParams()
     // The gain knob works as an amplifier. I empirically found +40dB to be a reasonable
     // upper bound for the amount of amplification allowed.
     // The user facing values are in the familiar 0-10 gain range. Under the hood, this is
-    // translated linearly to 0-50dB (by just multiplying by 5). Then that is mapped logarithmically
+    // translated linearly to 0-60dB (by just multiplying by 6). Then that is mapped logarithmically
     // to absolute gain values by the gainProcessor.
-    gainProcessor.setGainDecibels(gain * 5);
+    gainProcessor.setGainDecibels(gain * 6);
 
     float tone = *treeState.getRawParameterValue(TONE_ID);
     // Line equation for f(0) = -10 and f(10) = 10
