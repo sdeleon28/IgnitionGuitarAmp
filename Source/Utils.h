@@ -10,23 +10,25 @@
 
 #pragma once
 
-inline std::unique_ptr<InputStream> createAssetInputStream (const char* resourcePath)
+inline std::unique_ptr<InputStream> createAssetInputStream(const char *resourcePath)
 {
-  #if JUCE_ANDROID
-    ZipFile apkZip (File::getSpecialLocation (File::invokedExecutableFile));
-    return std::unique_ptr<InputStream> (apkZip.createStreamForEntry (apkZip.getIndexOfFileName ("assets/" + String (resourcePath))));
-  #else
-   #if JUCE_IOS
-    auto assetsDir = File::getSpecialLocation (File::currentExecutableFile)
-                          .getParentDirectory().getChildFile ("Assets");
-   #elif JUCE_MAC
-    auto assetsDir = File::getSpecialLocation (File::currentExecutableFile)
-                          .getParentDirectory().getParentDirectory().getChildFile ("Resources");
-   #endif
+#if JUCE_ANDROID
+    ZipFile apkZip(File::getSpecialLocation(File::invokedExecutableFile));
+    return std::unique_ptr<InputStream>(
+        apkZip.createStreamForEntry(apkZip.getIndexOfFileName("assets/" + String(resourcePath))));
+#else
+#if JUCE_IOS
+    auto assetsDir = File::getSpecialLocation(File::currentExecutableFile).getParentDirectory().getChildFile("Assets");
+#elif JUCE_MAC
+    auto assetsDir = File::getSpecialLocation(File::currentExecutableFile)
+                         .getParentDirectory()
+                         .getParentDirectory()
+                         .getChildFile("Resources");
+#endif
 
-    auto resourceFile = assetsDir.getChildFile (resourcePath);
-    jassert (resourceFile.existsAsFile());
+    auto resourceFile = assetsDir.getChildFile(resourcePath);
+    jassert(resourceFile.existsAsFile());
 
     return resourceFile.createInputStream();
-  #endif
+#endif
 }

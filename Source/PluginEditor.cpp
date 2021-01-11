@@ -12,8 +12,9 @@
 using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 
 //==============================================================================
-ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProcessor &p)
+    : AudioProcessorEditor(&p)
+    , audioProcessor(p)
 {
     gainLabel.setText(GAIN_NAME, dontSendNotification);
     gainLabel.attachToComponent(&gainSlider, false);
@@ -50,7 +51,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor (ShittyAmpAudioProc
 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (800, 600);
+    setSize(800, 600);
 }
 
 ShittyAmpAudioProcessorEditor::~ShittyAmpAudioProcessorEditor()
@@ -58,14 +59,14 @@ ShittyAmpAudioProcessorEditor::~ShittyAmpAudioProcessorEditor()
 }
 
 //==============================================================================
-void ShittyAmpAudioProcessorEditor::paint (Graphics& g)
+void ShittyAmpAudioProcessorEditor::paint(Graphics &g)
 {
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-    g.setColour (Colours::white);
-    g.setFont (15.0f);
+    g.fillAll(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
+    g.setColour(Colours::white);
+    g.setFont(15.0f);
 }
 
-void ShittyAmpAudioProcessorEditor::placeKnob(Slider* slider, int column, int row)
+void ShittyAmpAudioProcessorEditor::placeKnob(Slider *slider, int column, int row)
 {
     const int rowSize = 100;
     const int columnSize = 100;

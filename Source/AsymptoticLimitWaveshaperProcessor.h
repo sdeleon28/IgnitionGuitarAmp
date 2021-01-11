@@ -5,7 +5,7 @@
 
 class AsymptoticLimitWaveshaperProcessor : public BaseWaveshaper
 {
-public:
+  public:
     AsymptoticLimitWaveshaperProcessor();
     float processSample(float sample) override;
 };

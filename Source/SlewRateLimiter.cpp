@@ -1,25 +1,24 @@
 #include "SlewRateLimiter.h"
 SlewRateLimiter::SlewRateLimiter()
 {
-	// parameter initializition:
- sampleRate  = 48000.0f; // default sample rate
-    // These default values give me a decent envelope shape for a clean
-    // guitar waveform
-    // TODO: Add knobs for these so that I can try different values live.
-	attackTime  = 0.01f;
-	releaseTime = 0.1f;
+    // parameter initializition:
+    sampleRate = 48000.0f; // default sample rate
+                           // These default values give me a decent envelope shape for a clean
+                           // guitar waveform
+                           // TODO: Add knobs for these so that I can try different values live.
+    attackTime = 0.01f;
+    releaseTime = 0.1f;
 
-	// calculation of internal variables:
-	coeffAttack  = 0.0f;
-	coeffRelease = 0.0f;
+    // calculation of internal variables:
+    coeffAttack = 0.0f;
+    coeffRelease = 0.0f;
 
-	// init previous output sample:
-	y_1 = 0.0f;
+    // init previous output sample:
+    y_1 = 0.0f;
 }
 
 SlewRateLimiter::~SlewRateLimiter()
 {
-
 }
 
 //----------------------------------------------------------------------------
@@ -27,42 +26,43 @@ SlewRateLimiter::~SlewRateLimiter()
 
 void SlewRateLimiter::setSampleRate(float newSampleRate)
 {
-	if(newSampleRate > 0.01f)
-		sampleRate = newSampleRate;
+    if (newSampleRate > 0.01f)
+        sampleRate = newSampleRate;
 
- setAttackTime(attackTime);
- setReleaseTime(releaseTime);
+    setAttackTime(attackTime);
+    setReleaseTime(releaseTime);
 
-	//coeffAttack  = exp( -1.0f / (sampleRate*attackTime)  );
-	//coeffRelease = exp( -1.0f / (sampleRate*releaseTime) );
+    // coeffAttack  = exp( -1.0f / (sampleRate*attackTime)  );
+    // coeffRelease = exp( -1.0f / (sampleRate*releaseTime) );
 }
 
 void SlewRateLimiter::setAttackTime(float newAttackTime)
 {
-	if(newAttackTime > 0.0f)   
- {
-		attackTime  = newAttackTime;
-	 coeffAttack = exp( -1.0f / (sampleRate*attackTime)  );
- }
- else
- {
-  attackTime  = 0.0f;
-	 coeffAttack = 0.0f;;
- }
+    if (newAttackTime > 0.0f)
+    {
+        attackTime = newAttackTime;
+        coeffAttack = exp(-1.0f / (sampleRate * attackTime));
+    }
+    else
+    {
+        attackTime = 0.0f;
+        coeffAttack = 0.0f;
+        ;
+    }
 }
 
 void SlewRateLimiter::setReleaseTime(float newReleaseTime)
 {
-	if(newReleaseTime > 0.0f)  
- {
-		releaseTime  = newReleaseTime; 
-	 coeffRelease = exp( -1.0f / (sampleRate*releaseTime) );
- }
- else
- {
-		releaseTime  = 0.0f; 
-	 coeffRelease = 0.0f;
- }
+    if (newReleaseTime > 0.0f)
+    {
+        releaseTime = newReleaseTime;
+        coeffRelease = exp(-1.0f / (sampleRate * releaseTime));
+    }
+    else
+    {
+        releaseTime = 0.0f;
+        coeffRelease = 0.0f;
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -70,5 +70,5 @@ void SlewRateLimiter::setReleaseTime(float newReleaseTime)
 
 void SlewRateLimiter::reset()
 {
- y_1 = 0;
+    y_1 = 0;
 }

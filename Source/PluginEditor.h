@@ -15,20 +15,22 @@ using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 
 //==============================================================================
 /**
-*/
-class ShittyAmpAudioProcessorEditor  : public AudioProcessorEditor,
-                                       public Slider::Listener
+ */
+class ShittyAmpAudioProcessorEditor
+    : public AudioProcessorEditor
+    , public Slider::Listener
 {
-public:
-    ShittyAmpAudioProcessorEditor (ShittyAmpAudioProcessor&);
+  public:
+    ShittyAmpAudioProcessorEditor(ShittyAmpAudioProcessor &);
     ~ShittyAmpAudioProcessorEditor() override;
 
     //==============================================================================
-    void paint (Graphics&) override;
-    void placeKnob(Slider* slider, int column, int row);
+    void paint(Graphics &) override;
+    void placeKnob(Slider *slider, int column, int row);
     void resized() override;
-    void sliderValueChanged (Slider* slider) override;
-private:
+    void sliderValueChanged(Slider *slider) override;
+
+  private:
     Label gainLabel;
     Slider gainSlider;
     std::unique_ptr<SliderAttachment> gainValue;
@@ -43,7 +45,7 @@ private:
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    ShittyAmpAudioProcessor& audioProcessor;
+    ShittyAmpAudioProcessor &audioProcessor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ShittyAmpAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ShittyAmpAudioProcessorEditor)
 };

@@ -5,7 +5,7 @@ DynamicWaveshaper::~DynamicWaveshaper()
     delete envOutputBuffer;
 }
 
-void DynamicWaveshaper::prepare (const dsp::ProcessSpec& spec) noexcept
+void DynamicWaveshaper::prepare(const dsp::ProcessSpec &spec) noexcept
 {
     sampleRate = spec.sampleRate;
     maximumBlockSize = spec.maximumBlockSize;
@@ -32,12 +32,9 @@ void DynamicWaveshaper::reset() noexcept
 {
 }
 
-void DynamicWaveshaper::process (const dsp::ProcessContextReplacing<float>& context) noexcept
+void DynamicWaveshaper::process(const dsp::ProcessContextReplacing<float> &context) noexcept
 {
-    dsp::ProcessContextNonReplacing<float> envContext(
-        context.getInputBlock(),
-        *envOutputBlock
-    );
+    dsp::ProcessContextNonReplacing<float> envContext(context.getInputBlock(), *envOutputBlock);
     envelopeFollower.process(envContext);
     parametricWaveshaper.processWithSidechain(context, envOutputBuffer);
 }

@@ -5,9 +5,10 @@
 
 class ParametricWaveshaper
 {
-public:
+  public:
     ParametricWaveshaper();
-    void prepare(const dsp::ProcessSpec& spec);
-    float processSample(int channel, int sample, float x, AudioBuffer<float>* sidechainBuffer);
-    void processWithSidechain (const dsp::ProcessContextReplacing<float>& context, AudioBuffer<float>* sidechainBuffer) noexcept;
+    void prepare(const dsp::ProcessSpec &spec);
+    float processSample(int channel, int sample, float x, AudioBuffer<float> *sidechainBuffer);
+    void processWithSidechain(
+        const dsp::ProcessContextReplacing<float> &context, AudioBuffer<float> *sidechainBuffer) noexcept;
 };

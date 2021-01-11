@@ -4,19 +4,23 @@
 //==============================================================================
 ShittyAmpAudioProcessor::ShittyAmpAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       ),
-       treeState(*this, nullptr, "PARAMETERS", {
-           std::make_unique<AudioParameterFloat> (GAIN_ID, GAIN_NAME, 0.f, 10.f, 1.f),
-           std::make_unique<AudioParameterFloat> (TONE_ID, TONE_NAME, 0.f, 10.f, 5.f),
-           std::make_unique<AudioParameterFloat> (OUTPUT_ID, OUTPUT_NAME, 0.f, 10.f, 10.f),
-       })
+    : AudioProcessor(BusesProperties()
+#if !JucePlugin_IsMidiEffect
+#if !JucePlugin_IsSynth
+                         .withInput("Input", juce::AudioChannelSet::stereo(), true)
+#endif
+                         .withOutput("Output", juce::AudioChannelSet::stereo(), true)
+#endif
+                         )
+    , treeState(
+          *this,
+          nullptr,
+          "PARAMETERS",
+          {
+              std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, 0.f, 10.f, 1.f),
+              std::make_unique<AudioParameterFloat>(TONE_ID, TONE_NAME, 0.f, 10.f, 5.f),
+              std::make_unique<AudioParameterFloat>(OUTPUT_ID, OUTPUT_NAME, 0.f, 10.f, 10.f),
+          })
 #endif
 {
 }
@@ -33,29 +37,29 @@ const juce::String ShittyAmpAudioProcessor::getName() const
 
 bool ShittyAmpAudioProcessor::acceptsMidi() const
 {
-   #if JucePlugin_WantsMidiInput
+#if JucePlugin_WantsMidiInput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool ShittyAmpAudioProcessor::producesMidi() const
 {
-   #if JucePlugin_ProducesMidiOutput
+#if JucePlugin_ProducesMidiOutput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool ShittyAmpAudioProcessor::isMidiEffect() const
 {
-   #if JucePlugin_IsMidiEffect
+#if JucePlugin_IsMidiEffect
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 double ShittyAmpAudioProcessor::getTailLengthSeconds() const
@@ -65,8 +69,8 @@ double ShittyAmpAudioProcessor::getTailLengthSeconds() const
 
 int ShittyAmpAudioProcessor::getNumPrograms()
 {
-    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
+    return 1; // NB: some hosts don't cope very well if you tell them there are 0 programs,
+              // so this should be at least 1, even if you're not really implementing programs.
 }
 
 int ShittyAmpAudioProcessor::getCurrentProgram()
@@ -74,21 +78,21 @@ int ShittyAmpAudioProcessor::getCurrentProgram()
     return 0;
 }
 
-void ShittyAmpAudioProcessor::setCurrentProgram (int index)
+void ShittyAmpAudioProcessor::setCurrentProgram(int index)
 {
 }
 
-const juce::String ShittyAmpAudioProcessor::getProgramName (int index)
+const juce::String ShittyAmpAudioProcessor::getProgramName(int index)
 {
     return {};
 }
 
-void ShittyAmpAudioProcessor::changeProgramName (int index, const juce::String& newName)
+void ShittyAmpAudioProcessor::changeProgramName(int index, const juce::String &newName)
 {
 }
 
 //==============================================================================
-void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void ShittyAmpAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     lastSampleRate = sampleRate;
 
@@ -104,7 +108,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         "Lowest",
         EqProcessor::FilterType::HighPass,
         64.0f, // frequency
-        0.1f // q
+        0.1f   // q
     );
     EqProcessor::Band preEqLow(
         "Low",
@@ -117,15 +121,15 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     EqProcessor::Band preEqLowMids(
         "Low Mids",
         EqProcessor::FilterType::Peak,
-        671.0f, // frequency
-        2.1f, // q
+        671.0f,                        // frequency
+        2.1f,                          // q
         Decibels::decibelsToGain(8.5f) // gain
     );
     EqProcessor::Band preEqHighMids(
         "High Mids",
         EqProcessor::FilterType::Peak,
-        1320.0f, // frequency
-        1.1f, // q
+        1320.0f,                       // frequency
+        1.1f,                          // q
         Decibels::decibelsToGain(8.9f) // gain
     );
     EqProcessor::Band preEqHigh(
@@ -140,7 +144,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         "Highest",
         EqProcessor::FilterType::LowPass,
         17380.0f, // frequency
-        0.1f // q
+        0.1f      // q
     );
 
     preEqProcessor.setBand(0, preEqLowest);
@@ -156,7 +160,7 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         "Lowest",
         EqProcessor::FilterType::HighPass,
         144.0f, // frequency
-        1.1f // q
+        1.1f    // q
     );
     EqProcessor::Band postEqLow(
         "Low",
@@ -169,22 +173,22 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
     EqProcessor::Band postEqLowMids(
         "Low Mids",
         EqProcessor::FilterType::Peak,
-        304.0f, // frequency
-        1.1f, // q
+        304.0f,                        // frequency
+        1.1f,                          // q
         Decibels::decibelsToGain(2.0f) // gain
     );
     EqProcessor::Band postEqHighMids(
         "High Mids",
         EqProcessor::FilterType::Peak,
-        896.0f, // frequency
-        1.1f, // q
+        896.0f,                        // frequency
+        1.1f,                          // q
         Decibels::decibelsToGain(3.6f) // gain
     );
     EqProcessor::Band postEqHigh(
         "High",
         EqProcessor::FilterType::Peak,
-        2680.0f, // frequency
-        1.1f, // q
+        2680.0f,                        // frequency
+        1.1f,                           // q
         Decibels::decibelsToGain(-0.8f) // gain
     );
     EqProcessor::Band postEqHighest(
@@ -210,9 +214,8 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         "High",
         SingleEqBandProcessor::FilterType::Peak,
         2450.0f, // frequency
-        1.1f, // q
-        Decibels::decibelsToGain(0)
-    );
+        1.1f,    // q
+        Decibels::decibelsToGain(0));
     toneControlEqProcessor.setBand(toneControlEqBand);
     // BEGIN tone control EQ
 
@@ -221,18 +224,16 @@ void ShittyAmpAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBl
         "High",
         SingleEqBandProcessor::FilterType::Peak,
         256.0f, // frequency
-        0.94f, // q
-        Decibels::decibelsToGain(3.2)
-    );
+        0.94f,  // q
+        Decibels::decibelsToGain(3.2));
     postConvolutionLowEqProcessor.setBand(postConvolutionLowEqBand);
 
     SingleEqBandProcessor::Band postConvolutionLowMidsEqBand(
         "High",
         SingleEqBandProcessor::FilterType::Peak,
         690.0f, // frequency
-        0.87, // q
-        Decibels::decibelsToGain(-4.3)
-    );
+        0.87,   // q
+        Decibels::decibelsToGain(-4.3));
     postConvolutionLowMidsEqProcessor.setBand(postConvolutionLowMidsEqBand);
     // END post-convolution EQ
 
@@ -288,33 +289,33 @@ void ShittyAmpAudioProcessor::updateParams()
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool ShittyAmpAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool ShittyAmpAudioProcessor::isBusesLayoutSupported(const BusesLayout &layouts) const
 {
-  #if JucePlugin_IsMidiEffect
-    juce::ignoreUnused (layouts);
+#if JucePlugin_IsMidiEffect
+    juce::ignoreUnused(layouts);
     return true;
-  #else
+#else
     // This is the place where you check if the layout is supported.
     // In this template code we only support mono or stereo.
-    if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+    if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono() &&
+        layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
         return false;
 
-    // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
+        // This checks if the input layout matches the output layout
+#if !JucePlugin_IsSynth
     if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
         return false;
-   #endif
+#endif
 
     return true;
-  #endif
+#endif
 }
 #endif
 
-void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void ShittyAmpAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer, juce::MidiBuffer &midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
+    auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     // In case we have more outputs than inputs, this code clears any output
@@ -324,7 +325,7 @@ void ShittyAmpAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     // when they first compile a plugin, but obviously you don't need to keep
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+        buffer.clear(i, 0, buffer.getNumSamples());
 
     dsp::AudioBlock<float> block(buffer);
     updateParams();
@@ -351,29 +352,29 @@ bool ShittyAmpAudioProcessor::hasEditor() const
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor* ShittyAmpAudioProcessor::createEditor()
+juce::AudioProcessorEditor *ShittyAmpAudioProcessor::createEditor()
 {
-    return new ShittyAmpAudioProcessorEditor (*this);
+    return new ShittyAmpAudioProcessorEditor(*this);
 }
 
 //==============================================================================
-void ShittyAmpAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void ShittyAmpAudioProcessor::getStateInformation(juce::MemoryBlock &destData)
 {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
-    std::unique_ptr<XmlElement> xml (treeState.state.createXml());
+    std::unique_ptr<XmlElement> xml(treeState.state.createXml());
     copyXmlToBinary(*xml, destData);
 }
 
-void ShittyAmpAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void ShittyAmpAudioProcessor::setStateInformation(const void *data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
-    std::unique_ptr <XmlElement> theParams(getXmlFromBinary(data, sizeInBytes));
+    std::unique_ptr<XmlElement> theParams(getXmlFromBinary(data, sizeInBytes));
     if (theParams != nullptr)
     {
-        if (theParams -> hasTagName(treeState.state.getType()))
+        if (theParams->hasTagName(treeState.state.getType()))
         {
             treeState.state = ValueTree::fromXml(*theParams);
         }
@@ -382,7 +383,7 @@ void ShittyAmpAudioProcessor::setStateInformation (const void* data, int sizeInB
 
 //==============================================================================
 // This creates new instances of the plugin..
-juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
+juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter()
 {
     return new ShittyAmpAudioProcessor();
 }
