@@ -14,7 +14,7 @@ float ParametricWaveshaper::processSample(int channel, int sample, float x, Audi
     return (x * (abs(x) + parameter) / (x * x + (parameter - 1) * abs(x) + 1)) * 0.7;
 }
 
-// TODO: Duplicated code
+// Yeah, there's some duplication in here but creating some weird abstraction is not worth it
 void ParametricWaveshaper::processWithSidechain(
     const dsp::ProcessContextReplacing<float> &context, AudioBuffer<float> *sidechainBuffer) noexcept
 {

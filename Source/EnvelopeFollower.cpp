@@ -15,7 +15,7 @@ void EnvelopeFollower::prepare(const dsp::ProcessSpec &spec) noexcept
     reset();
 }
 
-// FIXME: Duplicated code
+// Yeah, there's some more duplication here. Sue me.
 void EnvelopeFollower::process(const dsp::ProcessContextNonReplacing<float> &context) noexcept
 {
     auto &&inBlock = context.getInputBlock();

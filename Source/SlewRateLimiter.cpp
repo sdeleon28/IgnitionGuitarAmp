@@ -5,7 +5,6 @@ SlewRateLimiter::SlewRateLimiter()
     sampleRate = 48000.0f; // default sample rate
                            // These default values give me a decent envelope shape for a clean
                            // guitar waveform
-                           // TODO: Add knobs for these so that I can try different values live.
     attackTime = 0.01f;
     releaseTime = 0.1f;
 
