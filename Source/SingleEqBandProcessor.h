@@ -25,6 +25,7 @@ class SingleEqBandProcessor
     ~SingleEqBandProcessor();
 
     void reset() noexcept;
+    void setPluginProcessor(AudioProcessor *processorToUse) noexcept;
     void prepare(const dsp::ProcessSpec &spec) noexcept;
     void releaseResources();
     void process(const dsp::ProcessContextReplacing<float> &context) noexcept;
@@ -69,4 +70,5 @@ class SingleEqBandProcessor
     using FilterBand = dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>>;
     FilterBand filter;
     double sampleRate = 0;
+    AudioProcessor *pluginProcessor = nullptr;
 };

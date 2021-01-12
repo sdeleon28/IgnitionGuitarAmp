@@ -14,6 +14,11 @@ void SingleEqBandProcessor::reset() noexcept
 {
 }
 
+void SingleEqBandProcessor::setPluginProcessor(AudioProcessor *processorToUse) noexcept
+{
+    pluginProcessor = processorToUse;
+}
+
 //==============================================================================
 void SingleEqBandProcessor::prepare(const dsp::ProcessSpec &spec) noexcept
 {
@@ -100,15 +105,13 @@ void SingleEqBandProcessor::updateBand()
 
         if (newCoefficients)
         {
+            if (pluginProcessor)
             {
-                // I think I don't need the next lock since I'm not changing these values in real time
-                // Commenting out for now
-                // FIXME will probably need the lock again when changing values in real time?
-                // See how they do it in https://github.com/TheAudioProgrammer/juceIIRFilter
-
-                // minimise lock scope, get<0>() needs to be a  compile time constant
-                // ScopedLock processLock (getCallbackLock());
-
+                ScopedLock processLock (pluginProcessor->getCallbackLock());
+                *filter.state = *newCoefficients;
+            }
+            else
+            {
                 *filter.state = *newCoefficients;
             }
         }
