@@ -23,7 +23,6 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     gainSlider.setRange(0.0f, 10.0f, 0.1f);
     gainSlider.setPopupDisplayEnabled(true, true, this);
-    gainSlider.addListener(this);
     addAndMakeVisible(gainLabel);
     addAndMakeVisible(gainSlider);
 
@@ -34,7 +33,6 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     toneSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     toneSlider.setRange(0.0f, 10.0f, 0.1f);
     toneSlider.setPopupDisplayEnabled(true, true, this);
-    toneSlider.addListener(this);
     addAndMakeVisible(toneLabel);
     addAndMakeVisible(toneSlider);
 
@@ -45,7 +43,6 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     outLevelSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     outLevelSlider.setRange(0.f, 10.0f, 0.1f);
     outLevelSlider.setPopupDisplayEnabled(true, true, this);
-    outLevelSlider.addListener(this);
     addAndMakeVisible(outLevelLabel);
     addAndMakeVisible(outLevelSlider);
 
@@ -82,13 +79,4 @@ void ShittyAmpAudioProcessorEditor::resized()
     placeKnob(&gainSlider, 0, 1);
     placeKnob(&toneSlider, 1, 1);
     placeKnob(&outLevelSlider, 2, 1);
-}
-
-// TODO: Is this still necessary?
-void ShittyAmpAudioProcessorEditor::sliderValueChanged(Slider *slider)
-{
-    if (slider == &gainSlider)
-        audioProcessor.gain = gainSlider.getValue();
-    if (slider == &outLevelSlider)
-        audioProcessor.outLevel = outLevelSlider.getValue();
 }

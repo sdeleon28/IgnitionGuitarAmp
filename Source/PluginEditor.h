@@ -18,7 +18,6 @@ using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
  */
 class ShittyAmpAudioProcessorEditor
     : public AudioProcessorEditor
-    , public Slider::Listener
 {
   public:
     ShittyAmpAudioProcessorEditor(ShittyAmpAudioProcessor &);
@@ -28,7 +27,6 @@ class ShittyAmpAudioProcessorEditor
     void paint(Graphics &) override;
     void placeKnob(Slider *slider, int column, int row);
     void resized() override;
-    void sliderValueChanged(Slider *slider) override;
 
   private:
     Label gainLabel;
