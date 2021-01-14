@@ -23,6 +23,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     gainSlider.setRange(0.0f, 10.0f, 0.1f);
     gainSlider.setPopupDisplayEnabled(true, true, this);
+    gainSlider.setLookAndFeel(&dialLookAndFeel);
     addAndMakeVisible(gainLabel);
     addAndMakeVisible(gainSlider);
 
@@ -53,6 +54,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
 
 ShittyAmpAudioProcessorEditor::~ShittyAmpAudioProcessorEditor()
 {
+    gainSlider.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
