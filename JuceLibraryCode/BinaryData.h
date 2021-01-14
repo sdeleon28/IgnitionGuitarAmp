@@ -8,11 +8,14 @@
 
 namespace BinaryData
 {
+    extern const char*   dial_png;
+    const int            dial_pngSize = 24245;
+
     extern const char*   cabsim_wav;
     const int            cabsim_wavSize = 72044;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 1;
+    const int namedResourceListSize = 2;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

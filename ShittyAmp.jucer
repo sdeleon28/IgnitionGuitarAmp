@@ -54,6 +54,7 @@
       <FILE id="uZLlWv" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
     <GROUP id="{675E0FD3-3764-EE8F-C44E-CBE96AC32132}" name="Assets">
+      <FILE id="NRHAgq" name="dial.png" compile="0" resource="1" file="Assets/dial.png"/>
       <FILE id="cepjQx" name="cabsim.wav" compile="0" resource="1" file="Assets/cabsim.wav"
             xcodeResource="1"/>
     </GROUP>
