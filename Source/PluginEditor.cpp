@@ -34,6 +34,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     toneSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     toneSlider.setRange(0.0f, 10.0f, 0.1f);
     toneSlider.setPopupDisplayEnabled(true, true, this);
+    toneSlider.setLookAndFeel(&dialLookAndFeel);
     addAndMakeVisible(toneLabel);
     addAndMakeVisible(toneSlider);
 
@@ -44,6 +45,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     outLevelSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     outLevelSlider.setRange(0.f, 10.0f, 0.1f);
     outLevelSlider.setPopupDisplayEnabled(true, true, this);
+    outLevelSlider.setLookAndFeel(&dialLookAndFeel);
     addAndMakeVisible(outLevelLabel);
     addAndMakeVisible(outLevelSlider);
 
@@ -55,6 +57,8 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
 ShittyAmpAudioProcessorEditor::~ShittyAmpAudioProcessorEditor()
 {
     gainSlider.setLookAndFeel(nullptr);
+    toneSlider.setLookAndFeel(nullptr);
+    outLevelSlider.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
