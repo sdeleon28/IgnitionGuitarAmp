@@ -8,7 +8,8 @@ void ParametricWaveshaper::prepare(const dsp::ProcessSpec &spec)
 {
 }
 
-float ParametricWaveshaper::processSample(int channel, int sample, float x, AudioBuffer<float> *sidechainBuffer)
+float ParametricWaveshaper::processSample(
+    int channel, int sample, float x, std::shared_ptr<AudioBuffer<float>> sidechainBuffer)
 {
     float parameter = sidechainBuffer->getSample(channel, sample);
     return (x * (abs(x) + parameter) / (x * x + (parameter - 1) * abs(x) + 1)) * 0.7;
@@ -16,7 +17,7 @@ float ParametricWaveshaper::processSample(int channel, int sample, float x, Audi
 
 // Yeah, there's some duplication in here but creating some weird abstraction is not worth it
 void ParametricWaveshaper::processWithSidechain(
-    const dsp::ProcessContextReplacing<float> &context, AudioBuffer<float> *sidechainBuffer) noexcept
+    const dsp::ProcessContextReplacing<float> &context, std::shared_ptr<AudioBuffer<float>> sidechainBuffer) noexcept
 {
     auto &&inBlock = context.getInputBlock();
     auto &&outBlock = context.getOutputBlock();

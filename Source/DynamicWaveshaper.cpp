@@ -2,7 +2,6 @@
 
 DynamicWaveshaper::~DynamicWaveshaper()
 {
-    delete envOutputBuffer;
 }
 
 void DynamicWaveshaper::prepare(const dsp::ProcessSpec &spec) noexcept
@@ -10,8 +9,8 @@ void DynamicWaveshaper::prepare(const dsp::ProcessSpec &spec) noexcept
     sampleRate = spec.sampleRate;
     maximumBlockSize = spec.maximumBlockSize;
     numChannels = spec.numChannels;
-    envOutputBuffer = new AudioBuffer<float>(numChannels, maximumBlockSize);
-    envOutputBlock = std::make_unique<dsp::AudioBlock<float>>(*envOutputBuffer);
+    envOutputBuffer = std::make_shared<AudioBuffer<float>>(numChannels, maximumBlockSize);
+    envOutputBlock = std::make_shared<dsp::AudioBlock<float>>(*envOutputBuffer);
     envelopeFollower.prepare(spec);
     parametricWaveshaper.prepare(spec);
     setAttackTime(0.15f);

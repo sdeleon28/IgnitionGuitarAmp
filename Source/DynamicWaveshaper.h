@@ -18,8 +18,8 @@ class DynamicWaveshaper
     float sampleRate;
     int maximumBlockSize;
     int numChannels;
-    AudioBuffer<float> *envOutputBuffer;
-    std::unique_ptr<dsp::AudioBlock<float>> envOutputBlock;
+    std::shared_ptr<AudioBuffer<float>> envOutputBuffer;
+    std::shared_ptr<dsp::AudioBlock<float>> envOutputBlock;
     EnvelopeFollower envelopeFollower;
     ParametricWaveshaper parametricWaveshaper;
 };
