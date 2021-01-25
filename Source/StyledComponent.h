@@ -4,7 +4,7 @@
 
 #define SIZE_FACTOR 1
 #define SEPARATOR_PINK 20
-#define SEPARATOR_GREEN 40
+#define SEPARATOR_GREEN 44
 #define SEPARATOR_BLUE 88
 #define COLOUR_BLACK Colour(28, 28, 28)
 #define COLOUR_YELLOW Colour(249, 226, 85)

@@ -7,7 +7,7 @@ DialLookAndFeel::DialLookAndFeel()
 
 void DialLookAndFeel::drawRotarySlider(Graphics &g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider &slider)
 {
-    float diameter = jmin(width, height) * 0.8;
+    float diameter = jmin(width, height);
     float radius = diameter / 2;
     float centreX = x + width / 2;
     float centreY = y + height / 2;

@@ -18,11 +18,11 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     , audioProcessor(p)
 {
 
-    const int borderSize = 3;
+    const int borderWidth = 3;
     const int separatorPink = SEPARATOR_PINK * SIZE_FACTOR;
     const int separatorBlue = SEPARATOR_BLUE * SIZE_FACTOR;
     const int separatorGreen = SEPARATOR_GREEN * SIZE_FACTOR;
-    const int yellowBoxWidth = (504 + 2 * borderSize) * SIZE_FACTOR;
+    const int yellowBoxWidth = (480 + 2 * borderWidth) * SIZE_FACTOR;
 
     // TODO:
     // colour -> backgroundColor
@@ -33,7 +33,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
         .width = yellowBoxWidth,
         .height = 58 * SIZE_FACTOR,
         .borderRadius = 10,
-        .borderWidth = 3,
+        .borderWidth = borderWidth,
         .colour = COLOUR_YELLOW,
         .borderColour = COLOUR_BLACK,
     };
@@ -41,7 +41,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
         .left = separatorPink,
         .top = topYellowBox.getBottom() + separatorPink,
         .width = yellowBoxWidth,
-        .height = 162 * SIZE_FACTOR,
+        .height = (162 + 2 * borderWidth) * SIZE_FACTOR,
         .borderRadius = 10,
         .borderWidth = 3,
         .colour = COLOUR_YELLOW,
@@ -62,26 +62,27 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
         .borderRadius = 10,
         .colour = COLOUR_BLACK,
     };
+
+    const int labelHeight = 30;
+    const int knobHeight = midYellowBox.height - 2 * midYellowBox.borderWidth - 3 * separatorPink - labelHeight;
+
     StyledComponent::Box gainBox = {
-        .left = separatorBlue + borderSize,
-        .top = (midYellowBox.height - midYellowBox.borderWidth * 2) / 2,
-        .width = 80 * SIZE_FACTOR,
-        .height = (midYellowBox.height - midYellowBox.borderWidth * 2) / 2,
-        .colour = COLOUR_DARK_GREY,
+        .left = separatorBlue,
+        .top = 2 * separatorPink + labelHeight,
+        .width = knobHeight,
+        .height = knobHeight,
     };
     StyledComponent::Box toneBox = {
         .left = gainBox.getRight() + separatorGreen,
         .top = gainBox.top,
         .width = gainBox.width,
         .height = gainBox.height,
-        .colour = COLOUR_DARK_GREY,
     };
     StyledComponent::Box levelBox = {
         .left = toneBox.getRight() + separatorGreen,
         .top = gainBox.top,
         .width = toneBox.width,
         .height = toneBox.height,
-        .colour = COLOUR_DARK_GREY,
     };
     const int labelSizeIncrease = 20;
 
@@ -89,22 +90,19 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
         .left = gainBox.left - labelSizeIncrease / 2,
         .top = separatorPink,
         .width = gainBox.width + labelSizeIncrease,
-        .height = gainBox.height - separatorPink,
-        .colour = COLOUR_LIGHT_GREY,
+        .height = labelHeight,
     };
     StyledComponent::Box toneLabelBox = {
         .left = toneBox.left - labelSizeIncrease / 2,
         .top = separatorPink,
         .width = gainLabelBox.width,
-        .height = gainLabelBox.height,
-        .colour = COLOUR_LIGHT_GREY,
+        .height = labelHeight,
     };
     StyledComponent::Box levelLabelBox = {
         .left = levelBox.left - labelSizeIncrease / 2,
         .top = separatorPink,
         .width = gainLabelBox.width,
-        .height = gainLabelBox.height,
-        .colour = COLOUR_LIGHT_GREY,
+        .height = labelHeight,
     };
 
     topComponent.styles = topBlackBox;
