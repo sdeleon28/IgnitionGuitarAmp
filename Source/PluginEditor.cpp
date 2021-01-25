@@ -1,7 +1,16 @@
+#include <algorithm>
+#include <string>
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
+
+inline std::string upper(std::string str)
+{
+    std::string out = str;
+    std::transform(out.begin(), out.end(), out.begin(), ::toupper);
+    return out;
+}
 
 //==============================================================================
 ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProcessor &p)
@@ -9,127 +18,168 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     , audioProcessor(p)
 {
 
-    const float borderSize = 3;
-    const float separatorPink = SEPARATOR_PINK * SIZE_FACTOR;
-    const float separatorBlue = SEPARATOR_BLUE * SIZE_FACTOR;
-    const float separatorGreen = SEPARATOR_GREEN * SIZE_FACTOR;
-    const float yellowBoxWidth = (504 + 2 * borderSize) * SIZE_FACTOR;
+    const int borderSize = 3;
+    const int separatorPink = SEPARATOR_PINK * SIZE_FACTOR;
+    const int separatorBlue = SEPARATOR_BLUE * SIZE_FACTOR;
+    const int separatorGreen = SEPARATOR_GREEN * SIZE_FACTOR;
+    const int yellowBoxWidth = (504 + 2 * borderSize) * SIZE_FACTOR;
 
-    topYellowBox = {
-        .left = 2 * separatorPink,
-        .top = 2 * separatorPink,
+    // TODO:
+    // colour -> backgroundColor
+    // borderColour -> borderColor
+    StyledComponent::Box topYellowBox = {
+        .left = separatorPink,
+        .top = separatorPink,
         .width = yellowBoxWidth,
         .height = 58 * SIZE_FACTOR,
-        .cornerSize = 10,
-        .borderThickness = 3,
+        .borderRadius = 10,
+        .borderWidth = 3,
         .colour = COLOUR_YELLOW,
         .borderColour = COLOUR_BLACK,
     };
-    midYellowBox = {
-        .left = 2 * separatorPink,
+    StyledComponent::Box midYellowBox = {
+        .left = separatorPink,
         .top = topYellowBox.getBottom() + separatorPink,
         .width = yellowBoxWidth,
         .height = 162 * SIZE_FACTOR,
-        .cornerSize = 10,
-        .borderThickness = 3,
+        .borderRadius = 10,
+        .borderWidth = 3,
         .colour = COLOUR_YELLOW,
         .borderColour = COLOUR_BLACK,
     };
-    topGreyBox = {
+    StyledComponent::Box topGreyBox = {
         .left = separatorPink,
         .top = separatorPink,
         .width = yellowBoxWidth + 2 * separatorPink,
         .height = topYellowBox.height + midYellowBox.height + 3 * separatorPink,
         .colour = COLOUR_LIGHT_GREY,
     };
-    topBlackBox = {
+    StyledComponent::Box topBlackBox = {
         .left = 0,
         .top = 0,
         .width = topGreyBox.width + 2 * separatorPink,
         .height = topGreyBox.height + 2 * separatorPink,
-        .cornerSize = 10,
+        .borderRadius = 10,
         .colour = COLOUR_BLACK,
     };
-    bottomYellowBox = {
-        .left = 2 * separatorPink,
-        .top = topBlackBox.getBottom() + 2 * separatorPink,
-        .width = yellowBoxWidth,
-        .height = 240 * SIZE_FACTOR,
-        .cornerSize = 10,
-        .borderThickness = 3,
-        .colour = COLOUR_YELLOW,
-        .borderColour = COLOUR_BLACK,
-    };
-    bottomGreyBox = {
-        .left = separatorPink,
-        .top = topBlackBox.getBottom() + separatorPink,
-        .width = yellowBoxWidth + 2 * separatorPink,
-        .height = bottomYellowBox.height + 2 * separatorPink,
-        .colour = COLOUR_LIGHT_GREY,
-    };
-    bottomBlackBox = {
-        .left = 0,
-        .top = topBlackBox.getBottom(),
-        .width = topGreyBox.width + 2 * separatorPink,
-        .height = topGreyBox.height + 2 * separatorPink,
-        .cornerSize = 10,
-        .colour = COLOUR_BLACK,
-    };
-    gainBox = {
-        .left = midYellowBox.left + separatorBlue + borderSize,
-        .top = midYellowBox.top,
+    StyledComponent::Box gainBox = {
+        .left = separatorBlue + borderSize,
+        .top = (midYellowBox.height - midYellowBox.borderWidth * 2) / 2,
         .width = 80 * SIZE_FACTOR,
-        .height = midYellowBox.height,
+        .height = (midYellowBox.height - midYellowBox.borderWidth * 2) / 2,
         .colour = COLOUR_DARK_GREY,
     };
-    toneBox = {
+    StyledComponent::Box toneBox = {
         .left = gainBox.getRight() + separatorGreen,
         .top = gainBox.top,
         .width = gainBox.width,
         .height = gainBox.height,
         .colour = COLOUR_DARK_GREY,
     };
-    levelBox = {
+    StyledComponent::Box levelBox = {
         .left = toneBox.getRight() + separatorGreen,
-        .top = toneBox.top,
+        .top = gainBox.top,
         .width = toneBox.width,
         .height = toneBox.height,
         .colour = COLOUR_DARK_GREY,
     };
+    const int labelSizeIncrease = 20;
 
-    gainLabel.setText(GAIN_NAME, dontSendNotification);
-    gainLabel.attachToComponent(&gainSlider, false);
-    gainValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, gainSlider);
-    gainSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    gainSlider.setRange(0.0f, 10.0f, 0.1f);
-    gainSlider.setPopupDisplayEnabled(true, true, this);
-    gainSlider.setLookAndFeel(&dialLookAndFeel);
-    addAndMakeVisible(gainLabel);
-    addAndMakeVisible(gainSlider);
+    StyledComponent::Box gainLabelBox = {
+        .left = gainBox.left - labelSizeIncrease / 2,
+        .top = separatorPink,
+        .width = gainBox.width + labelSizeIncrease,
+        .height = gainBox.height - separatorPink,
+        .colour = COLOUR_LIGHT_GREY,
+    };
+    StyledComponent::Box toneLabelBox = {
+        .left = toneBox.left - labelSizeIncrease / 2,
+        .top = separatorPink,
+        .width = gainLabelBox.width,
+        .height = gainLabelBox.height,
+        .colour = COLOUR_LIGHT_GREY,
+    };
+    StyledComponent::Box levelLabelBox = {
+        .left = levelBox.left - labelSizeIncrease / 2,
+        .top = separatorPink,
+        .width = gainLabelBox.width,
+        .height = gainLabelBox.height,
+        .colour = COLOUR_LIGHT_GREY,
+    };
 
-    toneLabel.setText(TONE_NAME, dontSendNotification);
-    toneLabel.attachToComponent(&toneSlider, false);
-    toneValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, TONE_ID, toneSlider);
-    toneSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    toneSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    toneSlider.setRange(0.0f, 10.0f, 0.1f);
-    toneSlider.setPopupDisplayEnabled(true, true, this);
-    toneSlider.setLookAndFeel(&dialLookAndFeel);
-    addAndMakeVisible(toneLabel);
-    addAndMakeVisible(toneSlider);
+    topComponent.styles = topBlackBox;
 
-    outLevelLabel.setText(OUTPUT_NAME, dontSendNotification);
-    outLevelLabel.attachToComponent(&outLevelSlider, false);
-    outLevelValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, OUTPUT_ID, outLevelSlider);
-    outLevelSlider.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    outLevelSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    outLevelSlider.setRange(0.f, 10.0f, 0.1f);
-    outLevelSlider.setPopupDisplayEnabled(true, true, this);
-    outLevelSlider.setLookAndFeel(&dialLookAndFeel);
-    addAndMakeVisible(outLevelLabel);
-    addAndMakeVisible(outLevelSlider);
+    auto topGreyBoxComponent = std::make_shared<StyledComponent>(topGreyBox);
+    auto topYellowBoxComponent = std::make_shared<StyledComponent>(topYellowBox);
+    auto midYellowBoxComponent = std::make_shared<StyledComponent>(midYellowBox);
+    auto gainBoxComponent = std::make_shared<StyledComponent>(gainBox);
+    auto toneBoxComponent = std::make_shared<StyledComponent>(toneBox);
+    auto levelBoxComponent = std::make_shared<StyledComponent>(levelBox);
+    auto gainLabelBoxComponent = std::make_shared<StyledComponent>(gainLabelBox);
+    auto toneLabelBoxComponent = std::make_shared<StyledComponent>(toneLabelBox);
+    auto levelLabelBoxComponent = std::make_shared<StyledComponent>(levelLabelBox);
+    
+    const Font font("Arial", 30, 0);
+    
+    gainSlider = std::make_shared<Slider>();
+    gainLabel = std::make_shared<Label>();
+    gainLabel->setText(upper(GAIN_NAME), dontSendNotification);
+    gainLabel->setJustificationType(Justification::centredTop);
+    gainLabel->setFont(font);
+    gainLabel->setColour(Label::textColourId, COLOUR_BLACK);
+    gainValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, *gainSlider);
+    gainSlider->setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    gainSlider->setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    gainSlider->setRange(0.0f, 10.0f, 0.1f);
+    gainSlider->setPopupDisplayEnabled(true, true, this);
+    gainSlider->setLookAndFeel(&dialLookAndFeel);
 
+    toneSlider = std::make_shared<Slider>();
+    toneLabel = std::make_shared<Label>();
+    toneLabel->setText(upper(TONE_NAME), dontSendNotification);
+    toneLabel->setJustificationType(Justification::centredTop);
+    toneLabel->setFont(font);
+    toneLabel->setColour(Label::textColourId, COLOUR_BLACK);
+    toneValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, TONE_ID, *toneSlider);
+    toneSlider->setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    toneSlider->setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    toneSlider->setRange(0.0f, 10.0f, 0.1f);
+    toneSlider->setPopupDisplayEnabled(true, true, this);
+    toneSlider->setLookAndFeel(&dialLookAndFeel);
+
+    outLevelSlider = std::make_shared<Slider>();
+    outLevelLabel = std::make_shared<Label>();
+    outLevelLabel->setText(upper(OUTPUT_NAME), dontSendNotification);
+    outLevelLabel->setJustificationType(Justification::centredTop);
+    outLevelLabel->setFont(font);
+    outLevelLabel->setColour(Label::textColourId, COLOUR_BLACK);
+    outLevelValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, OUTPUT_ID, *outLevelSlider);
+    outLevelSlider->setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    outLevelSlider->setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    outLevelSlider->setRange(0.f, 10.0f, 0.1f);
+    outLevelSlider->setPopupDisplayEnabled(true, true, this);
+    outLevelSlider->setLookAndFeel(&dialLookAndFeel);
+
+    addAndMakeVisible(topComponent);
+    addAndMakeVisible(*gainLabel);
+    addAndMakeVisible(*toneLabel);
+    addAndMakeVisible(*outLevelLabel);
+    topComponent.addChild(topGreyBoxComponent);
+    topGreyBoxComponent->addChild(topYellowBoxComponent);
+    topGreyBoxComponent->addChild(midYellowBoxComponent);
+    midYellowBoxComponent->addChild(gainLabelBoxComponent);
+    midYellowBoxComponent->addChild(toneLabelBoxComponent);
+    midYellowBoxComponent->addChild(levelLabelBoxComponent);
+    midYellowBoxComponent->addChild(gainBoxComponent);
+    midYellowBoxComponent->addChild(toneBoxComponent);
+    midYellowBoxComponent->addChild(levelBoxComponent);
+    gainLabelBoxComponent->addChild(gainLabel);
+    toneLabelBoxComponent->addChild(toneLabel);
+    levelLabelBoxComponent->addChild(outLevelLabel);
+    gainBoxComponent->addChild(gainSlider);
+    toneBoxComponent->addChild(toneSlider);
+    levelBoxComponent->addChild(outLevelSlider);
+    
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize(800, 600);
@@ -137,50 +187,15 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
 
 ShittyAmpAudioProcessorEditor::~ShittyAmpAudioProcessorEditor()
 {
-    gainSlider.setLookAndFeel(nullptr);
-    toneSlider.setLookAndFeel(nullptr);
-    outLevelSlider.setLookAndFeel(nullptr);
-}
-
-void paintBox(Box &box, Graphics &g)
-{
-    g.setColour(box.colour);
-    Rectangle<float> rect = Rectangle<float>(box.left, box.top, box.width, box.height);
-    if (box.cornerSize == 0)
-    {
-        g.fillRect(rect);
-        if (box.borderThickness != 0)
-        {
-            g.setColour(box.borderColour);
-            g.drawRect(rect, box.borderThickness);
-        }
-    }
-    else
-    {
-        g.fillRoundedRectangle(rect, box.cornerSize);
-        if (box.borderThickness != 0)
-        {
-            g.setColour(box.borderColour);
-            g.drawRoundedRectangle(rect, box.cornerSize, box.borderThickness);
-        }
-    }
+    gainSlider->setLookAndFeel(nullptr);
+    toneSlider->setLookAndFeel(nullptr);
+    outLevelSlider->setLookAndFeel(nullptr);
 }
 
 //==============================================================================
 void ShittyAmpAudioProcessorEditor::paint(Graphics &g)
 {
     g.fillAll(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
-
-    paintBox(topBlackBox, g);
-    //paintBox(bottomBlackBox, g);
-    paintBox(topGreyBox, g);
-    //paintBox(bottomGreyBox, g);
-    paintBox(topYellowBox, g);
-    paintBox(midYellowBox, g);
-    //paintBox(bottomYellowBox, g);
-    //paintBox(gainBox, g);
-    //paintBox(toneBox, g);
-    //paintBox(levelBox, g);
 }
 
 void ShittyAmpAudioProcessorEditor::placeKnob(Slider *slider, int column, int row)
@@ -192,15 +207,5 @@ void ShittyAmpAudioProcessorEditor::placeKnob(Slider *slider, int column, int ro
 
 void ShittyAmpAudioProcessorEditor::resized()
 {
-    gainSlider.setBounds(gainBox.top, gainBox.left, gainBox.width, gainBox.height);
-    toneSlider.setBounds(toneBox.top, toneBox.left, toneBox.width, toneBox.height);
-    outLevelSlider.setBounds(levelBox.top, levelBox.left, levelBox.width, levelBox.height);
-
-    //Rectangle<int> bounds = getLocalBounds();
-
-    // TODO: Add these back
-    // First row
-    //placeKnob(&gainSlider, 0, 1);
-    //placeKnob(&toneSlider, 1, 1);
-    //placeKnob(&outLevelSlider, 2, 1);
+    topComponent.setBounds(getLocalBounds());
 }

@@ -3,40 +3,9 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "DialLookAndFeel.h"
-
-#define SIZE_FACTOR 1
-#define SEPARATOR_PINK 20
-#define SEPARATOR_GREEN 40
-#define SEPARATOR_BLUE 88
-#define COLOUR_BLACK Colour(28, 28, 28)
-#define COLOUR_YELLOW Colour(249, 226, 85)
-#define COLOUR_LIGHT_GREY Colour(142, 142, 142)
-#define COLOUR_DARK_GREY Colour(58, 58, 58)
-
+#include "StyledComponent.h"
 
 using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
-
-struct Box {
-    float top;
-    float left;
-    float height;
-    float width;
-    float cornerSize = 0;
-    float borderThickness = 0;
-    Colour colour;
-    Colour borderColour = COLOUR_BLACK;
-
-    float getBottom()
-    {
-        return top + height;
-    }
-    
-    float getRight()
-    {
-        return left + width;
-    }
-};
-
 
 class ShittyAmpAudioProcessorEditor
     : public AudioProcessorEditor
@@ -51,16 +20,16 @@ class ShittyAmpAudioProcessorEditor
     void resized() override;
 
   private:
-    Label gainLabel;
-    Slider gainSlider;
+    std::shared_ptr<Label> gainLabel;
+    std::shared_ptr<Slider> gainSlider;
     std::unique_ptr<SliderAttachment> gainValue;
 
-    Label toneLabel;
-    Slider toneSlider;
+    std::shared_ptr<Label> toneLabel;
+    std::shared_ptr<Slider> toneSlider;
     std::unique_ptr<SliderAttachment> toneValue;
 
-    Label outLevelLabel;
-    Slider outLevelSlider;
+    std::shared_ptr<Label> outLevelLabel;
+    std::shared_ptr<Slider> outLevelSlider;
     std::unique_ptr<SliderAttachment> outLevelValue;
 
     // This reference is provided as a quick way for your editor to
@@ -68,17 +37,7 @@ class ShittyAmpAudioProcessorEditor
     ShittyAmpAudioProcessor &audioProcessor;
 
     DialLookAndFeel dialLookAndFeel;
-
-    Box topYellowBox;
-    Box midYellowBox;
-    Box topGreyBox;
-    Box topBlackBox;
-    Box bottomYellowBox;
-    Box bottomGreyBox;
-    Box bottomBlackBox;
-    Box gainBox;
-    Box toneBox;
-    Box levelBox;
+    StyledComponent topComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ShittyAmpAudioProcessorEditor)
 };

@@ -10,7 +10,7 @@ void DialLookAndFeel::drawRotarySlider(Graphics &g, int x, int y, int width, int
     float diameter = jmin(width, height) * 0.8;
     float radius = diameter / 2;
     float centreX = x + width / 2;
-    float centreY = x + height / 2;
+    float centreY = y + height / 2;
     float rx = centreX - radius;
     float ry = centreY - radius;
     float angle = rotaryStartAngle + (sliderPos * (rotaryEndAngle - rotaryStartAngle));
