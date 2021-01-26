@@ -56,7 +56,7 @@ void StyledComponent::resized()
         .withLeft(styles.left)
         .withTop(styles.top)
         .withWidth(styles.width)
-        .withHeight(styles.width)
+        .withHeight(styles.height)
         .reduced(styles.borderWidth);
     for (int i = 0; i < children.size(); i++)
     {

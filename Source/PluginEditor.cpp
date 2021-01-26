@@ -2,6 +2,7 @@
 #include <string>
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "ThmAmpText.h"
 
 using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 
@@ -117,10 +118,10 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     auto toneLabelBoxComponent = std::make_shared<StyledComponent>(toneLabelBox);
     auto levelLabelBoxComponent = std::make_shared<StyledComponent>(levelLabelBox);
     
-    //const Font thmFont = mainFont.getBold().withHeight(44);
-    //const Font ampFont = mainFont.getBoldItalic().withHeight(22);
+    auto thmAmpText = std::make_shared<ThmAmpText>();
+
     const Font sliderLabelFont = mainFont.getBold().withHeight(30);
-    
+
     gainSlider = std::make_shared<Slider>();
     gainLabel = std::make_shared<Label>();
     gainLabel->setText(upper(GAIN_NAME), dontSendNotification);
@@ -173,6 +174,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     gainLabelBoxComponent->addChild(gainLabel);
     toneLabelBoxComponent->addChild(toneLabel);
     levelLabelBoxComponent->addChild(outLevelLabel);
+    topYellowBoxComponent->addChild(thmAmpText);
     gainBoxComponent->addChild(gainSlider);
     toneBoxComponent->addChild(toneSlider);
     levelBoxComponent->addChild(outLevelSlider);

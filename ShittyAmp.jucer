@@ -6,6 +6,8 @@
               displaySplashScreen="1" pluginVST3Category="Distortion">
   <MAINGROUP id="KoOqKs" name="ShittyAmp">
     <GROUP id="{3C61CE8C-3D73-3D84-A3F2-889AC9331BC7}" name="Source">
+      <FILE id="N1ViD3" name="ThmAmpText.cpp" compile="1" resource="0" file="Source/ThmAmpText.cpp"/>
+      <FILE id="YMZHJe" name="ThmAmpText.h" compile="0" resource="0" file="Source/ThmAmpText.h"/>
       <FILE id="UxD0V4" name="MainFont.cpp" compile="1" resource="0" file="Source/MainFont.cpp"/>
       <FILE id="jAfQdm" name="MainFont.h" compile="0" resource="0" file="Source/MainFont.h"/>
       <FILE id="Jv1AAa" name="StyledComponent.cpp" compile="1" resource="0"
