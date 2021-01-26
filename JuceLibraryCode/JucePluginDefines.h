@@ -38,10 +38,10 @@
  #define JucePlugin_Enable_IAA             0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "ShittyAmp"
+ #define JucePlugin_Name                   "Ignition Guitar Amp"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "ShittyAmp"
+ #define JucePlugin_Desc                   "Ignition Guitar Amp"
 #endif
 #ifndef  JucePlugin_Manufacturer
  #define JucePlugin_Manufacturer           "thmstudio"
@@ -53,7 +53,7 @@
  #define JucePlugin_ManufacturerEmail      "santi@thmstudio.com"
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       0x4d616e75
+ #define JucePlugin_ManufacturerCode       0x54484d53
 #endif
 #ifndef  JucePlugin_PluginCode
  #define JucePlugin_PluginCode             0x5a357763
@@ -98,16 +98,16 @@
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AUExportPrefix
- #define JucePlugin_AUExportPrefix         ShittyAmpAU
+ #define JucePlugin_AUExportPrefix         IgnitionGuitarAmpAU
 #endif
 #ifndef  JucePlugin_AUExportPrefixQuoted
- #define JucePlugin_AUExportPrefixQuoted   "ShittyAmpAU"
+ #define JucePlugin_AUExportPrefixQuoted   "IgnitionGuitarAmpAU"
 #endif
 #ifndef  JucePlugin_AUManufacturerCode
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     com.thmstudio.ShittyAmp
+ #define JucePlugin_CFBundleIdentifier     com.thmstudio.IgnitionGuitarAmp
 #endif
 #ifndef  JucePlugin_RTASCategory
  #define JucePlugin_RTASCategory           0
@@ -125,7 +125,7 @@
  #define JucePlugin_RTASDisableMultiMono   0
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.thmstudio.ShittyAmp
+ #define JucePlugin_AAXIdentifier          com.thmstudio.IgnitionGuitarAmp
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
@@ -149,7 +149,7 @@
  #define JucePlugin_IAASubType             JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_IAAName
- #define JucePlugin_IAAName                "thmstudio: ShittyAmp"
+ #define JucePlugin_IAAName                "thmstudio: Ignition Guitar Amp"
 #endif
 #ifndef  JucePlugin_VSTNumMidiInputs
  #define JucePlugin_VSTNumMidiInputs       16

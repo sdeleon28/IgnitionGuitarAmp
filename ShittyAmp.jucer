@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="Z5wCcb" name="ShittyAmp" projectType="audioplug" useAppConfig="0"
-              jucerFormatVersion="1" version="0.0.1" companyName="thmstudio"
+<JUCERPROJECT id="Z5wCcb" name="IgnitionGuitarAmp" projectType="audioplug"
+              useAppConfig="0" jucerFormatVersion="1" version="0.0.1" companyName="thmstudio"
               companyWebsite="thmstudio.com" companyEmail="santi@thmstudio.com"
-              displaySplashScreen="1" pluginVST3Category="Distortion">
-  <MAINGROUP id="KoOqKs" name="ShittyAmp">
+              displaySplashScreen="1" pluginVST3Category="Distortion" pluginName="Ignition Guitar Amp"
+              pluginDesc="Ignition Guitar Amp" pluginManufacturerCode="THMS">
+  <MAINGROUP id="KoOqKs" name="IgnitionGuitarAmp">
     <GROUP id="{3C61CE8C-3D73-3D84-A3F2-889AC9331BC7}" name="Source">
       <FILE id="N1ViD3" name="ThmAmpText.cpp" compile="1" resource="0" file="Source/ThmAmpText.cpp"/>
       <FILE id="YMZHJe" name="ThmAmpText.h" compile="0" resource="0" file="Source/ThmAmpText.h"/>
@@ -83,8 +84,8 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="ShittyAmp"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="ShittyAmp"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="IgnitionGuitarAmp"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="IgniitonGuitarAmp"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../../../Applications/JUCE/modules"/>

@@ -47,7 +47,7 @@
 #if ! JUCE_DONT_DECLARE_PROJECTINFO
 namespace ProjectInfo
 {
-    const char* const  projectName    = "ShittyAmp";
+    const char* const  projectName    = "IgnitionGuitarAmp";
     const char* const  companyName    = "thmstudio";
     const char* const  versionString  = "0.0.1";
     const int          versionNumber  = 0x1;
