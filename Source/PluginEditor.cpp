@@ -117,13 +117,15 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     auto toneLabelBoxComponent = std::make_shared<StyledComponent>(toneLabelBox);
     auto levelLabelBoxComponent = std::make_shared<StyledComponent>(levelLabelBox);
     
-    const Font font("Arial", 30, 0);
+    //const Font thmFont = mainFont.getBold().withHeight(44);
+    //const Font ampFont = mainFont.getBoldItalic().withHeight(22);
+    const Font sliderLabelFont = mainFont.getBold().withHeight(30);
     
     gainSlider = std::make_shared<Slider>();
     gainLabel = std::make_shared<Label>();
     gainLabel->setText(upper(GAIN_NAME), dontSendNotification);
     gainLabel->setJustificationType(Justification::centredTop);
-    gainLabel->setFont(font);
+    gainLabel->setFont(sliderLabelFont);
     gainLabel->setColour(Label::textColourId, COLOUR_BLACK);
     gainValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, GAIN_ID, *gainSlider);
     gainSlider->setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
@@ -136,7 +138,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     toneLabel = std::make_shared<Label>();
     toneLabel->setText(upper(TONE_NAME), dontSendNotification);
     toneLabel->setJustificationType(Justification::centredTop);
-    toneLabel->setFont(font);
+    toneLabel->setFont(sliderLabelFont);
     toneLabel->setColour(Label::textColourId, COLOUR_BLACK);
     toneValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, TONE_ID, *toneSlider);
     toneSlider->setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
@@ -149,7 +151,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     outLevelLabel = std::make_shared<Label>();
     outLevelLabel->setText(upper(OUTPUT_NAME), dontSendNotification);
     outLevelLabel->setJustificationType(Justification::centredTop);
-    outLevelLabel->setFont(font);
+    outLevelLabel->setFont(sliderLabelFont);
     outLevelLabel->setColour(Label::textColourId, COLOUR_BLACK);
     outLevelValue = std::make_unique<SliderAttachment>(audioProcessor.treeState, OUTPUT_ID, *outLevelSlider);
     outLevelSlider->setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
@@ -159,9 +161,6 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     outLevelSlider->setLookAndFeel(&dialLookAndFeel);
 
     addAndMakeVisible(topComponent);
-    addAndMakeVisible(*gainLabel);
-    addAndMakeVisible(*toneLabel);
-    addAndMakeVisible(*outLevelLabel);
     topComponent.addChild(topGreyBoxComponent);
     topGreyBoxComponent->addChild(topYellowBoxComponent);
     topGreyBoxComponent->addChild(midYellowBoxComponent);

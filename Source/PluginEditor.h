@@ -4,6 +4,7 @@
 #include "PluginProcessor.h"
 #include "DialLookAndFeel.h"
 #include "StyledComponent.h"
+#include "MainFont.h"
 
 using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 
@@ -38,6 +39,8 @@ class ShittyAmpAudioProcessorEditor
 
     DialLookAndFeel dialLookAndFeel;
     StyledComponent topComponent;
+
+    MainFont mainFont;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ShittyAmpAudioProcessorEditor)
 };
