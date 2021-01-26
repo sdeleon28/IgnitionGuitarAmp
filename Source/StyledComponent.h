@@ -14,16 +14,15 @@
 class StyledComponent  : public juce::Component
 {
 public:
-    // TODO: Rename to view
-    struct Box {
+    struct View {
         int top;
         int left;
         int height;
         int width;
         int borderRadius = 0;
         int borderWidth = 0;
-        Colour colour;
-        Colour borderColour = COLOUR_BLACK;
+        Colour backgroundColor;
+        Colour borderColor = COLOUR_BLACK;
 
         int getBottom()
         {
@@ -37,14 +36,14 @@ public:
     };
 
     StyledComponent();
-    StyledComponent(Box stylesToUse);
+    StyledComponent(View stylesToUse);
     ~StyledComponent() override;
 
     void addChild(std::shared_ptr<Component> child);
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    Box styles;
+    View styles;
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StyledComponent)
     std::vector<std::shared_ptr<Component>> children;

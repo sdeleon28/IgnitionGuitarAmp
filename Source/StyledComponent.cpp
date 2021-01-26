@@ -6,7 +6,7 @@ StyledComponent::StyledComponent()
 {
 }
 
-StyledComponent::StyledComponent(Box stylesToUse)
+StyledComponent::StyledComponent(View stylesToUse)
     : styles(stylesToUse)
 {
     setInterceptsMouseClicks(false, true);
@@ -24,14 +24,14 @@ StyledComponent::~StyledComponent()
 
 void StyledComponent::paint (juce::Graphics& g)
 {
-    g.setColour(styles.colour);
+    g.setColour(styles.backgroundColor);
     Rectangle<int> localBounds = Rectangle<int>(styles.left, styles.top, styles.width, styles.height);
     if (styles.borderRadius == 0)
     {
         g.fillRect(localBounds);
         if (styles.borderWidth != 0)
         {
-            g.setColour(styles.borderColour);
+            g.setColour(styles.borderColor);
             g.drawRect(localBounds, styles.borderWidth);
         }
     }
@@ -42,7 +42,7 @@ void StyledComponent::paint (juce::Graphics& g)
         g.fillRoundedRectangle(floatLocalBounds, borderRadius);
         if (styles.borderWidth != 0)
         {
-            g.setColour(styles.borderColour);
+            g.setColour(styles.borderColor);
             g.drawRoundedRectangle(floatLocalBounds, borderRadius, styles.borderWidth);
         }
     }
