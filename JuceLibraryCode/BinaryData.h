@@ -8,6 +8,24 @@
 
 namespace BinaryData
 {
+    extern const char*   JorgeLuisCafeBoldItalic_ttf;
+    const int            JorgeLuisCafeBoldItalic_ttfSize = 36404;
+
+    extern const char*   JorgeLuisCafeBold_ttf;
+    const int            JorgeLuisCafeBold_ttfSize = 34484;
+
+    extern const char*   JorgeLuisCafeCafe_ttf;
+    const int            JorgeLuisCafeCafe_ttfSize = 32020;
+
+    extern const char*   JorgeLuisCafeItalic_ttf;
+    const int            JorgeLuisCafeItalic_ttfSize = 33756;
+
+    extern const char*   JorgeLuisCafeLightItalic_ttf;
+    const int            JorgeLuisCafeLightItalic_ttfSize = 34076;
+
+    extern const char*   JorgeLuisCafeLight_ttf;
+    const int            JorgeLuisCafeLight_ttfSize = 32552;
+
     extern const char*   dial_png;
     const int            dial_pngSize = 24245;
 
@@ -15,7 +33,7 @@ namespace BinaryData
     const int            cabsim_wavSize = 72044;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 2;
+    const int namedResourceListSize = 8;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -6,6 +6,8 @@
               displaySplashScreen="1" pluginVST3Category="Distortion">
   <MAINGROUP id="KoOqKs" name="ShittyAmp">
     <GROUP id="{3C61CE8C-3D73-3D84-A3F2-889AC9331BC7}" name="Source">
+      <FILE id="UxD0V4" name="MainFont.cpp" compile="1" resource="0" file="Source/MainFont.cpp"/>
+      <FILE id="jAfQdm" name="MainFont.h" compile="0" resource="0" file="Source/MainFont.h"/>
       <FILE id="Jv1AAa" name="StyledComponent.cpp" compile="1" resource="0"
             file="Source/StyledComponent.cpp"/>
       <FILE id="LclV4c" name="StyledComponent.h" compile="0" resource="0"
@@ -58,6 +60,18 @@
       <FILE id="uZLlWv" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
     <GROUP id="{675E0FD3-3764-EE8F-C44E-CBE96AC32132}" name="Assets">
+      <FILE id="pF8Teg" name="Jorge-Luis-Cafe-Bold-Italic.ttf" compile="0"
+            resource="1" file="Assets/Jorge-Luis-Cafe-Bold-Italic.ttf"/>
+      <FILE id="Nz6WDB" name="Jorge-Luis-Cafe-Bold.ttf" compile="0" resource="1"
+            file="Assets/Jorge-Luis-Cafe-Bold.ttf" xcodeResource="0"/>
+      <FILE id="DZrVqF" name="Jorge-Luis-Cafe-Cafe.ttf" compile="0" resource="1"
+            file="Assets/Jorge-Luis-Cafe-Cafe.ttf" xcodeResource="0"/>
+      <FILE id="PA48rP" name="Jorge-Luis-Cafe-Italic.ttf" compile="0" resource="1"
+            file="Assets/Jorge-Luis-Cafe-Italic.ttf" xcodeResource="0"/>
+      <FILE id="GVsxfm" name="Jorge-Luis-Cafe-Light-Italic.ttf" compile="0"
+            resource="1" file="Assets/Jorge-Luis-Cafe-Light-Italic.ttf" xcodeResource="0"/>
+      <FILE id="i71uT1" name="Jorge-Luis-Cafe-Light.ttf" compile="0" resource="1"
+            file="Assets/Jorge-Luis-Cafe-Light.ttf" xcodeResource="0"/>
       <FILE id="NRHAgq" name="dial.png" compile="0" resource="1" file="Assets/dial.png"/>
       <FILE id="cepjQx" name="cabsim.wav" compile="0" resource="1" file="Assets/cabsim.wav"
             xcodeResource="1"/>
