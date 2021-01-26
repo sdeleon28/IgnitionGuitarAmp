@@ -7,8 +7,8 @@ ThmAmpText::ThmAmpText()
     const Font thmFont = mainFont.getBold().withHeight(44);
     const Font ampFont = mainFont.getBoldItalic().withHeight(22);
     Range<int> thmRange(0, 3);
-    Range<int> ampRange(4, 7);
-    AttributedString attributedString("THM amp");
+    Range<int> ampRange(4, 12);
+    AttributedString attributedString("THM ignition");
     attributedString.setFont(thmRange, thmFont);
     attributedString.setFont(ampRange, ampFont);
     attributedString.setJustification(Justification::centredLeft);
