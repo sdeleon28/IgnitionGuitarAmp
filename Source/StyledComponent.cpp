@@ -25,20 +25,19 @@ StyledComponent::~StyledComponent()
 void StyledComponent::paint (juce::Graphics& g)
 {
     g.setColour(styles.colour);
-    Rectangle<int> rect = Rectangle<int>(styles.left, styles.top, styles.width, styles.height);
-    //if (styles.borderRadius == 0)
+    Rectangle<int> localBounds = Rectangle<int>(styles.left, styles.top, styles.width, styles.height);
+    if (styles.borderRadius == 0)
     {
-        g.fillRect(rect);
+        g.fillRect(localBounds);
         if (styles.borderWidth != 0)
         {
             g.setColour(styles.borderColour);
-            g.drawRect(rect, styles.borderWidth);
+            g.drawRect(localBounds, styles.borderWidth);
         }
     }
-    /*
     else
     {
-        Rectangle<float> floatLocalBounds = localBounds.getFloatEquivalent();
+        Rectangle<float> floatLocalBounds = localBounds.toFloat();
         float borderRadius = static_cast<float>(styles.borderRadius);
         g.fillRoundedRectangle(floatLocalBounds, borderRadius);
         if (styles.borderWidth != 0)
@@ -47,7 +46,6 @@ void StyledComponent::paint (juce::Graphics& g)
             g.drawRoundedRectangle(floatLocalBounds, borderRadius, styles.borderWidth);
         }
     }
-    */
 }
 
 void StyledComponent::resized()
