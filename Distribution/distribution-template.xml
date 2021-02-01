@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="2">
+    <pkg-ref id="com.thmstudio.IgnitionGuitarAmp.vst3">
+        <background file="background" alignment="left" scaling="proportional"/>
+        <options customize="always" hostArchitectures="i386"/>
+        <license language="en" mime-type="text/rtf"><![CDATA[THIS IS THE LICENSE]]></license>       
+        <bundle-version>
+            <bundle CFBundleShortVersionString="{short_version}" CFBundleVersion="{short_version}" id="com.thmstudio.IgnitionGuitarAmp.vst3" path="IgnitionGuitarAmp.vst3"/>
+        </bundle-version>
+    </pkg-ref>
+    <pkg-ref id="com.thmstudio.IgnitionGuitarAmp.au">
+        <bundle-version>
+            <bundle CFBundleShortVersionString="{short_version}" CFBundleVersion="{short_version}" id="com.thmstudio.IgnitionGuitarAmp.au" path="IgnitionGuitarAmp.component"/>
+        </bundle-version>
+    </pkg-ref>
+    <product version="{short_version}" id="com.thmstudio.IgnitionGuitarAmp.installer"/>
+    <title>Ignition Guitar Amp</title>
+    <options customize="never" require-scripts="false" hostArchitectures="x86_64"/>
+    <volume-check>
+        <allowed-os-versions>
+            <os-version min="10.9"/>
+        </allowed-os-versions>
+    </volume-check>
+    <choices-outline>
+        <line choice="default">
+            <line choice="com.thmstudio.IgnitionGuitarAmp.vst3"/>
+            <line choice="com.thmstudio.IgnitionGuitarAmp.au"/>
+        </line>
+    </choices-outline>
+    <choice id="default" title="Ignition" versStr="{short_version}"/>
+    <choice id="com.thmstudio.IgnitionGuitarAmp.vst3" title="Ignition" visible="false" customLocation="/Library/Audio/Plug-Ins/VST3/">
+        <pkg-ref id="com.thmstudio.IgnitionGuitarAmp.vst3"/>
+    </choice>
+    <pkg-ref id="com.thmstudio.IgnitionGuitarAmp.vst3" version="{version}" onConclusion="none" installKBytes="{vst3_size}">#com.thmstudio.IgnitionGuitarAmp.vst3.pkg</pkg-ref>
+    <choice id="com.thmstudio.IgnitionGuitarAmp.au" title="Ignition" visible="false" customLocation="/Library/Audio/Plug-Ins/Components/">
+        <pkg-ref id="com.thmstudio.IgnitionGuitarAmp.au"/>
+    </choice>
+    <pkg-ref id="com.thmstudio.IgnitionGuitarAmp.au" version="{version}" onConclusion="none" installKBytes="{au_size}">#com.thmstudio.IgnitionGuitarAmp.au.pkg</pkg-ref>
+</installer-gui-script>
