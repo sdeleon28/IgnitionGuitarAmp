@@ -1,5 +1,4 @@
 #include <JuceHeader.h>
-#include "Utils.h"
 
 using namespace dsp;
 #include "CabConvolutionProcessor.h"
@@ -13,16 +12,11 @@ void CabConvolutionProcessor::prepare(const ProcessSpec &spec)
     // BEGIN block
     // This block used to be a part of the updateParameters function, but since we're not changing
     // IRs dynamically I moved all of this into prepare.
-    auto assetName = "cabsim.wav";
-    auto assetInputStream = createAssetInputStream(assetName);
-    if (assetInputStream == nullptr)
-    {
-        jassertfalse;
-        return;
-    }
     AudioFormatManager manager;
     manager.registerBasicFormats();
-    std::unique_ptr<AudioFormatReader> reader{manager.createReaderFor(std::move(assetInputStream))};
+    std::unique_ptr<AudioFormatReader> reader{manager.createReaderFor(
+        std::make_unique<MemoryInputStream>(BinaryData::cabsim_wav, BinaryData::cabsim_wavSize, true)
+    )};
     if (reader == nullptr)
     {
         jassertfalse;

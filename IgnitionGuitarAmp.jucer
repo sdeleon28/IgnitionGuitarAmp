@@ -43,7 +43,6 @@
             file="Source/SingleEqBandProcessor.cpp"/>
       <FILE id="z0PA10" name="SingleEqBandProcessor.h" compile="0" resource="0"
             file="Source/SingleEqBandProcessor.h"/>
-      <FILE id="dmiGfJ" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
       <FILE id="ktEr5z" name="CabConvolutionProcessor.cpp" compile="1" resource="0"
             file="Source/CabConvolutionProcessor.cpp"/>
       <FILE id="pescag" name="CabConvolutionProcessor.h" compile="0" resource="0"
