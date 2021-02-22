@@ -273,8 +273,8 @@ void ShittyAmpAudioProcessor::updateParams()
     gainProcessor.setGainDecibels(gain * 6);
 
     float tone = *treeState.getRawParameterValue(TONE_ID);
-    // Line equation for f(0) = -10 and f(10) = 10
-    float toneBandGainInDb = 2 * tone - 10;
+    // Line equation for f(0) = -10 and f(10) = 5.4 (empirically tested values that sound good)
+    float toneBandGainInDb = 1.54 * tone - 10;
     toneControlEqProcessor.setBandGain(Decibels::decibelsToGain(toneBandGainInDb));
 
     // The out level knob works as an attenuator. You use this to tame the amount of gain
