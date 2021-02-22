@@ -17,7 +17,6 @@ class ShittyAmpAudioProcessorEditor
 
     //==============================================================================
     void paint(Graphics &) override;
-    void placeKnob(Slider *slider, int column, int row);
     void resized() override;
 
   private:

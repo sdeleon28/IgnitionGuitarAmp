@@ -194,13 +194,6 @@ void ShittyAmpAudioProcessorEditor::paint(Graphics &g)
     g.fillAll(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
 }
 
-void ShittyAmpAudioProcessorEditor::placeKnob(Slider *slider, int column, int row)
-{
-    const int rowSize = 100;
-    const int columnSize = 100;
-    slider->setBounds(column * columnSize, row * rowSize, columnSize * 0.8, rowSize * 0.8);
-}
-
 void ShittyAmpAudioProcessorEditor::resized()
 {
     topComponent.setBounds(getLocalBounds());
