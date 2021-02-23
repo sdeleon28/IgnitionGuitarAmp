@@ -27,7 +27,7 @@ namespace BinaryData
     const int            JorgeLuisCafeLight_ttfSize = 32552;
 
     extern const char*   dial_png;
-    const int            dial_pngSize = 24245;
+    const int            dial_pngSize = 3609;
 
     extern const char*   cabsim_wav;
     const int            cabsim_wavSize = 72044;
