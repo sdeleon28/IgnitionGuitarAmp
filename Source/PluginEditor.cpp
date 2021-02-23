@@ -26,81 +26,81 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     const int yellowBoxWidth = (480 + 2 * borderWidth) * SIZE_FACTOR;
 
     StyledComponent::View topYellowBox = {
+        .backgroundColor = COLOUR_YELLOW,
+        .borderColor = COLOUR_BLACK,
+        .borderRadius = 10,
+        .borderWidth = borderWidth,
+        .height = 58 * SIZE_FACTOR,
         .left = separatorPink,
         .top = separatorPink,
         .width = yellowBoxWidth,
-        .height = 58 * SIZE_FACTOR,
-        .borderRadius = 10,
-        .borderWidth = borderWidth,
-        .backgroundColor = COLOUR_YELLOW,
-        .borderColor = COLOUR_BLACK,
     };
     StyledComponent::View midYellowBox = {
+        .backgroundColor = COLOUR_YELLOW,
+        .borderColor = COLOUR_BLACK,
+        .borderRadius = 10,
+        .borderWidth = 3,
+        .height = (162 + 2 * borderWidth) * SIZE_FACTOR,
         .left = separatorPink,
         .top = topYellowBox.getBottom() + separatorPink,
         .width = yellowBoxWidth,
-        .height = (162 + 2 * borderWidth) * SIZE_FACTOR,
-        .borderRadius = 10,
-        .borderWidth = 3,
-        .backgroundColor = COLOUR_YELLOW,
-        .borderColor = COLOUR_BLACK,
     };
     StyledComponent::View topGreyBox = {
+        .backgroundColor = COLOUR_LIGHT_GREY,
+        .height = topYellowBox.height + midYellowBox.height + 3 * separatorPink,
         .left = separatorPink,
         .top = separatorPink,
         .width = yellowBoxWidth + 2 * separatorPink,
-        .height = topYellowBox.height + midYellowBox.height + 3 * separatorPink,
-        .backgroundColor = COLOUR_LIGHT_GREY,
     };
     StyledComponent::View topBlackBox = {
+        .backgroundColor = COLOUR_BLACK,
+        .borderRadius = 10,
+        .height = topGreyBox.height + 2 * separatorPink,
         .left = 0,
         .top = 0,
         .width = topGreyBox.width + 2 * separatorPink,
-        .height = topGreyBox.height + 2 * separatorPink,
-        .borderRadius = 10,
-        .backgroundColor = COLOUR_BLACK,
     };
 
     const int labelHeight = 30;
     const int knobHeight = midYellowBox.height - 2 * midYellowBox.borderWidth - 3 * separatorPink - labelHeight;
 
     StyledComponent::View gainBox = {
+        .height = knobHeight,
         .left = separatorBlue,
         .top = 2 * separatorPink + labelHeight,
         .width = knobHeight,
-        .height = knobHeight,
     };
     StyledComponent::View toneBox = {
+        .height = gainBox.height,
         .left = gainBox.getRight() + separatorGreen,
         .top = gainBox.top,
         .width = gainBox.width,
-        .height = gainBox.height,
     };
     StyledComponent::View levelBox = {
+        .height = toneBox.height,
         .left = toneBox.getRight() + separatorGreen,
         .top = gainBox.top,
         .width = toneBox.width,
-        .height = toneBox.height,
     };
     const int labelSizeIncrease = 20;
 
     StyledComponent::View gainLabelBox = {
+        .height = labelHeight,
         .left = gainBox.left - labelSizeIncrease / 2,
         .top = separatorPink,
         .width = gainBox.width + labelSizeIncrease,
-        .height = labelHeight,
     };
     StyledComponent::View toneLabelBox = {
+        .height = labelHeight,
         .left = toneBox.left - labelSizeIncrease / 2,
         .top = separatorPink,
         .width = gainLabelBox.width,
-        .height = labelHeight,
     };
     StyledComponent::View levelLabelBox = {
+        .height = labelHeight,
         .left = levelBox.left - labelSizeIncrease / 2,
         .top = separatorPink,
         .width = gainLabelBox.width,
-        .height = labelHeight,
     };
 
     topComponent.styles = topBlackBox;

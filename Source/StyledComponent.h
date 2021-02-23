@@ -15,14 +15,14 @@ class StyledComponent  : public juce::Component
 {
 public:
     struct View {
-        int top;
-        int left;
-        int height;
-        int width;
-        int borderRadius = 0;
-        int borderWidth = 0;
         Colour backgroundColor;
         Colour borderColor = COLOUR_BLACK;
+        int borderRadius = 0;
+        int borderWidth = 0;
+        int height;
+        int left;
+        int top;
+        int width;
 
         int getBottom()
         {
