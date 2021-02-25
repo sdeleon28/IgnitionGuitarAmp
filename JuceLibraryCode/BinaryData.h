@@ -8,6 +8,39 @@
 
 namespace BinaryData
 {
+    extern const char*   Apache_License_txt;
+    const int            Apache_License_txtSize = 11323;
+
+    extern const char*   OpenSansBold_ttf;
+    const int            OpenSansBold_ttfSize = 224592;
+
+    extern const char*   OpenSansBoldItalic_ttf;
+    const int            OpenSansBoldItalic_ttfSize = 213292;
+
+    extern const char*   OpenSansExtraBold_ttf;
+    const int            OpenSansExtraBold_ttfSize = 222584;
+
+    extern const char*   OpenSansExtraBoldItalic_ttf;
+    const int            OpenSansExtraBoldItalic_ttfSize = 213420;
+
+    extern const char*   OpenSansItalic_ttf;
+    const int            OpenSansItalic_ttfSize = 212896;
+
+    extern const char*   OpenSansLight_ttf;
+    const int            OpenSansLight_ttfSize = 222412;
+
+    extern const char*   OpenSansLightItalic_ttf;
+    const int            OpenSansLightItalic_ttfSize = 213128;
+
+    extern const char*   OpenSansRegular_ttf;
+    const int            OpenSansRegular_ttfSize = 217360;
+
+    extern const char*   OpenSansSemibold_ttf;
+    const int            OpenSansSemibold_ttfSize = 221328;
+
+    extern const char*   OpenSansSemiboldItalic_ttf;
+    const int            OpenSansSemiboldItalic_ttfSize = 212820;
+
     extern const char*   JorgeLuisCafeBoldItalic_ttf;
     const int            JorgeLuisCafeBoldItalic_ttfSize = 36404;
 
@@ -33,7 +66,7 @@ namespace BinaryData
     const int            cabsim_wavSize = 72044;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 8;
+    const int namedResourceListSize = 19;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

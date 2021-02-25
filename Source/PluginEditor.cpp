@@ -2,7 +2,7 @@
 #include <string>
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "ThmAmpText.h"
+//#include "ThmAmpText.h"
 
 using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 
@@ -102,6 +102,18 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
         .top = separatorPink,
         .width = gainLabelBox.width,
     };
+    StyledComponent::View thmLabelBox = {
+        .height = labelHeight * 2,
+        .left = 40,
+        .top = 2,
+        .width = 80,
+    };
+    StyledComponent::View ignitionLabelBox = {
+        .height = 56,
+        .left = thmLabelBox.getRight() - 4,
+        .top = 2,
+        .width = 92,
+    };
 
     topComponent.styles = topBlackBox;
 
@@ -114,10 +126,27 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     auto gainLabelBoxComponent = std::make_shared<StyledComponent>(gainLabelBox);
     auto toneLabelBoxComponent = std::make_shared<StyledComponent>(toneLabelBox);
     auto levelLabelBoxComponent = std::make_shared<StyledComponent>(levelLabelBox);
+    auto thmLabelBoxComponent = std::make_shared<StyledComponent>(thmLabelBox);
+    auto ignitionLabelBoxComponent = std::make_shared<StyledComponent>(ignitionLabelBox);
     
-    auto thmAmpText = std::make_shared<ThmAmpText>();
-
     const Font sliderLabelFont = mainFont.getBold().withHeight(30);
+    const Font thmFont = mainFont.getBold().withHeight(44);
+    const Font ignitionFont = mainFont.getBoldItalic().withHeight(28);
+
+    thmLabel = std::make_shared<Label>();
+    thmLabel->setText("THM", dontSendNotification);
+    thmLabel->setJustificationType(Justification::centredTop);
+    thmLabel->setFont(thmFont);
+    thmLabel->setColour(Label::textColourId, COLOUR_BLACK);
+    addAndMakeVisible(*thmLabel);
+
+    ignitionLabel = std::make_shared<Label>();
+    ignitionLabel->setText("ignition", dontSendNotification);
+    ignitionLabel->setJustificationType(Justification::centredLeft);
+    ignitionLabel->setFont(ignitionFont);
+    ignitionLabel->setColour(Label::textColourId, COLOUR_BLACK);
+    addAndMakeVisible(*ignitionLabel);
+
 
     gainSlider = std::make_shared<Slider>();
     gainLabel = std::make_shared<Label>();
@@ -171,7 +200,10 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     gainLabelBoxComponent->addChild(gainLabel);
     toneLabelBoxComponent->addChild(toneLabel);
     levelLabelBoxComponent->addChild(outLevelLabel);
-    topYellowBoxComponent->addChild(thmAmpText);
+    thmLabelBoxComponent->addChild(thmLabel);
+    ignitionLabelBoxComponent->addChild(ignitionLabel);
+    topYellowBoxComponent->addChild(thmLabelBoxComponent);
+    topYellowBoxComponent->addChild(ignitionLabelBoxComponent);
     gainBoxComponent->addChild(gainSlider);
     toneBoxComponent->addChild(toneSlider);
     levelBoxComponent->addChild(outLevelSlider);
