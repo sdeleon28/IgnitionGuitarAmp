@@ -117,7 +117,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     auto toneLabelBoxComponent = std::make_shared<StyledComponent>(toneLabelBox);
     auto levelLabelBoxComponent = std::make_shared<StyledComponent>(levelLabelBox);
     
-    const Font sliderLabelFont = mainFont.getBold().withHeight(30);
+    const Font sliderLabelFont = mainFont.getRegular().withHeight(30);
 
     gainSlider = std::make_shared<Slider>();
     gainLabel = std::make_shared<Label>();
