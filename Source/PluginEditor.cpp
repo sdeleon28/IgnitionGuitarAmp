@@ -190,8 +190,8 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     };
     auto thmLabelBoxComponent = std::make_shared<StyledComponent>(thmLabelBox);
     auto ignitionLabelBoxComponent = std::make_shared<StyledComponent>(ignitionLabelBox);
-    const Font thmFont = mainFont.getBold().withHeight(44);
-    const Font ignitionFont = mainFont.getBoldItalic().withHeight(28);
+    const Font thmFont = mainFont.getRegular().withHeight(44);
+    const Font ignitionFont = mainFont.getItalic().withHeight(28);
     thmLabel = std::make_shared<Label>();
     thmLabel->setText("THM", dontSendNotification);
     thmLabel->setJustificationType(Justification::centredTop);
