@@ -39,7 +39,7 @@ namespace BinaryData
     const int            LatoThinItalic_ttfSize = 48848;
 
     extern const char*   OFL_txt;
-    const int            OFL_txtSize = 4500;
+    const int            OFL_txtSize = 4407;
 
     extern const char*   Apache_License_txt;
     const int            Apache_License_txtSize = 11323;
