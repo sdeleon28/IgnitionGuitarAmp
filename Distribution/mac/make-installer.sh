@@ -65,7 +65,7 @@ sed 's/{au_size}/'"${au_size}/g" tmp-2.xml > tmp-3.xml
 sed 's/{vst3_size}/'"${vst3_size}/g" tmp-3.xml > Distribution.xml
 
 # Make folder for this package
-installer_dir="${DIR}/Builds/${version}"
+installer_dir="${DIR}/out"
 mkdir -p "${installer_dir}"
 
 # Package them together to a “thick” installer.
