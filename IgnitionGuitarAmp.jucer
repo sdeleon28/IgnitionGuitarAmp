@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="Z5wCcb" name="IgnitionGuitarAmp" projectType="audioplug"
-              useAppConfig="0" jucerFormatVersion="1" version="0.0.1" companyName="thmstudio"
+              useAppConfig="0" jucerFormatVersion="1" version="1.0.0" companyName="thmstudio"
               companyWebsite="thmstudio.com" companyEmail="santi@thmstudio.com"
               displaySplashScreen="1" pluginVST3Category="Distortion" pluginName="Ignition Guitar Amp"
               pluginDesc="Ignition Guitar Amp" pluginManufacturerCode="THMS"
