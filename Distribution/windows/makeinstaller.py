@@ -14,7 +14,7 @@ def main(version):
     tmp_installer_script_path = os.path.join(installer_tmp_path, install_script_name)
     project_dir = os.path.dirname(os.path.dirname(script_path))
     output_installer_path = os.path.join(installer_tmp_path, 'Output/IgnitionGuitarAmp-windows.exe')
-    installer_copy_path = os.path.join(script_path, 'IgnitionGuitarAmp_windows_{}.exe'.format(version))
+    installer_copy_path = os.path.join(script_path, 'out/IgnitionGuitarAmp_windows_{}.exe'.format(version))
     vst3_path = os.path.join(project_dir, 'Builds/VisualStudio2019/x64/Release/VST3/IgnitionGuitarAmp.vst3')
     shutil.rmtree(installer_tmp_path, ignore_errors=True)
     try:

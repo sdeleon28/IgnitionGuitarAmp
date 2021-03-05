@@ -2,6 +2,7 @@
 AppName=IgnitionGuitarAmp
 AppVersion=[$VERSION]
 DefaultDirName="{commoncf64}\VST3"
+AppendDefaultDirName=no
 DefaultGroupName=IgnitionGuitarAmp
 OutputBaseFilename=IgnitionGuitarAmp-windows
 UninstallFilesDir="{app}\IgnitionGuitarAmp"
