@@ -2,17 +2,17 @@
 
 MainFont::MainFont()
     : regular(Font(
-          Typeface::createSystemTypefaceFor(BinaryData::JorgeLuisCafeCafe_ttf, BinaryData::JorgeLuisCafeCafe_ttfSize)))
+          Typeface::createSystemTypefaceFor(BinaryData::LatoRegular_ttf, BinaryData::LatoRegular_ttfSize)))
     , lightItalic(Font(
-          Typeface::createSystemTypefaceFor(BinaryData::JorgeLuisCafeLightItalic_ttf, BinaryData::JorgeLuisCafeLightItalic_ttfSize)))
+          Typeface::createSystemTypefaceFor(BinaryData::LatoLightItalic_ttf, BinaryData::LatoLightItalic_ttfSize)))
     , light(Font(
-          Typeface::createSystemTypefaceFor(BinaryData::JorgeLuisCafeLight_ttf, BinaryData::JorgeLuisCafeLight_ttfSize)))
+          Typeface::createSystemTypefaceFor(BinaryData::LatoLight_ttf, BinaryData::LatoLight_ttfSize)))
     , italic(Font(
-          Typeface::createSystemTypefaceFor(BinaryData::JorgeLuisCafeItalic_ttf, BinaryData::JorgeLuisCafeItalic_ttfSize)))
+          Typeface::createSystemTypefaceFor(BinaryData::LatoItalic_ttf, BinaryData::LatoItalic_ttfSize)))
     , bold(Font(
-          Typeface::createSystemTypefaceFor(BinaryData::JorgeLuisCafeBold_ttf, BinaryData::JorgeLuisCafeBold_ttfSize)))
+          Typeface::createSystemTypefaceFor(BinaryData::LatoBold_ttf, BinaryData::LatoBold_ttfSize)))
     , boldItalic(Font(
-          Typeface::createSystemTypefaceFor(BinaryData::JorgeLuisCafeBoldItalic_ttf, BinaryData::JorgeLuisCafeBoldItalic_ttfSize)))
+          Typeface::createSystemTypefaceFor(BinaryData::LatoBoldItalic_ttf, BinaryData::LatoBoldItalic_ttfSize)))
 {
 }
 

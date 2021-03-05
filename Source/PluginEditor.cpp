@@ -2,7 +2,9 @@
 #include <string>
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#ifdef JUCE_MAC
 #include "ThmAmpText.h"
+#endif
 
 using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 
@@ -26,81 +28,81 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     const int yellowBoxWidth = (480 + 2 * borderWidth) * SIZE_FACTOR;
 
     StyledComponent::View topYellowBox = {
+        .backgroundColor = COLOUR_YELLOW,
+        .borderColor = COLOUR_BLACK,
+        .borderRadius = 10,
+        .borderWidth = borderWidth,
+        .height = 58 * SIZE_FACTOR,
         .left = separatorPink,
         .top = separatorPink,
         .width = yellowBoxWidth,
-        .height = 58 * SIZE_FACTOR,
-        .borderRadius = 10,
-        .borderWidth = borderWidth,
-        .backgroundColor = COLOUR_YELLOW,
-        .borderColor = COLOUR_BLACK,
     };
     StyledComponent::View midYellowBox = {
+        .backgroundColor = COLOUR_YELLOW,
+        .borderColor = COLOUR_BLACK,
+        .borderRadius = 10,
+        .borderWidth = 3,
+        .height = (162 + 2 * borderWidth) * SIZE_FACTOR,
         .left = separatorPink,
         .top = topYellowBox.getBottom() + separatorPink,
         .width = yellowBoxWidth,
-        .height = (162 + 2 * borderWidth) * SIZE_FACTOR,
-        .borderRadius = 10,
-        .borderWidth = 3,
-        .backgroundColor = COLOUR_YELLOW,
-        .borderColor = COLOUR_BLACK,
     };
     StyledComponent::View topGreyBox = {
+        .backgroundColor = COLOUR_LIGHT_GREY,
+        .height = topYellowBox.height + midYellowBox.height + 3 * separatorPink,
         .left = separatorPink,
         .top = separatorPink,
         .width = yellowBoxWidth + 2 * separatorPink,
-        .height = topYellowBox.height + midYellowBox.height + 3 * separatorPink,
-        .backgroundColor = COLOUR_LIGHT_GREY,
     };
     StyledComponent::View topBlackBox = {
+        .backgroundColor = COLOUR_BLACK,
+        .borderRadius = 10,
+        .height = topGreyBox.height + 2 * separatorPink,
         .left = 0,
         .top = 0,
         .width = topGreyBox.width + 2 * separatorPink,
-        .height = topGreyBox.height + 2 * separatorPink,
-        .borderRadius = 10,
-        .backgroundColor = COLOUR_BLACK,
     };
 
     const int labelHeight = 30;
     const int knobHeight = midYellowBox.height - 2 * midYellowBox.borderWidth - 3 * separatorPink - labelHeight;
 
     StyledComponent::View gainBox = {
+        .height = knobHeight,
         .left = separatorBlue,
         .top = 2 * separatorPink + labelHeight,
         .width = knobHeight,
-        .height = knobHeight,
     };
     StyledComponent::View toneBox = {
+        .height = gainBox.height,
         .left = gainBox.getRight() + separatorGreen,
         .top = gainBox.top,
         .width = gainBox.width,
-        .height = gainBox.height,
     };
     StyledComponent::View levelBox = {
+        .height = toneBox.height,
         .left = toneBox.getRight() + separatorGreen,
         .top = gainBox.top,
         .width = toneBox.width,
-        .height = toneBox.height,
     };
     const int labelSizeIncrease = 20;
 
     StyledComponent::View gainLabelBox = {
+        .height = labelHeight,
         .left = gainBox.left - labelSizeIncrease / 2,
         .top = separatorPink,
         .width = gainBox.width + labelSizeIncrease,
-        .height = labelHeight,
     };
     StyledComponent::View toneLabelBox = {
+        .height = labelHeight,
         .left = toneBox.left - labelSizeIncrease / 2,
         .top = separatorPink,
         .width = gainLabelBox.width,
-        .height = labelHeight,
     };
     StyledComponent::View levelLabelBox = {
+        .height = labelHeight,
         .left = levelBox.left - labelSizeIncrease / 2,
         .top = separatorPink,
         .width = gainLabelBox.width,
-        .height = labelHeight,
     };
 
     topComponent.styles = topBlackBox;
@@ -115,9 +117,7 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     auto toneLabelBoxComponent = std::make_shared<StyledComponent>(toneLabelBox);
     auto levelLabelBoxComponent = std::make_shared<StyledComponent>(levelLabelBox);
     
-    auto thmAmpText = std::make_shared<ThmAmpText>();
-
-    const Font sliderLabelFont = mainFont.getBold().withHeight(30);
+    const Font sliderLabelFont = mainFont.getRegular().withHeight(30);
 
     gainSlider = std::make_shared<Slider>();
     gainLabel = std::make_shared<Label>();
@@ -171,7 +171,42 @@ ShittyAmpAudioProcessorEditor::ShittyAmpAudioProcessorEditor(ShittyAmpAudioProce
     gainLabelBoxComponent->addChild(gainLabel);
     toneLabelBoxComponent->addChild(toneLabel);
     levelLabelBoxComponent->addChild(outLevelLabel);
+#ifdef JUCE_MAC
+    auto thmAmpText = std::make_shared<ThmAmpText>();
     topYellowBoxComponent->addChild(thmAmpText);
+#endif
+#ifdef JUCE_WINDOWS
+    StyledComponent::View thmLabelBox = {
+        .height = labelHeight * 2,
+        .left = 40,
+        .top = 2,
+        .width = 80,
+    };
+    StyledComponent::View ignitionLabelBox = {
+        .height = 56,
+        .left = thmLabelBox.getRight() - 5,
+        .top = 2,
+        .width = 92,
+    };
+    auto thmLabelBoxComponent = std::make_shared<StyledComponent>(thmLabelBox);
+    auto ignitionLabelBoxComponent = std::make_shared<StyledComponent>(ignitionLabelBox);
+    const Font thmFont = mainFont.getRegular().withHeight(44);
+    const Font ignitionFont = mainFont.getItalic().withHeight(28);
+    thmLabel = std::make_shared<Label>();
+    thmLabel->setText("THM", dontSendNotification);
+    thmLabel->setJustificationType(Justification::centredTop);
+    thmLabel->setFont(thmFont);
+    thmLabel->setColour(Label::textColourId, COLOUR_BLACK);
+    ignitionLabel = std::make_shared<Label>();
+    ignitionLabel->setText("ignition", dontSendNotification);
+    ignitionLabel->setJustificationType(Justification::centredLeft);
+    ignitionLabel->setFont(ignitionFont);
+    ignitionLabel->setColour(Label::textColourId, COLOUR_BLACK);
+    thmLabelBoxComponent->addChild(thmLabel);
+    ignitionLabelBoxComponent->addChild(ignitionLabel);
+    topYellowBoxComponent->addChild(thmLabelBoxComponent);
+    topYellowBoxComponent->addChild(ignitionLabelBoxComponent);
+#endif
     gainBoxComponent->addChild(gainSlider);
     toneBoxComponent->addChild(toneSlider);
     levelBoxComponent->addChild(outLevelSlider);

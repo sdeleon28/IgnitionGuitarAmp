@@ -11,15 +11,15 @@ using SliderAttachment = AudioProcessorValueTreeState::SliderAttachment;
 class ShittyAmpAudioProcessorEditor
     : public AudioProcessorEditor
 {
-  public:
-    ShittyAmpAudioProcessorEditor(ShittyAmpAudioProcessor &);
+public:
+    ShittyAmpAudioProcessorEditor(ShittyAmpAudioProcessor&);
     ~ShittyAmpAudioProcessorEditor() override;
 
     //==============================================================================
-    void paint(Graphics &) override;
+    void paint(Graphics&) override;
     void resized() override;
 
-  private:
+private:
     std::shared_ptr<Label> gainLabel;
     std::shared_ptr<Slider> gainSlider;
     std::unique_ptr<SliderAttachment> gainValue;
@@ -32,9 +32,12 @@ class ShittyAmpAudioProcessorEditor
     std::shared_ptr<Slider> outLevelSlider;
     std::unique_ptr<SliderAttachment> outLevelValue;
 
+    std::shared_ptr<Label> thmLabel;
+    std::shared_ptr<Label> ignitionLabel;
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    ShittyAmpAudioProcessor &audioProcessor;
+    ShittyAmpAudioProcessor& audioProcessor;
 
     DialLookAndFeel dialLookAndFeel;
     StyledComponent topComponent;

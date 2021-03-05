@@ -4,8 +4,8 @@
 ThmAmpText::ThmAmpText()
 {
     MainFont mainFont;
-    const Font thmFont = mainFont.getBold().withHeight(44);
-    const Font ampFont = mainFont.getBoldItalic().withHeight(22);
+    const Font thmFont = mainFont.getRegular().withHeight(44);
+    const Font ampFont = mainFont.getItalic().withHeight(22);
     Range<int> thmRange(0, 3);
     Range<int> ampRange(4, 12);
     AttributedString attributedString("THM ignition");

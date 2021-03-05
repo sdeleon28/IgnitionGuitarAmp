@@ -4,7 +4,8 @@
               useAppConfig="0" jucerFormatVersion="1" version="0.0.1" companyName="thmstudio"
               companyWebsite="thmstudio.com" companyEmail="santi@thmstudio.com"
               displaySplashScreen="1" pluginVST3Category="Distortion" pluginName="Ignition Guitar Amp"
-              pluginDesc="Ignition Guitar Amp" pluginManufacturerCode="THMS">
+              pluginDesc="Ignition Guitar Amp" pluginManufacturerCode="THMS"
+              cppLanguageStandard="latest">
   <MAINGROUP id="KoOqKs" name="IgnitionGuitarAmp">
     <GROUP id="{3C61CE8C-3D73-3D84-A3F2-889AC9331BC7}" name="Source">
       <FILE id="N1ViD3" name="ThmAmpText.cpp" compile="1" resource="0" file="Source/ThmAmpText.cpp"/>
@@ -62,6 +63,50 @@
       <FILE id="uZLlWv" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
     <GROUP id="{675E0FD3-3764-EE8F-C44E-CBE96AC32132}" name="Assets">
+      <GROUP id="{D28B48E0-9A0A-2C38-D63D-799F96B6E64B}" name="fonts">
+        <GROUP id="{B9ADAFBA-2D64-6F51-6077-A8BAB866731E}" name="lato">
+          <FILE id="rE0h0h" name="Lato-Black.ttf" compile="0" resource="1" file="Assets/fonts/lato/Lato-Black.ttf"/>
+          <FILE id="zzWaDB" name="Lato-BlackItalic.ttf" compile="0" resource="1"
+                file="Assets/fonts/lato/Lato-BlackItalic.ttf"/>
+          <FILE id="VP7K6O" name="Lato-Bold.ttf" compile="0" resource="1" file="Assets/fonts/lato/Lato-Bold.ttf"/>
+          <FILE id="BOr5Wt" name="Lato-BoldItalic.ttf" compile="0" resource="1"
+                file="Assets/fonts/lato/Lato-BoldItalic.ttf"/>
+          <FILE id="HAxv3z" name="Lato-Italic.ttf" compile="0" resource="1" file="Assets/fonts/lato/Lato-Italic.ttf"/>
+          <FILE id="ajYyHX" name="Lato-Light.ttf" compile="0" resource="1" file="Assets/fonts/lato/Lato-Light.ttf"/>
+          <FILE id="bKwrOY" name="Lato-LightItalic.ttf" compile="0" resource="1"
+                file="Assets/fonts/lato/Lato-LightItalic.ttf"/>
+          <FILE id="g0FDaN" name="Lato-Regular.ttf" compile="0" resource="1"
+                file="Assets/fonts/lato/Lato-Regular.ttf"/>
+          <FILE id="MvRwWh" name="Lato-Thin.ttf" compile="0" resource="1" file="Assets/fonts/lato/Lato-Thin.ttf"/>
+          <FILE id="Ze24ib" name="Lato-ThinItalic.ttf" compile="0" resource="1"
+                file="Assets/fonts/lato/Lato-ThinItalic.ttf"/>
+          <FILE id="GNWuQO" name="OFL.txt" compile="0" resource="1" file="Assets/fonts/lato/OFL.txt"/>
+        </GROUP>
+        <GROUP id="{9A3D1E9D-3B7F-C967-493A-3F9A181F65E2}" name="open-sans">
+          <FILE id="gYQ3IT" name="Apache License.txt" compile="0" resource="1"
+                file="Assets/fonts/open-sans/Apache License.txt"/>
+          <FILE id="S6VGju" name="OpenSans-Bold.ttf" compile="0" resource="1"
+                file="Assets/fonts/open-sans/OpenSans-Bold.ttf"/>
+          <FILE id="SPzKgy" name="OpenSans-BoldItalic.ttf" compile="0" resource="1"
+                file="Assets/fonts/open-sans/OpenSans-BoldItalic.ttf"/>
+          <FILE id="iOBJKN" name="OpenSans-ExtraBold.ttf" compile="0" resource="1"
+                file="Assets/fonts/open-sans/OpenSans-ExtraBold.ttf"/>
+          <FILE id="PkLCBa" name="OpenSans-ExtraBoldItalic.ttf" compile="0" resource="1"
+                file="Assets/fonts/open-sans/OpenSans-ExtraBoldItalic.ttf"/>
+          <FILE id="aKhK9v" name="OpenSans-Italic.ttf" compile="0" resource="1"
+                file="Assets/fonts/open-sans/OpenSans-Italic.ttf"/>
+          <FILE id="GKgW9p" name="OpenSans-Light.ttf" compile="0" resource="1"
+                file="Assets/fonts/open-sans/OpenSans-Light.ttf"/>
+          <FILE id="hmD3oQ" name="OpenSans-LightItalic.ttf" compile="0" resource="1"
+                file="Assets/fonts/open-sans/OpenSans-LightItalic.ttf"/>
+          <FILE id="nu0QEi" name="OpenSans-Regular.ttf" compile="0" resource="1"
+                file="Assets/fonts/open-sans/OpenSans-Regular.ttf"/>
+          <FILE id="I2vtjY" name="OpenSans-Semibold.ttf" compile="0" resource="1"
+                file="Assets/fonts/open-sans/OpenSans-Semibold.ttf"/>
+          <FILE id="yRRrQ0" name="OpenSans-SemiboldItalic.ttf" compile="0" resource="1"
+                file="Assets/fonts/open-sans/OpenSans-SemiboldItalic.ttf"/>
+        </GROUP>
+      </GROUP>
       <FILE id="pF8Teg" name="Jorge-Luis-Cafe-Bold-Italic.ttf" compile="0"
             resource="1" file="Assets/Jorge-Luis-Cafe-Bold-Italic.ttf"/>
       <FILE id="Nz6WDB" name="Jorge-Luis-Cafe-Bold.ttf" compile="0" resource="1"
@@ -102,6 +147,27 @@
         <MODULEPATH id="juce_gui_extra" path="../../../../Applications/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
+    <VS2019 targetFolder="Builds/VisualStudio2019">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_gui_extra" path="../../juce"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce"/>
+        <MODULEPATH id="juce_graphics" path="../../juce"/>
+        <MODULEPATH id="juce_events" path="../../juce"/>
+        <MODULEPATH id="juce_dsp" path="../../juce"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce"/>
+        <MODULEPATH id="juce_core" path="../../juce"/>
+        <MODULEPATH id="juce_audio_utils" path="../../juce"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../juce"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce"/>
+      </MODULEPATHS>
+    </VS2019>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
@@ -121,5 +187,6 @@
   </MODULES>
   <LIVE_SETTINGS>
     <OSX/>
+    <WINDOWS/>
   </LIVE_SETTINGS>
 </JUCERPROJECT>
