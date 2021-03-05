@@ -1,8 +1,16 @@
 #!/bin/sh
 set -e
 
-# Guard
-read -p "I will user the version stored in the .jucer file - have you already updated that? " -n 1 -r
+# Guards
+read -p "I will user the version stored in the .jucer file - have you already updated that? [y/N] " -n 1 -r
+echo    # (optional) move to a new line
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    echo "Cancelling"
+    exit 1
+fi
+
+read -p "I will pick files from the locations where XCode puts them when you build the All target. Have you built it with the latest code? [y/N] " -n 1 -r
 echo    # (optional) move to a new line
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
@@ -82,3 +90,10 @@ rm tmp-*.xml
 rm Distribution.xml
 rm -r "./vst3"
 rm -r "./au"
+
+echo "Installer created successfully."
+echo "REMEMBER:"
+echo "* Tag this as v${version} and push that tag"
+echo "* Test installer by running clean-ignition.sh and then running the installer"
+echo "* Add installer to Dropbox"
+echo "* Add installer to website"
