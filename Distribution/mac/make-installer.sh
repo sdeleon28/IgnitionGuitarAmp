@@ -1,8 +1,18 @@
 #!/bin/sh
+set -e
+
+# Guard
+read -p "I will user the version stored in the .jucer file - have you already updated that? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    echo "Cancelling"
+    exit 1
+fi
 
 # Inspired on a script from the juce forum -> https://forum.juce.com/t/vst-installer/16654/15
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-JUCERFILE="${DIR}/../IgnitionGuitarAmp.jucer"
+JUCERFILE="${DIR}/../../IgnitionGuitarAmp.jucer"
 
 shortname="IgnitionGuitarAmp"
 name="com.thmstudio.${shortname}"
